@@ -1,6 +1,6 @@
 
-using System.DataAnnotations;
-using System.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 // Models/LoginModel.cs
 namespace dotnetapp.Models
