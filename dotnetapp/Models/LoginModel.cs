@@ -1,4 +1,6 @@
 
+
+
 using System.ComponentModel.DataAnnotaions;
 using System.ComponentModel.DataAnnotaions.Schema;
 
@@ -15,3 +17,4 @@ namespace dotnetapp.Models
     public string Password { get; set; }
     }
 }
+
