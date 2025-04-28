@@ -1,3 +1,5 @@
+
+
 namespace dotnetapp.Models
 {
     public static class UserRoles
@@ -6,3 +8,4 @@ namespace dotnetapp.Models
         public const string User = "User";
     }
 }
+
