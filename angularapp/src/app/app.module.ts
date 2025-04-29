@@ -6,21 +6,27 @@ import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegistrationComponent } from './components/registration/registration.component';
 import { ErrorComponent } from './components/error/error.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
-import { AppRoutingModule } from './app-routing.module';
-// import { MentorshipapplicationformComponent } from './components/mentorshipapplicationform/mentorshipapplicationform.component';
+import { CreatementorshipprogramComponent } from './components/creatementorshipprogram/creatementorshipprogram.component';
+
+import { ActivatedRoute } from '@angular/router';
+import { ViewmentorshipprogramComponent } from './components/viewmentorshipprogram/viewmentorshipprogram.component';
+import { AdmineditmentorshipprogramComponent } from './components/admineditmentorshipprogram/admineditmentorshipprogram.component';
+import { AdminnavComponent } from './components/adminnav/adminnav.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
+  //  MentorshipapplicationformComponent
+    CreatementorshipprogramComponent,
+    ViewmentorshipprogramComponent,
+    AdmineditmentorshipprogramComponent,
+    AdminnavComponent,
     NavbarComponent,
     HomeComponent,
-    LoginComponent,
     RegistrationComponent,
     ErrorComponent,
-  //  MentorshipapplicationformComponent
+    LoginComponent
 
   ],
   imports: [

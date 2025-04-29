@@ -10,10 +10,10 @@ import { MentorshipApplication } from '../models/mentorshipapplication.model';
 export class MentorshipService {
 
   // Base URL for API endpoints related to mentorship programs and applications.
-  private apiUrl = "";
+  public apiUrl = "https://8080-cdcacccccaadbcfceefbaaddebedfbddafee.premiumproject.examly.io";
 
   // Injecting HttpClient for performing HTTP operations.
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   /**
    * Generates HTTP headers required for API requests.
