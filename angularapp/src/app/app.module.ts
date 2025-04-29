@@ -15,9 +15,6 @@ import { LoginComponent } from './components/login/login.component';
 import { FormsModule } from '@angular/forms';
 import { RegistrationComponent } from './components/registration/registration.component';
 import { ErrorComponent } from './components/error/error.component';
-import { ActivatedRoute } from '@angular/router';
-import { UserviewmentorshipprogramComponent } from './components/userviewmentorshipprogram/userviewmentorshipprogram.component';
-
 
 
 @NgModule({
@@ -29,17 +26,15 @@ import { UserviewmentorshipprogramComponent } from './components/userviewmentors
     AdminnavComponent,
     NavbarComponent,
     HomeComponent,
-    LoginComponent,
     RegistrationComponent,
     ErrorComponent,
-    UserviewmentorshipprogramComponent
-
+    LoginComponent
 
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
 
   ],
   providers: [],
