@@ -12,6 +12,9 @@ import { ActivatedRoute } from '@angular/router';
 import { ViewmentorshipprogramComponent } from './components/viewmentorshipprogram/viewmentorshipprogram.component';
 import { AdmineditmentorshipprogramComponent } from './components/admineditmentorshipprogram/admineditmentorshipprogram.component';
 import { AdminnavComponent } from './components/adminnav/adminnav.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AppRoutingModule } from './app-routing.module';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -35,7 +38,6 @@ import { AdminnavComponent } from './components/adminnav/adminnav.component';
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule
- 
   ],
   providers: [],
   bootstrap: [AppComponent]
