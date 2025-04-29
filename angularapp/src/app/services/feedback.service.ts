@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
 export class FeedbackService {
 
   // Base API URL for the feedback-related requests.
-  private apiUrl = "";
+  public apiUrl = "https://8080-cdcacccccaadbcfceefbaaddebedfbddafee.premiumproject.examly.io";
 
   // Constructor injecting HttpClient for HTTP operations.
   constructor(private http: HttpClient) {}

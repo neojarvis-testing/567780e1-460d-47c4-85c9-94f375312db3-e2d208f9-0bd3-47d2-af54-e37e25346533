@@ -19,6 +19,7 @@ import { ActivatedRoute } from '@angular/router';
 import { UserviewmentorshipprogramComponent } from './components/userviewmentorshipprogram/userviewmentorshipprogram.component';
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -32,6 +33,7 @@ import { UserviewmentorshipprogramComponent } from './components/userviewmentors
     RegistrationComponent,
     ErrorComponent,
     UserviewmentorshipprogramComponent
+
 
   ],
   imports: [
