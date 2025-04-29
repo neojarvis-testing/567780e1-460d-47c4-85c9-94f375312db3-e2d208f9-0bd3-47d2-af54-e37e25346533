@@ -1,0 +1,20 @@
+<nav>
+  <!-- Navigation bar container -->
+  <h1>MENTORSHIP APPLICATION SYSTEM</h1>
+  <!-- Header displaying the title of the application -->
+
+  <div *ngIf="!authService.isLoggedIn()">
+      <!-- This section is conditionally displayed using Angular's *ngIf directive.
+           It will only show if the user is not logged in (authService.isLoggedIn() returns false). -->
+
+      <a routerLink="/register">Register</a> |
+      <!-- Link to the registration page using Angular's routerLink for navigation -->
+
+      <a routerLink="/login">Login</a>
+      <!-- Link to the login page using Angular's routerLink for navigation -->
+
+  </div>
+</nav>
+
+<hr>
+<!-- Horizontal line to separate the navigation bar from the rest of the content -->
