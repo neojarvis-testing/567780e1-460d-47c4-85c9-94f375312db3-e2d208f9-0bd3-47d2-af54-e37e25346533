@@ -1,6 +1,6 @@
-using System.ComponentModel.DataAnnotaions;
-using System.ComponentModel.DataAnnotaions.Schema;
-
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 namespace dotnetapp.Models
 {
     public class Feedback

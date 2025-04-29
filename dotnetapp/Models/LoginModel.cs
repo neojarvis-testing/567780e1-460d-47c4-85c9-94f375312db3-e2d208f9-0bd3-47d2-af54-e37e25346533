@@ -1,8 +1,5 @@
-
-
-
-using System.ComponentModel.DataAnnotaions;
-using System.ComponentModel.DataAnnotaions.Schema;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace dotnetapp.Models
 {
