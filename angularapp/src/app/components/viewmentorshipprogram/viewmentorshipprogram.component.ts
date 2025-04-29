@@ -3,8 +3,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { MentorshipService } from '../../services/mentorship.service';
 
-import { MentorshipProgram } from '../../models/mentorship-program.model';
-
+import { MentorshipProgram } from 'src/app/models/mentorshipprogram.model';
 import { Router } from '@angular/router';
 
 @Component({
