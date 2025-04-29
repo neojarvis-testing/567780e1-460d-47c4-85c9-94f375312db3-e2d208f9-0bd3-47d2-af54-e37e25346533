@@ -1,0 +1,68 @@
+<div class="register-container">
+  <!-- Container for the registration form layout -->
+  
+  <h1>Registration</h1>
+  <!-- Heading for the registration page -->
+
+  <form (ngSubmit)="register()">
+      <!-- Form element with Angular's ngSubmit directive, which binds the 'register' method to the form submission -->
+
+      <label>Username<span class="astrick">*</span></label><br>
+      <!-- Label for the Username field with a required asterisk -->
+
+      <input type="text" [(ngModel)]="user.Username" name="username" required><br><br>
+      <!-- Input field for the user's username with two-way data binding using Angular's ngModel, 'name' for form identification, and 'required' for validation -->
+
+      <label>Email<span class="astrick">*</span></label><br>
+      <!-- Label for the Email field with a required asterisk -->
+
+      <input type="email" [(ngModel)]="user.Email" name="email" required><br><br>
+      <!-- Input field for the user's email with two-way data binding, 'name' for form identification, and 'required' for validation -->
+
+      <label>Mobile Number<span class="astrick">*</span></label><br>
+      <!-- Label for the Mobile Number field with a required asterisk -->
+
+      <input type="text" [(ngModel)]="user.MobileNumber" name="mobile" required><br><br>
+      <!-- Input field for the user's mobile number with two-way data binding, 'name' for form identification, and 'required' for validation -->
+
+      <label>Password<span class="astrick">*</span></label><br>
+      <!-- Label for the Password field with a required asterisk -->
+
+      <input type="password" [(ngModel)]="user.Password" name="password" required><br><br>
+      <!-- Input field for the user's password with two-way data binding, 'name' for form identification, and 'required' for validation -->
+
+      <label>Role<span class="astrick">*</span></label><br>
+      <!-- Label for the Role dropdown with a required asterisk -->
+
+      <select [(ngModel)]="user.UserRole" name="role" (change)="onRoleChange()" required>
+          <!-- Dropdown field for selecting the user's role. onRoleChange method is called when the selection changes. -->
+          
+          <option value="">Select Role</option>
+          <!-- Default option prompting the user to select a role -->
+
+          <option value="Admin">Admin</option>
+          <!-- Option for the Admin role -->
+
+          <option value="User">User</option>
+          <!-- Option for the User role -->
+      </select><br><br>
+
+      <div *ngIf="showSecretKeyField">
+          <!-- Conditional div displayed only if showSecretKeyField is true -->
+          
+          <label>Secret Key<span class="astrick">*</span></label><br>
+          <!-- Label for the Secret Key field with a required asterisk -->
+
+          <input type="password" [(ngModel)]="user.SecretKey" name="secretKey"><br><br>
+          <!-- Input field for the secret key with two-way data binding -->
+      </div>
+
+      <button type="submit">Register</button>
+      <!-- Button to submit the registration form -->
+
+      <div *ngIf="errorMessage" class="error">
+          <!-- Conditional div to display the error message when 'errorMessage' is not empty -->
+          {{errorMessage}}
+      </div>
+  </form>
+</div>

@@ -1,0 +1,28 @@
+<div class="login-container">
+  <!-- Container for the login form layout -->
+  <h1>Login</h1>
+
+  <form (ngSubmit)="login()">
+      <!-- Form element with Angular's ngSubmit directive, which binds the 'login' method to the form submission -->
+
+      <label>Email<span class="astrick">*</span></label><br>
+      <!-- Label for the Email field with a required asterisk -->
+
+      <input type="email" [(ngModel)]="loginModel.Email" name="email" required><br><br>
+      <!-- Input field for user's email with two-way data binding using Angular's ngModel, 'name' for form identification, and 'required' for validation -->
+
+      <label>Password<span class="astrick">*</span></label><br>
+      <!-- Label for the Password field with a required asterisk -->
+
+      <input type="password" [(ngModel)]="loginModel.Password" name="password" required><br><br>
+      <!-- Input field for user's password with two-way data binding, 'name' for form identification, and 'required' for validation -->
+
+      <button type="submit">Login</button>
+      <!-- Submit button for the form -->
+
+      <div *ngIf="errorMessage" class="error">
+          <!-- Conditional div to display the error message when 'errorMessage' is not empty -->
+          {{errorMessage}}
+      </div>
+  </form>
+</div>
