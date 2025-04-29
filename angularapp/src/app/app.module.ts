@@ -10,11 +10,14 @@ import { AdminnavComponent } from './components/adminnav/adminnav.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
-import { FormsModule } from '@angular/forms';
+
 import { RegistrationComponent } from './components/registration/registration.component';
 import { ErrorComponent } from './components/error/error.component';
-import { ActivatedRoute } from '@angular/router';
+
 import { UserviewmentorshipprogramComponent } from './components/userviewmentorshipprogram/userviewmentorshipprogram.component';
+import { FormsModule } from '@angular/forms';
+import { UseraddfeedbackComponent } from './components/useraddfeedback/useraddfeedback.component';
+import { UserviewfeedbackComponent } from './components/userviewfeedback/userviewfeedback.component';
 
 
 
@@ -28,14 +31,21 @@ import { UserviewmentorshipprogramComponent } from './components/userviewmentors
     LoginComponent,
     RegistrationComponent,
     ErrorComponent,
-    UserviewmentorshipprogramComponent
+    UserviewmentorshipprogramComponent,
+    AdmineditmentorshipprogramComponent,
+    AdminnavComponent,
+    UseraddfeedbackComponent,
+    UserviewfeedbackComponent
+
 
 
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+   
+   
 
   ],
   providers: [],
