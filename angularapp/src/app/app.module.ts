@@ -7,16 +7,34 @@ import { CreatementorshipprogramComponent } from './components/creatementorshipp
 import { ViewmentorshipprogramComponent } from './components/viewmentorshipprogram/viewmentorshipprogram.component';
 import { AdmineditmentorshipprogramComponent } from './components/admineditmentorshipprogram/admineditmentorshipprogram.component';
 
+import { AdminnavComponent } from './components/adminnav/adminnav.component';
+
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { HomeComponent } from './components/home/home.component';
+import { LoginComponent } from './components/login/login.component';
+import { FormsModule } from '@angular/forms';
+import { RegistrationComponent } from './components/registration/registration.component';
+import { ErrorComponent } from './components/error/error.component';
+import { ActivatedRoute } from '@angular/router';
+
+
 @NgModule({
   declarations: [
     AppComponent,
+
     CreatementorshipprogramComponent,
     ViewmentorshipprogramComponent,
     AdmineditmentorshipprogramComponent
+
+
+    AdminnavComponent
+
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule,
+
   ],
   providers: [],
   bootstrap: [AppComponent]
