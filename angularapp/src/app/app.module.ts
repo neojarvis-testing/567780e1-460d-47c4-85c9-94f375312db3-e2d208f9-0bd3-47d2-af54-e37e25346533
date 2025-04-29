@@ -1,20 +1,20 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
+import { CreatementorshipprogramComponent } from './components/creatementorshipprogram/creatementorshipprogram.component';
+import { ViewmentorshipprogramComponent } from './components/viewmentorshipprogram/viewmentorshipprogram.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegistrationComponent } from './components/registration/registration.component';
 import { ErrorComponent } from './components/error/error.component';
-import { CreatementorshipprogramComponent } from './components/creatementorshipprogram/creatementorshipprogram.component';
-
-import { ActivatedRoute } from '@angular/router';
-import { ViewmentorshipprogramComponent } from './components/viewmentorshipprogram/viewmentorshipprogram.component';
 import { AdmineditmentorshipprogramComponent } from './components/admineditmentorshipprogram/admineditmentorshipprogram.component';
 import { AdminnavComponent } from './components/adminnav/adminnav.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
-import { HttpClientModule } from '@angular/common/http';
+import { UserviewmentorshipprogramComponent } from './components/userviewmentorshipprogram/userviewmentorshipprogram.component';
+
+
 
 
 @NgModule({
@@ -23,21 +23,23 @@ import { HttpClientModule } from '@angular/common/http';
   //  MentorshipapplicationformComponent
     CreatementorshipprogramComponent,
     ViewmentorshipprogramComponent,
-    AdmineditmentorshipprogramComponent,
-    AdminnavComponent,
     NavbarComponent,
     HomeComponent,
+    LoginComponent,
     RegistrationComponent,
     ErrorComponent,
-    LoginComponent
+    LoginComponent,
+    AdmineditmentorshipprogramComponent,
+    AdminnavComponent,
+    UserviewmentorshipprogramComponent
 
   ],
   imports: [
     BrowserModule,
     FormsModule,
-    AppRoutingModule,
-    ReactiveFormsModule,
-    HttpClientModule
+    AppRoutingModule
+    
+
   ],
   providers: [],
   bootstrap: [AppComponent]
