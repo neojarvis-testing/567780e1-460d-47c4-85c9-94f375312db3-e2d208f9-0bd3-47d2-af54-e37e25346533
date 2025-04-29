@@ -9,7 +9,3 @@ namespace dotnetapp.Exceptions
         }
     }
 }
-<<<<<<< HEAD
-=======
-
->>>>>>> 6d1961a5f8266de5915c9e48c9ab37cd41670700

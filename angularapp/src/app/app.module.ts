@@ -13,6 +13,8 @@ import { LoginComponent } from './components/login/login.component';
 import { FormsModule } from '@angular/forms';
 import { RegistrationComponent } from './components/registration/registration.component';
 import { ErrorComponent } from './components/error/error.component';
+import { AdmineditmentorshipprogramComponent } from './components/admineditmentorshipprogram/admineditmentorshipprogram.component';
+import { AdminnavComponent } from './components/adminnav/adminnav.component';
 
 
 @NgModule({
@@ -24,7 +26,9 @@ import { ErrorComponent } from './components/error/error.component';
     HomeComponent,
     RegistrationComponent,
     ErrorComponent,
-    LoginComponent
+    LoginComponent,
+    AdmineditmentorshipprogramComponent,
+    AdminnavComponent
 
   ],
   imports: [
