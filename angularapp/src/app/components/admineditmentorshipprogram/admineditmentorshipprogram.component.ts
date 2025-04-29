@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { MentorshipService } from '../../services/mentorship.service';
+import { MentorshipService } from 'src/app/services/mentorship.service';
 
 import { MentorshipProgram } from 'src/app/models/mentorshipprogram.model';
 
