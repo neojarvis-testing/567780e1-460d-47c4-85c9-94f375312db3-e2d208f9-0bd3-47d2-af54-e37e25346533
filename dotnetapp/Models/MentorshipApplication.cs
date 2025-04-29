@@ -1,8 +1,9 @@
-
+using System.Text.Json.Serialization;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text.Json.Serialization;
+
 using Microsoft.EntityFrameworkCore;
+
 namespace dotnetapp.Models
 {
 
@@ -38,8 +39,10 @@ namespace dotnetapp.Models
         public string CareerGoals{get; set;}
 
         [Required(ErrorMessage = "Profile Image is required.")]
+        [StringLength(128, ErrorMessage = "Profile Image cannot exceed 128 characters.")]
         public string ProfileImage{get; set;}
 
+        [StringLength(128, ErrorMessage = "Port folio link cannot exceed 128 characters.")]
         public string? PortfolioLink{get; set;}
 
         [JsonIgnore]
