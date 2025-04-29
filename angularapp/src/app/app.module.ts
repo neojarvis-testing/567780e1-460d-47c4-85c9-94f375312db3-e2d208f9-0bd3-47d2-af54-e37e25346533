@@ -16,24 +16,28 @@ import { FormsModule } from '@angular/forms';
 import { RegistrationComponent } from './components/registration/registration.component';
 import { ErrorComponent } from './components/error/error.component';
 import { ActivatedRoute } from '@angular/router';
+import { UserviewmentorshipprogramComponent } from './components/userviewmentorshipprogram/userviewmentorshipprogram.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-
     CreatementorshipprogramComponent,
     ViewmentorshipprogramComponent,
-    AdmineditmentorshipprogramComponent
-
-
-    AdminnavComponent
+    AdmineditmentorshipprogramComponent,
+    AdminnavComponent,
+    NavbarComponent,
+    HomeComponent,
+    LoginComponent,
+    RegistrationComponent,
+    ErrorComponent,
+    UserviewmentorshipprogramComponent
 
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule,
+    FormsModule
 
   ],
   providers: [],
