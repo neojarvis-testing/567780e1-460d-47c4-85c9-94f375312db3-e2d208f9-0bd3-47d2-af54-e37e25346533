@@ -5,16 +5,18 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CreatementorshipprogramComponent } from './components/creatementorshipprogram/creatementorshipprogram.component';
 import { ViewmentorshipprogramComponent } from './components/viewmentorshipprogram/viewmentorshipprogram.component';
-import { AdmineditmentorshipprogramComponent } from './components/admineditmentorshipprogram/admineditmentorshipprogram.component';
-
-import { AdminnavComponent } from './components/adminnav/adminnav.component';
-
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
 import { FormsModule } from '@angular/forms';
 import { RegistrationComponent } from './components/registration/registration.component';
 import { ErrorComponent } from './components/error/error.component';
+import { AdmineditmentorshipprogramComponent } from './components/admineditmentorshipprogram/admineditmentorshipprogram.component';
+import { AdminnavComponent } from './components/adminnav/adminnav.component';
+import { ActivatedRoute } from '@angular/router';
+import { UserviewmentorshipprogramComponent } from './components/userviewmentorshipprogram/userviewmentorshipprogram.component';
+
+
 
 
 @NgModule({
@@ -22,13 +24,15 @@ import { ErrorComponent } from './components/error/error.component';
     AppComponent,
     CreatementorshipprogramComponent,
     ViewmentorshipprogramComponent,
-    AdmineditmentorshipprogramComponent,
-    AdminnavComponent,
     NavbarComponent,
     HomeComponent,
+    LoginComponent,
     RegistrationComponent,
     ErrorComponent,
-    LoginComponent
+    LoginComponent,
+    AdmineditmentorshipprogramComponent,
+    AdminnavComponent
+    UserviewmentorshipprogramComponent
 
   ],
   imports: [
