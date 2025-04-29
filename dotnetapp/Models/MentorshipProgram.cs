@@ -1,6 +1,6 @@
 using System;
 using System.ComponentModel.DataAnnotations; // Required for data annotations
- using System.ComponentModel.DataAnnotations.Schema; 
+using System.ComponentModel.DataAnnotations.Schema; 
 namespace dotnetapp.Models
 {
     public class MentorshipProgram

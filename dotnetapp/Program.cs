@@ -23,7 +23,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 
-    options.UseSqlServer(builder.Configuration.GetConnectionString("connectionString")));
+  options.UseSqlServer(builder.Configuration.GetConnectionString("connectionString")));
 
 
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
@@ -41,6 +41,7 @@ builder.Services.AddScoped<MentorshipApplicationService>();
 
 
 builder.Services.AddScoped<FeedbackService>();
+
 
 // JWT Authentication
 
@@ -169,11 +170,15 @@ if (app.Environment.IsDevelopment())
 app.UseCors("AllowAngularApp");
 
 
+app.UseAuthentication();
+
+
 
 
 app.UseAuthorization();
  
 app.MapControllers();
+
 
 
 
