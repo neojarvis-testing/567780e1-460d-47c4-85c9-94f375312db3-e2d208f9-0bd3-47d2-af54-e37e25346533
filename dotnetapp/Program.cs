@@ -22,7 +22,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+    options.UseSqlServer(builder.Configuration.GetConnectionString("connectionString")));
+
 
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
 
@@ -30,11 +32,13 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
 
     .AddDefaultTokenProviders();
 
-// builder.Services.AddScoped<IAuthService, AuthService>();
 
-// builder.Services.AddScoped<MentorshipProgramService>();
+builder.Services.AddScoped<IAuthService, AuthService>();
 
-// builder.Services.AddScoped<MentorshipApplicationService>();
+builder.Services.AddScoped<MentorshipProgramService>();
+
+builder.Services.AddScoped<MentorshipApplicationService>();
+
 
 builder.Services.AddScoped<FeedbackService>();
 
@@ -170,4 +174,6 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.Run("http://localhost:8080");
+
+app.Run();
+
