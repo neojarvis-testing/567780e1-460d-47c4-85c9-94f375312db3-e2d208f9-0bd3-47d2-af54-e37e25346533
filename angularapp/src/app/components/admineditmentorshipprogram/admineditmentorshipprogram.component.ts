@@ -5,7 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { MentorshipService } from '../../services/mentorship.service';
 
-import { MentorshipProgram } from '../../models/mentorship-program.model';
+import { MentorshipProgram } from 'src/app/models/mentorshipprogram.model';
 
 @Component({
 

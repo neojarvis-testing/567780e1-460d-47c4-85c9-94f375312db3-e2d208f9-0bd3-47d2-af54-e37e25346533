@@ -1,5 +1,3 @@
-
-
 namespace dotnetapp.Models
 {
     public static class UserRoles
