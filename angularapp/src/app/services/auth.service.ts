@@ -10,7 +10,7 @@ import { Observable, BehaviorSubject } from 'rxjs';
 export class AuthService {
 
   // Base URL for API endpoints.
-  private apiUrl = "";
+  private apiUrl = "https://8080-cdcacccccaadbcfceefbaaddebedfbddafee.premiumproject.examly.io";
 
   // BehaviorSubject to hold the current user's role, defaulting to an empty string.
   public currentUserRole = new BehaviorSubject<string>('');

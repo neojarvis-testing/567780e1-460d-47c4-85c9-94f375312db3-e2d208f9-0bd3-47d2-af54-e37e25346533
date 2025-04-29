@@ -5,7 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { MentorshipService } from '../../services/mentorship.service';
 
-import { MentorshipProgram } from '../../models/mentorship-program.model';
+import { MentorshipProgram } from 'src/app/models/mentorshipprogram.model';
 
 @Component({
 
@@ -37,6 +37,8 @@ export class AdmineditmentorshipprogramComponent implements OnInit {
 
   };
 
+
+
   constructor(
 
     private route: ActivatedRoute,
@@ -45,13 +47,20 @@ export class AdmineditmentorshipprogramComponent implements OnInit {
 
     private router: Router
 
-  ) {}
+  ) { }
 
   ngOnInit(): void {
 
-    this.mentorshipId = this.route.snapshot.params['id'];
+    // this.mentorshipId = this.route.snapshot.params['id'];
+    this.route.params.subscribe((p) => {
+      this.mentorshipId = Number(p['id']);
 
-    this.loadMentorship();
+      if (this.mentorshipId) {
+        this.loadMentorship();
+      }
+    });
+
+   
 
   }
 
@@ -104,3 +113,10 @@ export class AdmineditmentorshipprogramComponent implements OnInit {
   }
 
 }
+
+
+
+
+
+
+
