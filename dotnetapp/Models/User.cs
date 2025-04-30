@@ -2,17 +2,18 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
-
+using System.Text.Json.Serialization;
 namespace dotnetapp.Models
 {
     public class User
     {
         [Key]
+        [JsonIgnore]
         public int UserId{get;set;}
 
         [Required(ErrorMessage="Email is required.")]
         [EmailAddress(ErrorMessage="Invalid Email Address Format.")]
-        [StringLength(32,ErrorMessage="Email Address cannot exceed 32 characters.")]
+       
         public string Email{get;set;}
 
         [Required(ErrorMessage="Password is required.")]
@@ -35,6 +36,7 @@ namespace dotnetapp.Models
         public string UserRole{get;set;}
 
         [StringLength(16,ErrorMessage="Secret Key cannot exceed 16 characters.")]
+        [JsonIgnore]
         public string? SecretKey{get;set;}
     }
 }
