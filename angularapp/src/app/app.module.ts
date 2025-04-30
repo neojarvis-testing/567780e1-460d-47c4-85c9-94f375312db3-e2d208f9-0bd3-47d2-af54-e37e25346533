@@ -7,59 +7,67 @@ import { AdmineditmentorshipprogramComponent } from './components/admineditmento
 import { AdminnavComponent } from './components/adminnav/adminnav.component';
 import { AdminviewfeedbackComponent } from './components/adminviewfeedback/adminviewfeedback.component';
 import { CreatementorshipprogramComponent } from './components/creatementorshipprogram/creatementorshipprogram.component';
-import { ErrorComponent } from './components/error/error.component';
+import { ViewmentorshipprogramComponent } from './components/viewmentorshipprogram/viewmentorshipprogram.component';
+import { AdmineditmentorshipprogramComponent } from './components/admineditmentorshipprogram/admineditmentorshipprogram.component';
+import { AdminnavComponent } from './components/adminnav/adminnav.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
 import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
-import { MentorshipapplicationformComponent } from './components/mentorshipapplicationform/mentorshipapplicationform.component';
-import { MentorshipapplicationlistComponent } from './components/mentorshipapplicationlist/mentorshipapplicationlist.component';
-import { NavbarComponent } from './components/navbar/navbar.component';
-import { RegistrationComponent } from './components/registration/registration.component';
-import { RequestedmentorshipapplicationComponent } from './components/requestedmentorshipapplication/requestedmentorshipapplication.component';
-import { UseraddfeedbackComponent } from './components/useraddfeedback/useraddfeedback.component';
-import { UsernavComponent } from './components/usernav/usernav.component';
-import { UserviewfeedbackComponent } from './components/userviewfeedback/userviewfeedback.component';
 
-import { ViewmentorshipprogramComponent } from './components/viewmentorshipprogram/viewmentorshipprogram.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';;
-import { HttpClientModule } from '@angular/common/http';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-// import { UserappliedmentorshipprogramComponent } from './components/userappliedmentorshipprogram/userappliedmentorshipprogram.component';
-// import { UserwishlistcomponentComponent } from './components/userwishlistcomponent/userwishlistcomponent.component';
-// import { AgGridModule } from 'ag-grid-angular';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RegistrationComponent } from './components/registration/registration.component';
+import { ErrorComponent } from './components/error/error.component';
+import { RegistrationComponent } from './components/registration/registration.component';
+import { ErrorComponent } from './components/error/error.component';
+import { AdmineditmentorshipprogramComponent } from './components/admineditmentorshipprogram/admineditmentorshipprogram.component';
+// import { ActivatedRoute } from '@angular/router';
 import { UserviewmentorshipprogramComponent } from './components/userviewmentorshipprogram/userviewmentorshipprogram.component';
+import { HttpClientModule } from '@angular/common/http';
+import { MentorshipapplicationlistComponent } from './components/mentorshipapplicationlist/mentorshipapplicationlist.component';
+import { UserappliedmentorshipapplicationComponent } from './components/userappliedmentorshipapplication/userappliedmentorshipapplication.component';
+
+
 
 
 @NgModule({
   declarations: [
     AppComponent,
+    CreatementorshipprogramComponent,
+    ViewmentorshipprogramComponent,
+    NavbarComponent,
+    HomeComponent,
+    RegistrationComponent,
+    ErrorComponent,
+    LoginComponent,
+    RegistrationComponent,
+    ErrorComponent,
+    UserviewmentorshipprogramComponent,
     AdmineditmentorshipprogramComponent,
     AdminnavComponent,
-    // AdminviewfeedbackComponent,
-    ErrorComponent,
-    HomeComponent,
-    LoginComponent,
-    MentorshipapplicationformComponent,
-    MentorshipapplicationlistComponent,
-    NavbarComponent,
-    RegistrationComponent,
-    RequestedmentorshipapplicationComponent,
     UseraddfeedbackComponent,
-    UsernavComponent,
-    UserviewfeedbackComponent,
-    // UserviewmentorshipprogramComponent,
-    ViewmentorshipprogramComponent,
-    CreatementorshipprogramComponent,
-    UserviewmentorshipprogramComponent
+    UserviewfeedbackComponent
+    LoginComponent,
+    AdmineditmentorshipprogramComponent,
+    AdminnavComponent,
+
+    UserviewmentorshipprogramComponent,
+    MentorshipapplicationlistComponent,
+    UserappliedmentorshipapplicationComponent
+
+
+
+
   ],
-  
   imports: [
     BrowserModule,
-    BrowserAnimationsModule,
-    AppRoutingModule, 
+    AppRoutingModule,
+    FormsModule,
+
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule
+
+
   ],
  
   providers: [],
