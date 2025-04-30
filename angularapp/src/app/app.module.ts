@@ -13,6 +13,9 @@ import { AdminnavComponent } from './components/adminnav/adminnav.component';
 import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { UserviewmentorshipprogramComponent } from './components/userviewmentorshipprogram/userviewmentorshipprogram.component';
+import { MentorshipapplicationlistComponent } from './components/mentorshipapplicationlist/mentorshipapplicationlist.component';
+import { UserappliedmentorshipapplicationComponent } from './components/userappliedmentorshipapplication/userappliedmentorshipapplication.component';
+
 
 
 
@@ -31,7 +34,10 @@ import { UserviewmentorshipprogramComponent } from './components/userviewmentors
     LoginComponent,
     AdmineditmentorshipprogramComponent,
     AdminnavComponent,
-    UserviewmentorshipprogramComponent
+    UserviewmentorshipprogramComponent,
+    MentorshipapplicationlistComponent,
+    UserappliedmentorshipapplicationComponent,
+    
 
   ],
   imports: [

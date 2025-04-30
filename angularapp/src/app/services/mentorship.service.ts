@@ -8,6 +8,9 @@ import { MentorshipApplication } from '../models/mentorshipapplication.model';
   providedIn: 'root'
 })
 export class MentorshipService {
+  // getMyApplications(userId: number){
+  //   throw new Error('Method not implemented.');
+  // }
 
   // Base URL for API endpoints related to mentorship programs and applications.
   public apiUrl = "https://8080-cdcacccccaadbcfceefbaaddebedfbddafee.premiumproject.examly.io";
