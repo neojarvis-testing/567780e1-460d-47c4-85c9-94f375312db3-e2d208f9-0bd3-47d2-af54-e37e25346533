@@ -7,6 +7,7 @@ namespace dotnetapp.Models
     public class Feedback
     {
         [Key]
+        [JsonIgnore]
         public int FeedbackId { get; set; }
 
         [Required(ErrorMessage = "User Id is required.")]
@@ -19,7 +20,7 @@ namespace dotnetapp.Models
 
         [Required(ErrorMessage = "Feedback DateTime is Required.")]
         [DataType(DataType.Date, ErrorMessage = "Invalid Date Format.")]
-        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
+        // [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime Date { get; set; }
 
         [JsonIgnore]
