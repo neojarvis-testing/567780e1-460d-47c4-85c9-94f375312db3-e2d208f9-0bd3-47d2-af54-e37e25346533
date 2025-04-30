@@ -14,12 +14,10 @@ import { ErrorComponent } from './components/error/error.component';
 
 import { AdmineditmentorshipprogramComponent } from './components/admineditmentorshipprogram/admineditmentorshipprogram.component';
 import { AdminnavComponent } from './components/adminnav/adminnav.component';
-import { ActivatedRoute } from '@angular/router';
+// import { ActivatedRoute } from '@angular/router';
 import { UserviewmentorshipprogramComponent } from './components/userviewmentorshipprogram/userviewmentorshipprogram.component';
-import { MentorshipapplicationformComponent } from './components/mentorshipapplicationform/mentorshipapplicationform.component';
 import { HttpClientModule } from '@angular/common/http';
-// import { MentorshipapplicationformComponent } from './components/mentorshipapplicationform/mentorshipapplicationform.component';
-// import { MentorshipapplicationformComponent } from './components/mentorshipapplicationform/mentorshipapplicationform.component';
+
 
 
 @NgModule({
@@ -37,18 +35,16 @@ import { HttpClientModule } from '@angular/common/http';
     LoginComponent,
     AdmineditmentorshipprogramComponent,
     AdminnavComponent,
-    UserviewmentorshipprogramComponent,
-    MentorshipapplicationformComponent
+    UserviewmentorshipprogramComponent
 
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    ReactiveFormsModule,
     HttpClientModule
-],
 
+  ],
   providers: [],
   bootstrap: [AppComponent]
 })

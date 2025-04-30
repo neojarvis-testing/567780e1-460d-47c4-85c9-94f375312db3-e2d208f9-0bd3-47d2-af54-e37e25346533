@@ -89,14 +89,76 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
-// Registers application services with dependency injection for scoped lifetime
-builder.Services.AddScoped<IAuthService, AuthService>();
-builder.Services.AddScoped<FeedbackService>();
-builder.Services.AddScoped<MentorshipApplicationService>();
-builder.Services.AddScoped<MentorshipProgramService>();
+// CORS for Angular
+builder.Services.AddCors(options =>
+{
+   
+        options.AddDefaultPolicy( builder =>
+        {
+            builder.AllowAnyOrigin()
+                   .AllowAnyMethod()
+                   .AllowAnyHeader();
+        });
+   
 
-// Add Log4Net logging
-builder.Logging.AddLog4Net("log4Net.config");
+});
+
+
+builder.Services.AddControllers();
+
+builder.Services.AddEndpointsApiExplorer();
+
+builder.Services.AddSwaggerGen(c =>
+
+{
+
+    // Add Authorization Header to Swagger
+
+    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+
+    {
+
+        Description = "Enter 'Bearer' [space] and your valid token",
+
+        Name = "Authorization",
+
+        In = ParameterLocation.Header,
+
+        Scheme = "Bearer",
+
+        Type = SecuritySchemeType.ApiKey
+
+    });
+
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement
+
+    {
+
+        {
+
+              new OpenApiSecurityScheme
+
+              {
+
+                  Reference = new OpenApiReference
+
+                  {
+
+                      Type = ReferenceType.SecurityScheme,
+
+                      Id = "Bearer"
+
+                  }
+
+              },
+
+             new string[] {}
+
+        }
+
+    });
+
+});
 
 var app = builder.Build();
 
@@ -107,7 +169,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+app.UseCors();
 
 // Enable authentication and authorization middleware
 app.UseAuthentication();
