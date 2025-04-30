@@ -21,12 +21,10 @@ import { UserappliedmentorshipapplicationComponent } from './components/userappl
 @NgModule({
   declarations: [
     AppComponent,
-  //  MentorshipapplicationformComponent
     CreatementorshipprogramComponent,
     ViewmentorshipprogramComponent,
     NavbarComponent,
     HomeComponent,
-    LoginComponent,
     RegistrationComponent,
     ErrorComponent,
     LoginComponent,
