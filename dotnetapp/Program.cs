@@ -79,20 +79,19 @@ builder.Services.AddAuthentication(options =>
 });
 
 // CORS for Angular
-
 builder.Services.AddCors(options =>
-
 {
-
-    options.AddPolicy("AllowAngularApp",
-
-        builder => builder.WithOrigins("http://localhost:8081")
-
-                          .AllowAnyHeader()
-
-                          .AllowAnyMethod());
+   
+        options.AddDefaultPolicy( builder =>
+        {
+            builder.AllowAnyOrigin()
+                   .AllowAnyMethod()
+                   .AllowAnyHeader();
+        });
+   
 
 });
+
 
 builder.Services.AddControllers();
 
@@ -164,7 +163,7 @@ if (app.Environment.IsDevelopment())
 
 }
 
-app.UseCors("AllowAngularApp");
+app.UseCors();
 
 app.UseAuthentication();
 

@@ -1,83 +1,76 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { User } from '../models/user.model';
 import { Login } from '../models/login.model';
-import { Observable, BehaviorSubject } from 'rxjs';
-
+import { tap } from 'rxjs/operators';
+ 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-
-  // Base URL for API endpoints.
-
-  private apiUrl = "https://8080-cdcacccccaadbcfceefbaaddebedfbddafee.premiumproject.examly.io";
-
-
-  // BehaviorSubject to hold the current user's role, defaulting to an empty string.
-  public currentUserRole = new BehaviorSubject<string>('');
-
-  // BehaviorSubject to hold the current user's ID, defaulting to 0.
-  public currentUserId = new BehaviorSubject<number>(0);
-
-  // Injecting HttpClient for making HTTP requests.
-  constructor(private http: HttpClient) { }
-
-  /**
-   * Registers a new user.
-   * Sends an HTTP POST request to the '/register' endpoint with the user details.
-   *  user - The user data to be sent in the request.
-   * returns An Observable of the server's response.
-   */
-  register(user: User): Observable<any> {
-    return this.http.post(`${this.apiUrl}/register`, user);
+  public baseUrl = "https://8080-cdcacccccaadbcfceefbaaddebedfbddafee.premiumproject.examly.io/api";
+  private currentUserSubject: BehaviorSubject<User | null>;
+  public currentUser: Observable<User | null>;
+ 
+  constructor(private http: HttpClient) {
+    const storedUser = localStorage.getItem('currentUser');
+    this.currentUserSubject = new BehaviorSubject<User | null>(
+      storedUser ? JSON.parse(storedUser) : null
+    );
+    this.currentUser = this.currentUserSubject.asObservable();
   }
-
-  /**
-   * Authenticates a user with login credentials.
-   * Sends an HTTP POST request to the '/login' endpoint with the login details.
-   * login - The login data (e.g., username and password).
-   * returns An Observable of the server's response.
-   */
-  login(login: Login): Observable<any> {
-    return this.http.post(`${this.apiUrl}/login`, login);
+ 
+  public get currentUserValue(): User | null {
+    return this.currentUserSubject.value;
   }
-
-  /**
-   * Updates the current user's role in the BehaviorSubject.
-   *  role - The role of the currently logged-in user.
-   */
-  setRole(role: string) {
-    this.currentUserRole.next(role);
+ 
+  register(newUser: User): Observable<User> {
+    return this.http.post<User>(`${this.baseUrl}/register`, newUser);
   }
-
-  /**
-   * Updates the current user's ID in the BehaviorSubject.
-   * id - The ID of the currently logged-in user.
-   */
-  setUserId(id: number) {
-    this.currentUserId.next(id);
+ 
+  login(loginData: Login): Observable<any> {
+    try {
+      return this.http.post<{ token: string; user: User }>(`${this.baseUrl}/login`, loginData).pipe(
+        tap(response => {
+          console.log('Login API response:', response);
+          const token = response.Token;
+          const user = response.User;
+          console.log('Storing token:', token);
+          console.log('Storing user:', user);      
+          if (token && user) {
+            localStorage.setItem('jwtToken', token);
+            localStorage.setItem('currentUser', JSON.stringify(user));
+            this.currentUserSubject.next(user);
+          }
+        })
+      );
+      
+    } catch (error) {
+        console.error();
+    }
   }
-
-  /**
-   * Logs out the current user.
-   * Removes token, role, and user ID from local storage.
-   * Resets the BehaviorSubjects to their initial values.
-   */
-  logout() {
-    localStorage.removeItem('token');
-    localStorage.removeItem('role');
-    localStorage.removeItem('userId');
-    this.currentUserRole.next('');
-    this.currentUserId.next(0);
-  }
-
-  /**
-   * Checks if a user is logged in.
-   * Determines this by checking the presence of a token in local storage.
-   * returns A boolean indicating whether the user is logged in.
-   */
+ 
   isLoggedIn(): boolean {
-    return !!localStorage.getItem('token');
+    return !!localStorage.getItem('jwtToken');
+  }
+ 
+  getUserRole(): string | null {
+    const user = this.currentUserValue;
+    return user ? user.UserRole : null;
+  }
+ 
+  isAdmin(): boolean {
+    return this.getUserRole() === 'Admin';
+  }
+ 
+  isUser(): boolean {
+    return this.getUserRole() === 'User';
+  }
+ 
+  logout(): void {
+    localStorage.removeItem('jwtToken');
+    localStorage.removeItem('currentUser');
+    this.currentUserSubject.next(null);
   }
 }

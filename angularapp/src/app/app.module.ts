@@ -10,13 +10,9 @@ import { RegistrationComponent } from './components/registration/registration.co
 import { ErrorComponent } from './components/error/error.component';
 import { AdmineditmentorshipprogramComponent } from './components/admineditmentorshipprogram/admineditmentorshipprogram.component';
 import { AdminnavComponent } from './components/adminnav/adminnav.component';
-import { FormsModule } from '@angular/forms';
-import { AppRoutingModule } from './app-routing.module';
+// import { ActivatedRoute } from '@angular/router';
 import { UserviewmentorshipprogramComponent } from './components/userviewmentorshipprogram/userviewmentorshipprogram.component';
-import { MentorshipapplicationlistComponent } from './components/mentorshipapplicationlist/mentorshipapplicationlist.component';
-import { UserappliedmentorshipapplicationComponent } from './components/userappliedmentorshipapplication/userappliedmentorshipapplication.component';
-
-
+import { HttpClientModule } from '@angular/common/http';
 
 
 
@@ -34,17 +30,14 @@ import { UserappliedmentorshipapplicationComponent } from './components/userappl
     LoginComponent,
     AdmineditmentorshipprogramComponent,
     AdminnavComponent,
-    UserviewmentorshipprogramComponent,
-    MentorshipapplicationlistComponent,
-    UserappliedmentorshipapplicationComponent,
-    
+    UserviewmentorshipprogramComponent
 
   ],
   imports: [
     BrowserModule,
+    AppRoutingModule,
     FormsModule,
-    AppRoutingModule
-    
+    HttpClientModule
 
   ],
   providers: [],
