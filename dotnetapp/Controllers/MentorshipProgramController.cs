@@ -23,7 +23,7 @@ namespace dotnetapp.Controllers
         }
  
         [HttpGet]
-        [Authorize]
+        [Authorize(Roles = "Admin, User")]
         public async Task<IActionResult> GetAll()
         {
             _logger.LogInformation("Fetching all mentorship programs.");
@@ -48,17 +48,32 @@ namespace dotnetapp.Controllers
             return Ok(program);
         }
  
+        // [HttpPost]
+        // [Authorize(Roles = "Admin")]
+        // public async Task<IActionResult> AddMentorshipProgram([FromBody] MentorshipProgram program)
+        // {
+        //     _logger.LogInformation("Admin attempting to add a mentorship program: {ProgramName}", program.ProgramName);
+ 
+        //     var result = await _service.AddMentorshipProgram(program);
+ 
+        //     _logger.LogInformation("Mentorship program added successfully: {ProgramName}", program.ProgramName);
+        //     return Ok(result);
+        // }
+
         [HttpPost]
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> AddMentorshipProgram([FromBody] MentorshipProgram program)
         {
+         if (!User.Identity.IsAuthenticated)
+            {
+             _logger.LogWarning("Unauthorized attempt to add mentorship program.");
+              return StatusCode(401, new { message = "Authentication required" });
+            }
+
             _logger.LogInformation("Admin attempting to add a mentorship program: {ProgramName}", program.ProgramName);
- 
             var result = await _service.AddMentorshipProgram(program);
- 
-            _logger.LogInformation("Mentorship program added successfully: {ProgramName}", program.ProgramName);
-            return Ok(result);
-        }
+             return Ok(result);
+}
  
         [HttpPut("{id}")]
         [Authorize(Roles = "Admin")]
@@ -70,7 +85,7 @@ namespace dotnetapp.Controllers
             if (result == null)
             {
                 _logger.LogWarning("Mentorship program with ID {ProgramId} not found.", id);
-                return NotFound(new { message = "Program not found" });
+                return StatusCode(404, new { message = "Program not found" });
             }
  
             _logger.LogInformation("Mentorship program updated successfully: {ProgramName}", program.ProgramName);
@@ -87,7 +102,7 @@ namespace dotnetapp.Controllers
             if (!deleted)
             {
                 _logger.LogWarning("Mentorship program with ID {ProgramId} not found.", id);
-                return NotFound(new { message = "Program not found" });
+                return StatusCode(404, new { message = "Program not found" });
             }
  
             _logger.LogInformation("Mentorship program deleted successfully with ID: {ProgramId}", id);

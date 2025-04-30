@@ -7,10 +7,12 @@ namespace dotnetapp.Models
     public class Feedback
     {
         [Key]
+        [JsonIgnore]
         public int FeedbackId { get; set; }
 
         [Required(ErrorMessage = "User Id is required.")]
         [ForeignKey("User")]
+        [JsonIgnore]
         public int UserId { get; set; }
 
         [Required(ErrorMessage = "Feedback Text is required.")]

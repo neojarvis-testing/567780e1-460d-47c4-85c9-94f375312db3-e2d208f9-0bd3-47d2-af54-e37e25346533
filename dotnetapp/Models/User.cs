@@ -12,7 +12,7 @@ namespace dotnetapp.Models
 
         [Required(ErrorMessage="Email is required.")]
         [EmailAddress(ErrorMessage="Invalid Email Address Format.")]
-        [StringLength(32,ErrorMessage="Email Address cannot exceed 32 characters.")]
+      //  [StringLength(32,ErrorMessage="Email Address cannot exceed 32 characters.")]
         public string Email{get;set;}
 
         [Required(ErrorMessage="Password is required.")]
