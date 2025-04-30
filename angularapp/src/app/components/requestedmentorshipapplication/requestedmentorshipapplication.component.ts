@@ -4,6 +4,8 @@ import { MentorshipService } from 'src/app/services/mentorship.service';
 
 import { MentorshipApplication } from 'src/app/models/mentorshipapplication.model';
 
+import { FormsModule } from '@angular/forms';
+
 @Component({
 
   selector: 'app-requestedmentorshipapplication',
@@ -38,15 +40,9 @@ export class RequestedmentorshipapplicationComponent implements OnInit {
 
         this.applications = res;
 
-        this.filteredApplications = res;
+        this.filteredApplications = this.applications;
 
       },
-
-      error: (err) => {
-
-        alert('Failed to load mentorship applications!');
-
-      }
 
     });
 
