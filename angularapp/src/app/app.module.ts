@@ -19,6 +19,7 @@ import { UserviewmentorshipprogramComponent } from './components/userviewmentors
 import { HttpClientModule } from '@angular/common/http';
 import { MentorshipapplicationlistComponent } from './components/mentorshipapplicationlist/mentorshipapplicationlist.component';
 import { UserappliedmentorshipapplicationComponent } from './components/userappliedmentorshipapplication/userappliedmentorshipapplication.component';
+import { RequestedmentorshipapplicationComponent } from './components/requestedmentorshipapplication/requestedmentorshipapplication.component';
 
 
 
@@ -39,7 +40,8 @@ import { UserappliedmentorshipapplicationComponent } from './components/userappl
     AdminnavComponent,
     UserviewmentorshipprogramComponent,
     MentorshipapplicationlistComponent,
-    UserappliedmentorshipapplicationComponent
+    UserappliedmentorshipapplicationComponent,
+    RequestedmentorshipapplicationComponent
 
   ],
   imports: [

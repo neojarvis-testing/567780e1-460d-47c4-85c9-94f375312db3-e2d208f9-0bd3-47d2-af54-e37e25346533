@@ -1,10 +1,10 @@
-<div class="requested-applications">
+<div ngForms="form" class="requested-applications">
 
     <h1>Mentorship Applications for Approval</h1>
   
-    <input type="text" placeholder="Search by Career Goals" [(ngModel)]="filteredApplications" (input)="search()" style="width:300px;">
+    <input type="text" placeholder="Search by Career Goals" [(ngModel)]="searchTerm" (input)="search()" style="width:300px;">
   
-    <select [(ngModel)]="statusFilter"(change)="search()">
+    <select [(ngModel)]="statusFilter" (change)="search()">
   
       <option value="">All Status</option>
   

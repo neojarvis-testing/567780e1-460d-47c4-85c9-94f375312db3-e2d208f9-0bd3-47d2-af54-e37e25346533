@@ -25,6 +25,8 @@ import { RequestedmentorshipapplicationComponent } from './components/requestedm
 import { AdminviewfeedbackComponent } from './components/adminviewfeedback/adminviewfeedback.component';
 import { UsernavComponent } from './components/usernav/usernav.component';
 import { UserviewmentorshipprogramComponent } from './components/userviewmentorshipprogram/userviewmentorshipprogram.component';
+import { UserappliedmentorshipapplicationComponent } from './components/userappliedmentorshipapplication/userappliedmentorshipapplication.component';
+import { MentorshipapplicationlistComponent } from './components/mentorshipapplicationlist/mentorshipapplicationlist.component';
 
 // import { AdminnavComponent } from './components/adminnav/adminnav.component';
 
@@ -64,9 +66,7 @@ const routes: Routes = [
 
   { path: 'register', component: RegistrationComponent },
 
-  // Admin Pages
-
-  { path: 'admin/home', component: AdminnavComponent, canActivate: [AuthGuard] },
+  { path: 'admin/home', component: AdminnavComponent, canActivate: [AuthGuard]},
 
   { path: 'admin/add-mentorship', component: CreatementorshipprogramComponent, canActivate: [AuthGuard] },
 
@@ -78,7 +78,7 @@ const routes: Routes = [
 
   { path: 'admin/feedbacks', component: AdminviewfeedbackComponent, canActivate: [AuthGuard] },
 
-  // { path: 'admin/mentorship-application-list', component: MentorshipapplicationlistComponent, canActivate: [AuthGuard] },
+  { path: 'admin/mentorship-application-list', component: MentorshipapplicationlistComponent, canActivate: [AuthGuard] },
 
   // User Pages
 
@@ -88,7 +88,7 @@ const routes: Routes = [
 
   // { path: 'user/apply-mentorship/:id', component: MentorshipapplicationformComponent, canActivate: [AuthGuard] },
 
-  // { path: 'user/applied-mentorships', component: UserappliedmentorshipapplicationComponent, canActivate: [AuthGuard] },
+  { path: 'user/applied-mentorships', component: UserappliedmentorshipapplicationComponent, canActivate: [AuthGuard] },
 
   // { path: 'user/post-feedback', component: UseraddfeedbackComponent, canActivate: [AuthGuard] },
 

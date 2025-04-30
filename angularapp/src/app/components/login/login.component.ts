@@ -31,10 +31,10 @@ export class LoginComponent implements OnInit {
           alert("Logged in");
           if (this.authService.isAdmin()) {
             console.log("navigating to admin");
-            this.router.navigate(['/admin']);
+            this.router.navigate(['/admin/home']);
           } else if (this.authService.isUser()) {
             console.log("navigating to user");
-            this.router.navigate(['/user']);
+            this.router.navigate(['/user/home']);
           }
         },
         error: err => {
