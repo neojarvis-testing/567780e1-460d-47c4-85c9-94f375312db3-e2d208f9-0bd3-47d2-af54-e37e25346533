@@ -1,152 +1,105 @@
-using dotnetapp.Models;
-using dotnetapp.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Logging.Log4Net.AspNetCore;
- 
- 
+using dotnetapp.Models;
+using dotnetapp.Services;
+using Microsoft.AspNetCore.Authorization;
+
 namespace dotnetapp.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/")]
     public class MentorshipApplicationController : ControllerBase
     {
         private readonly MentorshipApplicationService _mentorshipApplicationService;
-        private readonly ILogger<MentorshipApplicationController> _logger;
- 
-        // Constructor to inject MentorshipApplicationService and ILogger
-        public MentorshipApplicationController(MentorshipApplicationService mentorshipApplicationService, ILogger<MentorshipApplicationController> logger)
+        public MentorshipApplicationController(MentorshipApplicationService mentorshipApplicationService)
         {
             _mentorshipApplicationService = mentorshipApplicationService;
-            _logger = logger;
         }
- 
-        // GET: api/MentorshipApplication
-        [HttpGet]
+        
+        [HttpGet("mentorship-application")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<IEnumerable<MentorshipApplication>>> GetAllMentorshipApplications()
         {
-            _logger.LogInformation("Executing GetAllMentorshipApplications method.");
             try
             {
                 var applications = await _mentorshipApplicationService.GetAllMentorshipApplications();
-                _logger.LogInformation("Successfully retrieved mentorship applications.");
                 return Ok(applications);
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Error fetching mentorship applications: {ex.Message}");
-                return StatusCode(500, $"Internal server error: {ex.Message}");
+                return StatusCode(500, ex.Message);
             }
         }
- 
-        // GET: api/MentorshipApplication/{userId}
-        [HttpGet("user/{userId}")]
-        public async Task<ActionResult<IEnumerable<MentorshipApplication>>> GetMentorshipApplicationsByUserId(int userId)
+        
+        [HttpGet("mentorship-application/user/{userId}")]
+        [Authorize(Roles = "Admin,User")]
+        public async Task<ActionResult<IEnumerable<MentorshipApplication>>> GetMentorshipApplicationByUserId(int userId)
         {
-            _logger.LogInformation($"Fetching mentorship applications for user ID: {userId}");
             try
             {
                 var applications = await _mentorshipApplicationService.GetMentorshipApplicationsByUserId(userId);
-                if (applications == null)
+                if (applications == null || !applications.Any())
                 {
-                    _logger.LogWarning($"No mentorship applications found for user ID: {userId}");
-                    return NotFound($"Cannot find any mentorship applications for user with ID {userId}");
+                    return NotFound("Cannot find any mentorship application");
                 }
- 
-                _logger.LogInformation("Successfully retrieved mentorship applications.");
                 return Ok(applications);
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Error fetching mentorship applications: {ex.Message}");
-                return StatusCode(500, $"Internal server error: {ex.Message}");
+                return StatusCode(500, ex.Message);
             }
         }
- 
-        // POST: api/MentorshipApplication
-        [HttpPost]
+
+        [HttpPost("mentorship-application")]
+        [Authorize(Roles = "User")]
         public async Task<ActionResult> AddMentorshipApplication([FromBody] MentorshipApplication mentorshipApplication)
         {
-            _logger.LogInformation("Attempting to add mentorship application.");
             try
             {
-                if (mentorshipApplication == null)
-                {
-                    _logger.LogWarning("Received null mentorship application data.");
-                    return BadRequest("Mentorship application data is required.");
-                }
- 
                 var result = await _mentorshipApplicationService.AddMentorshipApplication(mentorshipApplication);
                 if (result)
-                {
-                    _logger.LogInformation("Mentorship application added successfully.");
                     return Ok("Mentorship application added successfully");
-                }
- 
-                _logger.LogWarning("Failed to add mentorship application.");
-                return StatusCode(500, "Failed to add mentorship application");
+                return BadRequest("Failed to add mentorship application");
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Error adding mentorship application: {ex.Message}");
-                return StatusCode(500, $"Internal server error: {ex.Message}");
+                return StatusCode(500, ex.Message);
             }
         }
- 
-        // PUT: api/MentorshipApplication/{id}
-        [HttpPut("{id}")]
+
+        [HttpPut("mentorship-application/{mentorshipApplicationId}")]
+        [Authorize(Roles = "Admin, User")]
         public async Task<ActionResult> UpdateMentorshipApplication(int mentorshipApplicationId, [FromBody] MentorshipApplication mentorshipApplication)
         {
-            _logger.LogInformation($"Attempting to update mentorship application ID: {mentorshipApplicationId}");
             try
             {
-                if (mentorshipApplication == null)
-                {
-                    _logger.LogWarning("Received null mentorship application data for update.");
-                    return BadRequest("Updated mentorship application data is required.");
-                }
- 
-                var result = await _mentorshipApplicationService.UpdateMentorshipApplication(mentorshipApplicationId, mentorshipApplication);
-                if (result)
-                {
-                    _logger.LogInformation("Mentorship application updated successfully.");
+                var updated = await _mentorshipApplicationService.UpdateMentorshipApplication(mentorshipApplicationId, mentorshipApplication);
+                if (updated)
                     return Ok("Mentorship application updated successfully");
-                }
- 
-                _logger.LogWarning($"No mentorship application found with ID {mentorshipApplicationId}");
-                return NotFound($"Cannot find any mentorship application with ID {mentorshipApplicationId}");
+                return NotFound("Cannot find any mentorship application");
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Error updating mentorship application: {ex.Message}");
-                return StatusCode(500, $"Internal server error: {ex.Message}");
+                return StatusCode(500, ex.Message);
             }
         }
- 
-        // DELETE: api/MentorshipApplication/{id}
-        [HttpDelete("{id}")]
+
+        [HttpDelete("mentorship-application/{mentorshipApplicationId}")]
+        [Authorize(Roles = "User")]
         public async Task<ActionResult> DeleteMentorshipApplication(int mentorshipApplicationId)
         {
-            _logger.LogInformation($"Attempting to delete mentorship application ID: {mentorshipApplicationId}");
             try
             {
-                var result = await _mentorshipApplicationService.DeleteMentorshipApplication(mentorshipApplicationId);
-                if (result)
-                {
-                    _logger.LogInformation("Mentorship application deleted successfully.");
+                var deleted = await _mentorshipApplicationService.DeleteMentorshipApplication(mentorshipApplicationId);
+                if (deleted)
                     return Ok("Mentorship application deleted successfully");
-                }
- 
-                _logger.LogWarning($"No mentorship application found with ID {mentorshipApplicationId}");
-                return NotFound($"Cannot find any mentorship application with ID {mentorshipApplicationId}");
+                return NotFound("Cannot find any mentorship application");
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Error deleting mentorship application: {ex.Message}");
-                return StatusCode(500, $"Internal server error: {ex.Message}");
+                return StatusCode(500, ex.Message);
             }
         }
     }

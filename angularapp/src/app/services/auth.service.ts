@@ -1,76 +1,86 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, BehaviorSubject } from 'rxjs';
 import { User } from '../models/user.model';
 import { Login } from '../models/login.model';
-import { tap } from 'rxjs/operators';
+
+import { Observable } from 'rxjs';
+
+import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
  
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  public baseUrl = "https://8080-cbaeecfcadbcfceefbaaddebedfbddafee.premiumproject.examly.io/api";
-  private currentUserSubject: BehaviorSubject<User | null>;
-  public currentUser: Observable<User | null>;
  
-  constructor(private http: HttpClient) {
-    const storedUser = localStorage.getItem('currentUser');
-    this.currentUserSubject = new BehaviorSubject<User | null>(
-      storedUser ? JSON.parse(storedUser) : null
-    );
-    this.currentUser = this.currentUserSubject.asObservable();
+  public apiUrl = "https://8080-cbaeecfcadbcfceefbaaddebedfbddafee.premiumproject.examly.io/";
+  
+  constructor(private http:HttpClient, private router:Router) { }
+ 
+  register(user:User):Observable<any>
+  {
+    return this.http.post<any>(`${this.apiUrl}api/register`,user);
   }
  
-  public get currentUserValue(): User | null {
-    return this.currentUserSubject.value;
+  login(login:Login):Observable<any>
+  {
+   
+    return this.http.post(`${this.apiUrl}api/login`,login);
   }
  
-  register(newUser: User): Observable<User> {
-    return this.http.post<User>(`${this.baseUrl}/register`, newUser);
+ 
+ 
+  getAllUsers(): Observable<User[]> {
+   return this.http.get<User[]>(`${this.apiUrl}api/users`);
+   }
+ 
+ 
+  isRole()
+  {
+    const token=localStorage.getItem("token").split('.');
+    let payload=JSON.parse(atob(token[1]));
+    localStorage.setItem('userRole',payload['http://schemas.microsoft.com/ws/2008/06/identity/claims/role']);
+    localStorage.setItem('userName',payload['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name']);
+    localStorage.setItem('userId',payload['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier']);
+  }
+  isRoles():string
+  {
+    const token=localStorage.getItem("token").split('.');
+    let payload=JSON.parse(atob(token[1]));
+    localStorage.setItem('userRole',payload['http://schemas.microsoft.com/ws/2008/06/identity/claims/role']);
+    localStorage.setItem('userName',payload['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name']);
+    localStorage.setItem('userId',payload['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier']);
+    return payload;
   }
  
-  login(loginData: Login): Observable<any> {
-    try {
-      return this.http.post<{ token: string; user: User }>(`${this.baseUrl}/login`, loginData).pipe(
-        tap(response => {
-          console.log('Login API response:', response);
-          const token = response.Token;
-          const user = response.User;
-          console.log('Storing token:', token);
-          console.log('Storing user:', user);      
-          if (token && user) {
-            localStorage.setItem('jwtToken', token);
-            localStorage.setItem('currentUser', JSON.stringify(user));
-            this.currentUserSubject.next(user);
-          }
-        })
-      );
-      
-    } catch (error) {
-        console.error();
+  isLoggedIn():boolean
+  {
+    if(localStorage.getItem('userRole')==="Admin" || localStorage.getItem('userRole')==="User")
+    {
+      return true;
     }
+    return false;
   }
  
-  isLoggedIn(): boolean {
-    return !!localStorage.getItem('jwtToken');
+  isAdmin():boolean
+  {
+    return localStorage.getItem('userRole')==="Admin";
   }
  
-  getUserRole(): string | null {
-    const user = this.currentUserValue;
-    return user ? user.UserRole : null;
+  isUser():boolean
+  {
+    return localStorage.getItem('userRole')==="User";
   }
  
-  isAdmin(): boolean {
-    return this.getUserRole() === 'Admin';
+  logout()
+  {
+   
+    localStorage.removeItem('userRole');
+    localStorage.removeItem('userName');
+    localStorage.removeItem('userId');
+    localStorage.removeItem('token');
   }
- 
-  isUser(): boolean {
-    return this.getUserRole() === 'User';
-  }
- 
-  logout(): void {
-    localStorage.removeItem('jwtToken');
-    localStorage.removeItem('currentUser');
-    this.currentUserSubject.next(null);
-  }
+
 }
+ 
+ 

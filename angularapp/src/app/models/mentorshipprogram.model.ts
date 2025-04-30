@@ -1,4 +1,5 @@
-export interface MentorshipProgram {
+export interface MentorshipProgram
+{
     MentorshipProgramId?: number;
     ProgramName: string;
     Description: string;
