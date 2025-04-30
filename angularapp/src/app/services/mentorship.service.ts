@@ -13,7 +13,7 @@ export class MentorshipService {
   // }
 
   // Base URL for API endpoints related to mentorship programs and applications.
-  public apiUrl = "https://8080-cdcacccccaadbcfceefbaaddebedfbddafee.premiumproject.examly.io";
+  public apiUrl = "https://8080-dfadabbbaceadbcfceefbaaddebedfbddafee.premiumproject.examly.io";
 
   // Injecting HttpClient for performing HTTP operations.
   constructor(private http: HttpClient) { }

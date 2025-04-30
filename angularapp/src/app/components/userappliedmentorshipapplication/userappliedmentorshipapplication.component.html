@@ -1,0 +1,23 @@
+<div>
+
+    <h2>Applied Mentorships</h2>
+  
+    <table border="1">
+  
+      <thead><tr><th>Program ID</th><th>Status</th></tr></thead>
+  
+      <tbody>
+  
+        <tr *ngFor="let app of applications">
+  
+          <td>{{ app.MentorshipProgramId }}</td>
+  
+          <td>{{ app.ApplicationStatus }}</td>
+  
+        </tr>
+  
+      </tbody>
+  
+    </table>
+  
+  </div>

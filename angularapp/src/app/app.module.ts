@@ -13,7 +13,9 @@ import { AdminnavComponent } from './components/adminnav/adminnav.component';
 // import { ActivatedRoute } from '@angular/router';
 import { UserviewmentorshipprogramComponent } from './components/userviewmentorshipprogram/userviewmentorshipprogram.component';
 import { HttpClientModule } from '@angular/common/http';
-
+import { FormsModule } from '@angular/forms';
+import { AppRoutingModule } from './app-routing.module';
+import { UserappliedmentorshipapplicationComponent } from './components/userappliedmentorshipapplication/userappliedmentorshipapplication.component';
 
 
 @NgModule({
@@ -30,7 +32,8 @@ import { HttpClientModule } from '@angular/common/http';
     LoginComponent,
     AdmineditmentorshipprogramComponent,
     AdminnavComponent,
-    UserviewmentorshipprogramComponent
+    UserviewmentorshipprogramComponent,
+    UserappliedmentorshipapplicationComponent
 
   ],
   imports: [
