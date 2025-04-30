@@ -1,57 +1,49 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
-import { Login } from '../../models/login.model';
+import { NgForm } from '@angular/forms';
+import { Login } from 'src/app/models/login.model';
 
-// The @Component decorator defines the component's metadata.
 @Component({
-  selector: 'app-login', // This is the HTML tag used to identify the component.
-  templateUrl: './login.component.html' // The associated HTML file for the component's view.
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.css']
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
+  email: string = '';
+  password: string = '';
 
-  // Defining the login model to capture user's email and password input.
-  loginModel: Login = { Email: '', Password: '' };
-
-  // Variable to store and display error messages.
-  errorMessage: string = '';
-
-  // Constructor initializes services like AuthService for authentication 
-  // and Router for navigation between routes.
   constructor(private authService: AuthService, private router: Router) { }
 
-  // Method that handles the login logic.
-  login() {
-    // Check if email and password fields are not empty.
-    if (!this.loginModel.Email || !this.loginModel.Password) {
-      this.errorMessage = 'All fields are required!'; // Display error message if any field is empty.
-      return; // Exit the function.
-    }
+  ngOnInit(): void {
+    this.authService.logout();
+  }
 
-    // Call the login method of AuthService with login details.
-    this.authService.login(this.loginModel).subscribe({
-      next: (response) => {
-        // Store the returned authentication details in the local storage.
-        localStorage.setItem('token', response.token);
-        localStorage.setItem('role', response.role);
-        localStorage.setItem('userId', response.userId);
-        localStorage.setItem('username', response.username);
+  login(form: NgForm): void {
+    const loginUser: Login = {
+      Email: this.email,
+      Password: this.password
+    };
 
-        // Update AuthService with role and userId to maintain state.
-        this.authService.setRole(response.role);
-        this.authService.setUserId(response.userId);
-
-        // Navigate to the appropriate page based on user role.
-        if (response.role === 'Admin') {
-          this.router.navigate(['/admin/home']); // Redirect Admin user to Admin home page.
-        } else if (response.role === 'User') {
-          this.router.navigate(['/user/home']); // Redirect general User to User home page.
+    if (loginUser.Email && loginUser.Password) {
+      this.authService.login(loginUser).subscribe({
+        next: user => {
+          alert("Logged in");
+          if (this.authService.isAdmin()) {
+            console.log("navigating to admin");
+            this.router.navigate(['/admin']);
+          } else if (this.authService.isUser()) {
+            console.log("navigating to user");
+            this.router.navigate(['/user']);
+          }
+        },
+        error: err => {
+          console.error('Login failed', err);
+          alert("Login failed. Please check your credentials and try again.");
         }
-      },
-      error: (err) => {
-        // Handle errors and display an appropriate error message.
-        this.errorMessage = err.error.message || 'Login failed!';
-      }
-    });
+      });
+    } else {
+      alert("Incorrect email or password");
+    }
   }
 }

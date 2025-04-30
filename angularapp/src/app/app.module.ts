@@ -13,9 +13,9 @@ import { RegistrationComponent } from './components/registration/registration.co
 import { ErrorComponent } from './components/error/error.component';
 import { AdmineditmentorshipprogramComponent } from './components/admineditmentorshipprogram/admineditmentorshipprogram.component';
 import { AdminnavComponent } from './components/adminnav/adminnav.component';
-import { ActivatedRoute } from '@angular/router';
+// import { ActivatedRoute } from '@angular/router';
 import { UserviewmentorshipprogramComponent } from './components/userviewmentorshipprogram/userviewmentorshipprogram.component';
-
+import { HttpClientModule } from '@angular/common/http';
 
 
 
@@ -31,14 +31,15 @@ import { UserviewmentorshipprogramComponent } from './components/userviewmentors
     ErrorComponent,
     LoginComponent,
     AdmineditmentorshipprogramComponent,
-    AdminnavComponent
+    AdminnavComponent,
     UserviewmentorshipprogramComponent
 
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule
 
   ],
   providers: [],
