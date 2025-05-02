@@ -1,0 +1,35 @@
+<div class="apply-mentorship-form">
+    <h2>Mentorship Application Form</h2>
+
+    <form #mentorshipForm="ngForm" (ngSubmit)="submit()" novalidate>
+
+        <div class="form-group">
+            <label for="reasonForApplying">Reason For Applying*</label>
+            <input type="text" id="reasonForApplying" [(ngModel)]="mentorshipApplication.ReasonForApplying" name="ReasonForApplying" required #reasonInput="ngModel">
+            <div class="error" *ngIf="reasonInput.invalid && reasonInput.touched">Reason for Applying is required.</div>
+        </div>
+
+        <div class="form-group">
+            <label for="careerGoals">Career Goals*</label>
+            <input type="text" id="careerGoals" [(ngModel)]="mentorshipApplication.CareerGoals" name="CareerGoals" required #careerInput="ngModel">
+            <div class="error" *ngIf="careerInput.invalid && careerInput.touched">Career Goals are required.</div>
+        </div>
+
+        <div class="form-group">
+            <label for="profileImage">Profile Image URL*</label>
+            <input type="url" id="profileImage" [(ngModel)]="mentorshipApplication.ProfileImage" name="ProfileImage" required #profileInput="ngModel">
+            <div class="error" *ngIf="profileInput.invalid && profileInput.touched">Please enter a valid URL.</div>
+        </div>
+
+        <div class="form-group">
+            <label for="portfolioLink">Portfolio Link (Optional)</label>
+            <input type="url" id="portfolioLink" [(ngModel)]="mentorshipApplication.PortfolioLink" name="PortfolioLink">
+        </div>
+
+        <div class="button-group">
+            <button type="submit" [disabled]="mentorshipForm.invalid">Submit</button>
+            <button type="button" (click)="back()">Back</button>
+        </div>
+
+     </form>
+</div> 

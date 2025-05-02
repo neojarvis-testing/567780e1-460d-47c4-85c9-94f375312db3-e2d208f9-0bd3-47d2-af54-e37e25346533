@@ -1,0 +1,112 @@
+   
+  /* Centering login form */
+  form {
+    max-width: 400px;
+    margin: 200px auto; /* Add space from the navbar */
+    padding: 30px; /* Add more padding for a clean look */
+    background: #fff; /* Change to solid white */
+    border-radius: 10px;
+    box-shadow: 0 10px 20px rgba(71, 178, 228, 0.3);
+    position: relative; /* Ensure it stays in the flow of the page */
+  }
+   
+  /* Form Header */
+  form h1 {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #333; /* Dark text for contrast with white background */
+  }
+   
+  /* Form Labels */
+  form label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #333; /* Dark text for better visibility */
+  }
+   
+  /* Form Inputs */
+  form input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #00c6ff;
+    border-radius: 5px;
+    background: #f9f9f9; /* Light background for inputs */
+    color: #333; /* Dark text for better visibility */
+    font-size: 1rem;
+  }
+   
+  form input:focus {
+    outline: none;
+    border-color: #00c6ff;
+    box-shadow: 0 0 10px rgba(0, 198, 255, 0.5);
+    background: #fff; /* Solid background on focus */
+  }
+   
+  /* Error Messages */
+  .error-message small {
+    color: #ff4d4d;
+    font-size: 0.875rem;
+  }
+   
+  /* Submit Button */
+  form button {
+    width: 100%;
+    padding: 10px 20px;
+    border: 2px solid #00c6ff;
+    color: #fff;
+    background: #00c6ff; /* Filled blue background */
+    cursor: pointer;
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: 1px;
+    border-radius: 25px;
+    transition: 0.3s ease;
+  }
+   
+  form button:disabled {
+    background: rgba(0, 198, 255, 0.3);
+    border-color: rgba(0, 198, 255, 0.3);
+    color: #fff;
+    cursor: not-allowed;
+  }
+   
+  form button:hover:enabled {
+    background: #008ecf;
+    border-color: #008ecf;
+  }
+   
+  /* Ensuring the form is centered vertically and horizontally */
+  body, html {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(to right, #0f2027, #203a43, #2c5364); /* Backup for video */
+    color: #fff;
+  }
+   
+  /* Responsive Design */
+  @media screen and (max-width: 768px) {
+    form {
+      padding: 15px;
+      margin: 80px auto; /* Adjust margin for smaller screens */
+    }
+   
+    form h1 {
+      font-size: 1.5rem;
+    }
+   
+    form input {
+      font-size: 0.9rem;
+    }
+   
+    form button {
+      font-size: 0.9rem;
+      padding: 8px 15px;
+    }
+  }

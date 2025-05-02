@@ -1,0 +1,38 @@
+
+<div>
+
+    <h2>All Mentorship Applications</h2>
+  
+    <input type="text" [(ngModel)]="searchTerm" placeholder="Search Career Goals"><br><br>
+  
+    <table border="1">
+  
+      <thead>
+  
+        <tr>
+  
+          <th>ID</th><th>User</th><th>Program</th><th>Status</th>
+  
+        </tr>
+  
+      </thead>
+  
+      <tbody>
+  
+        <tr *ngFor="let app of applications" [hidden]="!app.CareerGoals.toLowerCase().includes(searchTerm.toLowerCase())">
+  
+          <td>{{ app.MentorshipApplicationId }}</td>
+  
+          <td>{{ app.UserId }}</td>
+  
+          <td>{{ app.MentorshipProgramId }}</td>
+  
+          <td>{{ app.ApplicationStatus }}</td>
+  
+        </tr>
+  
+      </tbody>
+  
+    </table>
+  
+  </div>

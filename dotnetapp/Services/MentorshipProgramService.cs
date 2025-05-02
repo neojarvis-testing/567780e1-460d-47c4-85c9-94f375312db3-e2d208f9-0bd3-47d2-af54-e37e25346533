@@ -1,74 +1,64 @@
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using dotnetapp.Models;
-using dotnetapp.Data;
-using dotnetapp.Exceptions;
 
+using dotnetapp.Data;
+using dotnetapp.Models;
+using dotnetapp.Exceptions;
+using Microsoft.EntityFrameworkCore;
+ 
+ 
 namespace dotnetapp.Services
 {
     public class MentorshipProgramService
     {
         private readonly ApplicationDbContext _context;
-
+ 
+        // Constructor for dependency injection of ApplicationDbContext
         public MentorshipProgramService(ApplicationDbContext context)
         {
             _context = context;
         }
-
+ 
+        // 1. Retrieve all mentorship programs from the database
         public async Task<IEnumerable<MentorshipProgram>> GetAllMentorshipPrograms()
         {
             return await _context.MentorshipPrograms.ToListAsync();
         }
-
-        public async Task<MentorshipProgram?> GetMentorshipProgramById(int mentorshipProgramId)
+ 
+        // 2. Retrieve a mentorship program by its ID
+        public async Task<MentorshipProgram> GetMentorshipProgramById(int mentorshipProgramId)
         {
-            var program = await _context.MentorshipPrograms
-                .FirstOrDefaultAsync(mp => mp.MentorshipProgramId == mentorshipProgramId);
-
-            if (program == null)
-            {
-                throw new MentorshipProgramException("Cannot find any mentorship program.");
-            }
-
-            return program;
+            return await _context.MentorshipPrograms.FirstOrDefaultAsync(mentorprogram => mentorprogram.MentorshipProgramId == mentorshipProgramId);
         }
-
+ 
+        // 3. Add a new mentorship program to the database
         public async Task<bool> AddMentorshipProgram(MentorshipProgram mentorshipProgram)
         {
-            var existingProgram = await _context.MentorshipPrograms
-                .FirstOrDefaultAsync(mp => mp.ProgramName == mentorshipProgram.ProgramName);
-
+            var existingProgram = await _context.MentorshipPrograms.FirstOrDefaultAsync(mentorprogram => mentorprogram.ProgramName == mentorshipProgram.ProgramName);
             if (existingProgram != null)
             {
                 throw new MentorshipProgramException("Program with the same name already exists");
             }
-
+ 
             _context.MentorshipPrograms.Add(mentorshipProgram);
             await _context.SaveChangesAsync();
-
-            return true;
+            return true; // Return true for successful insertion
         }
-
+ 
+        // 4. Update an existing mentorship program
         public async Task<bool> UpdateMentorshipProgram(int mentorshipProgramId, MentorshipProgram mentorshipProgram)
         {
             var existingProgram = await _context.MentorshipPrograms
-                .FirstOrDefaultAsync(mp => mp.MentorshipProgramId == mentorshipProgramId);
-
+                                                 .FirstOrDefaultAsync(mentorprogram => mentorprogram.MentorshipProgramId == mentorshipProgramId);
             if (existingProgram == null)
             {
-                return false;
+                return false; // Return false if program doesn't exist
             }
-
-            var duplicateProgram = await _context.MentorshipPrograms
-                .FirstOrDefaultAsync(mp => mp.ProgramName == mentorshipProgram.ProgramName 
-                                           && mp.MentorshipProgramId != mentorshipProgramId);
-
-            if (duplicateProgram != null)
+ 
+            var existingProgramWithSameName = await _context.MentorshipPrograms.FirstOrDefaultAsync(mentorprogram => mentorprogram.ProgramName == mentorshipProgram.ProgramName);
+            if (existingProgramWithSameName != null)
             {
                 throw new MentorshipProgramException("Program with the same name already exists");
             }
-
+ 
             existingProgram.ProgramName = mentorshipProgram.ProgramName;
             existingProgram.Description = mentorshipProgram.Description;
             existingProgram.FieldOfMentorship = mentorshipProgram.FieldOfMentorship;
@@ -76,33 +66,32 @@ namespace dotnetapp.Services
             existingProgram.MentorName = mentorshipProgram.MentorName;
             existingProgram.ExperienceLevel = mentorshipProgram.ExperienceLevel;
             existingProgram.ModeOfMentorship = mentorshipProgram.ModeOfMentorship;
+ 
             await _context.SaveChangesAsync();
-
-            return true;
+            return true; // Return true for successful update
         }
-
+ 
+        // 5. Delete a mentorship program from the database
         public async Task<bool> DeleteMentorshipProgram(int mentorshipProgramId)
         {
-            var mentorshipProgram = await _context.MentorshipPrograms
-                .FirstOrDefaultAsync(mp => mp.MentorshipProgramId == mentorshipProgramId);
-
+            var mentorshipProgram = await _context.MentorshipPrograms.FirstOrDefaultAsync(mentorprogram => mentorprogram.MentorshipProgramId == mentorshipProgramId);
             if (mentorshipProgram == null)
             {
-                throw new MentorshipProgramException("Cannot find any mentorship program.");
+                return false; // Return false if program doesn't exist
             }
-
-            var isReferenced = await _context.MentorshipApplications
-                .AnyAsync(ma => ma.MentorshipProgramId == mentorshipProgramId);
-
-            if (isReferenced)
+ 
+            var mentorshipApplications = await _context.MentorshipApplications.FirstOrDefaultAsync(mentorapplication => mentorapplication.MentorshipProgramId == mentorshipProgramId);
+ 
+            if (mentorshipApplications != null)
             {
-                throw new MentorshipProgramException("Mentorship cannot be deleted, it is referenced in MentorshipApplication.");
+                throw new MentorshipProgramException("Mentorship cannot be deleted, it is referenced in mentorship applications.");
             }
-
+ 
             _context.MentorshipPrograms.Remove(mentorshipProgram);
             await _context.SaveChangesAsync();
-
-            return true;
+            return true; // Return true for successful delete
         }
     }
 }
+ 
+ 

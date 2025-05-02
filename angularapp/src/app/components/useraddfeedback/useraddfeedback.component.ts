@@ -20,7 +20,7 @@ export class UseraddfeedbackComponent {
 
   submit() {
 
-    this.service.sendFeedback(this.feedback).subscribe(() => {
+    this.service.getFeedbacks().subscribe(() => {
 
       alert('Feedback submitted');
 

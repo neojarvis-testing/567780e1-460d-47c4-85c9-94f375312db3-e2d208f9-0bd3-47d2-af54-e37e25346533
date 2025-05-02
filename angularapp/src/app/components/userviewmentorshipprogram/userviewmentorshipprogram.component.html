@@ -1,0 +1,63 @@
+<div class="user-view-mentorships">
+
+    <h1>Available Mentorship Programs</h1>
+  
+    <input type="text" placeholder="Search by Program Name" [(ngModel)]="searchTerm" style="width:300px;"><br><br>
+  
+    <table border="1" width="100%" *ngIf="programs.length > 0; else noData">
+  
+      <thead>
+  
+        <tr>
+  
+          <th>Program Name</th>
+  
+          <th>Mentor Name</th>
+  
+          <th>Field</th>
+  
+          <th>Duration</th>
+  
+          <th>Mode</th>
+  
+          <th>Action</th>
+  
+        </tr>
+  
+      </thead>
+  
+      <tbody>
+  
+        <tr *ngFor="let program of programs" [hidden]="!program.ProgramName.toLowerCase().includes(searchTerm.toLowerCase())">
+  
+          <td>{{ program.ProgramName }}</td>
+  
+          <td>{{ program.MentorName }}</td>
+  
+          <td>{{ program.FieldOfMentorship }}</td>
+  
+          <td>{{ program.DurationInMonths }} months</td>
+  
+          <td>{{ program.ModeOfMentorship }}</td>
+  
+          <td>
+  
+            <button (click)="applyProgram(program.MentorshipProgramId!)">Apply</button>
+  
+          </td>
+  
+        </tr>
+  
+      </tbody>
+  
+    </table>
+  
+    <ng-template #noData>
+  
+      <p>Oops! No records Found.</p>
+  
+    </ng-template>
+  
+  </div>
+  
+  

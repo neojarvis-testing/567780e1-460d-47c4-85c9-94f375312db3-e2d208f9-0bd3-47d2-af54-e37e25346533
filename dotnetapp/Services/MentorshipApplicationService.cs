@@ -1,89 +1,81 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using dotnetapp.Data; 
+using dotnetapp.Data;
 using dotnetapp.Models;
 using dotnetapp.Exceptions;
-
+using Microsoft.EntityFrameworkCore;
+using dotnetapp.Exceptions;
+ 
 namespace dotnetapp.Services
 {
     public class MentorshipApplicationService
     {
         private readonly ApplicationDbContext _context;
-
+ 
+        // Constructor to inject ApplicationDbContext
         public MentorshipApplicationService(ApplicationDbContext context)
         {
             _context = context;
         }
-
+ 
+        // 1. Retrieve all mentorship applications from the database
         public async Task<IEnumerable<MentorshipApplication>> GetAllMentorshipApplications()
         {
-            return await _context.MentorshipApplications
-                    .Include(ma => ma.User)
-                    .Include(ma => ma.MentorshipProgram)
-                    .ToListAsync();
+            return await _context.MentorshipApplications.ToListAsync();
         }
-        
+ 
+        // 2. Retrieve all mentorship applications for a specific user by userId
         public async Task<IEnumerable<MentorshipApplication>> GetMentorshipApplicationsByUserId(int userId)
         {
-            return await _context.MentorshipApplications
-                    .Where(ma => ma.UserId == userId)
-                    .Include(ma => ma.MentorshipProgram)
-                    .ToListAsync(); 
+            return await _context.MentorshipApplications.Where(mentorapplication => mentorapplication.UserId == userId).ToListAsync();
         }
-
+ 
+        // 3. Add a new mentorship application to the database
         public async Task<bool> AddMentorshipApplication(MentorshipApplication mentorshipApplication)
         {
-            bool alreadyApplied = await _context.MentorshipApplications.AnyAsync(ma => 
-                    ma.UserId == mentorshipApplication.UserId && (ma.MentorshipProgramId == mentorshipApplication.MentorshipProgramId));
-
-            if(alreadyApplied)
+            var existingApplication = await _context.MentorshipApplications
+                                                     .FirstOrDefaultAsync(mentorapplication => mentorapplication.UserId == mentorshipApplication.UserId && mentorapplication.MentorshipProgramId == mentorshipApplication.MentorshipProgramId);
+ 
+            if (existingApplication != null)
             {
                 throw new MentorshipProgramException("User already applied for this mentorship");
             }
-
-            mentorshipApplication.ApplicationDate = DateTime.UtcNow;
-
+ 
             _context.MentorshipApplications.Add(mentorshipApplication);
             await _context.SaveChangesAsync();
-            return true;
+            return true; // Return true for successful insertion
         }
-
-        public async Task<bool> UpdateMentorshipApplication(int MentorshipApplicationId, MentorshipApplication mentorshipApplication)
+ 
+        // 4. Update an existing mentorship application
+        public async Task<bool> UpdateMentorshipApplication(int mentorshipApplicationId, MentorshipApplication mentorshipApplication)
         {
-            var existing = await _context.MentorshipApplications.FindAsync(MentorshipApplicationId);
-
-            if(existing == null)
+            var existingApplication = await _context.MentorshipApplications.FirstOrDefaultAsync(mentorapplication => mentorapplication.MentorshipApplicationId == mentorshipApplicationId);
+            if (existingApplication == null)
             {
-                return false;
+                return false; // Return false if application doesn't exist
             }
-
-            existing.ApplicationStatus = mentorshipApplication.ApplicationStatus;
-            existing.ReasonForApplying = mentorshipApplication.ReasonForApplying;
-            existing.CareerGoals = mentorshipApplication.CareerGoals;
-            existing.ProfileImage = mentorshipApplication.ProfileImage;
-            existing.PortfolioLink = mentorshipApplication.PortfolioLink;
-
-            _context.MentorshipApplications.Update(existing);
+ 
+            existingApplication.ApplicationStatus = mentorshipApplication.ApplicationStatus;
+            existingApplication.ReasonForApplying = mentorshipApplication.ReasonForApplying;
+            existingApplication.CareerGoals = mentorshipApplication.CareerGoals;
+            existingApplication.ProfileImage = mentorshipApplication.ProfileImage;
+            existingApplication.PortfolioLink = mentorshipApplication.PortfolioLink;
+ 
             await _context.SaveChangesAsync();
-            return true;
-
+            return true; // Return true for successful update
         }
-
+ 
+        // 5. Delete a mentorship application from the database
         public async Task<bool> DeleteMentorshipApplication(int mentorshipApplicationId)
         {
-            var application = await _context.MentorshipApplications.FindAsync(mentorshipApplicationId);
-
-            if (application == null)
+            var mentorshipApplication = await _context.MentorshipApplications.FirstOrDefaultAsync(mentorapplication => mentorapplication.MentorshipApplicationId == mentorshipApplicationId);
+ 
+            if (mentorshipApplication == null)
             {
-                return false;
+                return false; // Return false if application doesn't exist
             }
-
-            _context.MentorshipApplications.Remove(application);
+ 
+            _context.MentorshipApplications.Remove(mentorshipApplication);
             await _context.SaveChangesAsync();
-            return true;        
+            return true; // Return true for successful delete
         }
     }
 }

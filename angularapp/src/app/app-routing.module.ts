@@ -1,6 +1,21 @@
 import { NgModule } from '@angular/core';
 
-import { RouterModule,Routes } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
+import { HomeComponent } from './components/home/home.component';
+import { AuthGuard } from './components/authguard/auth.guard';
+import { UsernavComponent } from './components/usernav/usernav.component';
+import { UserviewmentorshipprogramComponent } from './components/userviewmentorshipprogram/userviewmentorshipprogram.component';
+import { AdminviewfeedbackComponent } from './components/adminviewfeedback/adminviewfeedback.component';
+import { RequestedmentorshipapplicationComponent } from './components/requestedmentorshipapplication/requestedmentorshipapplication.component';
+import { AdmineditmentorshipprogramComponent } from './components/admineditmentorshipprogram/admineditmentorshipprogram.component';
+import { ViewmentorshipprogramComponent } from './components/viewmentorshipprogram/viewmentorshipprogram.component';
+import { AdminnavComponent } from './components/adminnav/adminnav.component';
+import { CreatementorshipprogramComponent } from './components/creatementorshipprogram/creatementorshipprogram.component';
+import { LoginComponent } from './components/login/login.component';
+import { RegistrationComponent } from './components/registration/registration.component';
+import { UserappliedmentorshipapplicationComponent } from './components/userappliedmentorshipapplication/userappliedmentorshipapplication.component';
+import { UseraddfeedbackComponent } from './components/useraddfeedback/useraddfeedback.component';
+import { UserviewfeedbackComponent } from './components/userviewfeedback/userviewfeedback.component';
 
 // Auth Guard
 
@@ -8,59 +23,103 @@ import { RouterModule,Routes } from '@angular/router';
 
 // Components
 
-import { HomeComponent } from './components/home/home.component';
-import { LoginComponent } from './components/login/login.component';
-import { RegistrationComponent } from './components/registration/registration.component';
-import { UserviewmentorshipprogramComponent } from './components/userviewmentorshipprogram/userviewmentorshipprogram.component';
-import { MentorshipapplicationformComponent } from './components/mentorshipapplicationform/mentorshipapplicationform.component';
-import { AdmineditmentorshipprogramComponent } from './components/admineditmentorshipprogram/admineditmentorshipprogram.component';
-import { CreatementorshipprogramComponent } from './components/creatementorshipprogram/creatementorshipprogram.component';
-import { AuthGuard } from './components/authguard/auth.guard';
-import { UseraddfeedbackComponent } from './components/useraddfeedback/useraddfeedback.component';
-import { UserviewfeedbackComponent } from './components/userviewfeedback/userviewfeedback.component';
-import { AdminviewfeedbackComponent } from './components/adminviewfeedback/adminviewfeedback.component';
-import { RequestedmentorshipapplicationComponent } from './components/requestedmentorshipapplication/requestedmentorshipapplication.component';
-import { ViewmentorshipprogramComponent } from './components/viewmentorshipprogram/viewmentorshipprogram.component';
-import { MentorshipapplicationlistComponent } from './components/mentorshipapplicationlist/mentorshipapplicationlist.component';
-// import { UserappliedmentorshipprogramComponent } from './components/userappliedmentorshipprogram/userappliedmentorshipprogram.component';
-// import { UserwishlistcomponentComponent } from './components/userwishlistcomponent/userwishlistcomponent.component';
-import { ErrorComponent } from './components/error/error.component';
-import { AdminnavComponent } from './components/adminnav/adminnav.component';
-import { UsernavComponent } from './components/usernav/usernav.component';
-// import { UserhomeComponent } from './components/userhome/userhome.component';
-// import { AdminhomeComponent } from './components/adminhome/adminhome.component';
+// import { HomeComponent } from './components/home/home.component';
 
+// import { LoginComponent } from './components/login/login.component';
+
+// import { RegistrationComponent } from './components/registration/registration.component';
+
+// import { ErrorComponent } from './components/error/error.component';
+// import { AdminnavComponent } from './components/adminnav/adminnav.component';
+// import { AuthGuard } from './components/authguard/auth.guard';
+// import { CreatementorshipprogramComponent } from './components/creatementorshipprogram/creatementorshipprogram.component';
+// import { ViewmentorshipprogramComponent } from './components/viewmentorshipprogram/viewmentorshipprogram.component';
+// import { AdmineditmentorshipprogramComponent } from './components/admineditmentorshipprogram/admineditmentorshipprogram.component';
+// import { RequestedmentorshipapplicationComponent } from './components/requestedmentorshipapplication/requestedmentorshipapplication.component';
+// import { AdminviewfeedbackComponent } from './components/adminviewfeedback/adminviewfeedback.component';
+// import { UsernavComponent } from './components/usernav/usernav.component';
+// import { UserviewmentorshipprogramComponent } from './components/userviewmentorshipprogram/userviewmentorshipprogram.component';
+
+// import { AdminnavComponent } from './components/adminnav/adminnav.component';
+
+// import { CreatementorshipprogramComponent } from './components/creatementorshipprogram/creatementorshipprogram.component';
+
+// import { ViewmentorshipprogramComponent } from './components/viewmentorshipprogram/viewmentorshipprogram.component';
+
+// import { AdmineditmentorshipprogramComponent } from './components/admineditmentorshipprogram/admineditmentorshipprogram.component';
+
+// import { RequestedmentorshipapplicationComponent } from './components/requestedmentorshipapplication/requestedmentorshipapplication.component';
+
+// import { AdminviewfeedbackComponent } from './components/adminviewfeedback/adminviewfeedback.component';
+
+// import { MentorshipapplicationlistComponent } from './components/mentorshipapplicationlist/mentorshipapplicationlist.component';
+
+// import { UsernavComponent } from './components/usernav/usernav.component';
+
+// import { UserviewmentorshipprogramComponent } from './components/userviewmentorshipprogram/userviewmentorshipprogram.component';
+
+// import { MentorshipapplicationformComponent } from './components/mentorshipapplicationform/mentorshipapplicationform.component';
+
+// import { UserappliedmentorshipapplicationComponent } from './components/userappliedmentorshipapplication/userappliedmentorshipapplication.component';
+
+// import { UseraddfeedbackComponent } from './components/useraddfeedback/useraddfeedback.component';
+
+// import { UserviewfeedbackComponent } from './components/userviewfeedback/userviewfeedback.component';
 
 const routes: Routes = [
- 
-  { path: '', component: HomeComponent },
+
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
+
+  // Public Pages
+
   { path: 'home', component: HomeComponent },
+
   { path: 'login', component: LoginComponent },
+
   { path: 'register', component: RegistrationComponent },
-  { path: 'admin', component: AdminnavComponent, canActivate: [AuthGuard], data: { roles: ['Admin'] }},
-  { path: 'user', component: UsernavComponent, canActivate: [AuthGuard], data: { roles: ['User'] }},
-  // { path: 'user/home', component: UserhomeComponent, canActivate: [AuthGuard], data: { roles: ['User'] }},
-  // { path: 'admin/home', component: AdminhomeComponent, canActivate: [AuthGuard], data: { roles: ['Admin'] }},
-  { path: 'user/addFeedback', component: UseraddfeedbackComponent, canActivate: [AuthGuard] },
-  // { path: 'user/appliedmentorshipapplication',component:UserappliedmentorshipprogramComponent, canActivate: [AuthGuard] },
-  { path: 'user/viewFeedback', component: UserviewfeedbackComponent, canActivate: [AuthGuard] },
-  { path: 'user/viewmentorshipprogram', component: UserviewmentorshipprogramComponent, canActivate: [AuthGuard] },
-  { path: 'admin/viewmentorshipprogram', component: ViewmentorshipprogramComponent, canActivate: [AuthGuard]  },
-  { path: 'user/viewmentorshipprogram/:id',component: UserviewmentorshipprogramComponent, canActivate: [AuthGuard]  },
-  { path: 'user/viewmentorshipprogram', component: UserviewmentorshipprogramComponent },
-  { path: 'user/mentorshipapplicationform/:id', component: MentorshipapplicationformComponent, canActivate: [AuthGuard] },
-  { path: 'admin/creatementorshipprogram',component:CreatementorshipprogramComponent,canActivate: [AuthGuard] },
-  { path: 'admin/editmentorshipprogram/:id',component: AdmineditmentorshipprogramComponent, canActivate: [AuthGuard]  },
-  { path: 'admin/viewFeedback', component: AdminviewfeedbackComponent },
-  { path: 'admin/mentorshipapplicationlist',component:MentorshipapplicationlistComponent, canActivate:[AuthGuard] },
-  { path: 'admin/requestedmentorshipapplication', component:RequestedmentorshipapplicationComponent, canActivate: [AuthGuard] },
-  // { path: 'user/wishlist', component: UserwishlistcomponentComponent  },
-  { path:'**', component:ErrorComponent }
+
+  // Admin Pages
+
+  { path: 'admin/home', component: AdminnavComponent, canActivate: [AuthGuard] },
+
+  { path: 'admin/add-mentorship', component: CreatementorshipprogramComponent, canActivate: [AuthGuard] },
+
+  { path: 'admin/view-mentorships', component: ViewmentorshipprogramComponent, canActivate: [AuthGuard] },
+
+  { path: 'admin/edit-mentorship/:id', component: AdmineditmentorshipprogramComponent, canActivate: [AuthGuard] },
+
+  { path: 'admin/requested-applications', component: RequestedmentorshipapplicationComponent, canActivate: [AuthGuard] },
+
+  { path: 'admin/feedbacks', component: AdminviewfeedbackComponent, canActivate: [AuthGuard] },
+
+  // { path: 'admin/mentorship-application-list', component: MentorshipapplicationlistComponent, canActivate: [AuthGuard] },
+
+  // User Pages
+
+  { path: 'user/home', component: UsernavComponent, canActivate: [AuthGuard] },
+
+  { path: 'user/viewmentorships', component: UserviewmentorshipprogramComponent, canActivate: [AuthGuard] },
+
+  // { path: 'user/apply-mentorship/:id', component: MentorshipapplicationformComponent, canActivate: [AuthGuard] },
+
+  { path: 'user/applied-mentorships', component: UserappliedmentorshipapplicationComponent, canActivate: [AuthGuard] },
+
+  { path: 'user/post-feedback', component: UseraddfeedbackComponent, canActivate: [AuthGuard] },
+
+  { path: 'user/view-feedbacks', component: UserviewfeedbackComponent, canActivate: [AuthGuard] },
+
+  // // Error Route
+
+  { path: '**', component: HomeComponent }
+
 ];
- 
+
 @NgModule({
+
   imports: [RouterModule.forRoot(routes)],
+
   exports: [RouterModule]
+
 })
+
 export class AppRoutingModule { }
- 
