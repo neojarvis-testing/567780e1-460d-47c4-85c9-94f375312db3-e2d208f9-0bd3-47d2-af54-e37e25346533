@@ -13,9 +13,11 @@ import { AdminnavComponent } from './components/adminnav/adminnav.component';
 // import { ActivatedRoute } from '@angular/router';
 import { UserviewmentorshipprogramComponent } from './components/userviewmentorshipprogram/userviewmentorshipprogram.component';
 import { HttpClientModule } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { UserappliedmentorshipapplicationComponent } from './components/userappliedmentorshipapplication/userappliedmentorshipapplication.component';
+import { RequestedmentorshipapplicationComponent } from './components/requestedmentorshipapplication/requestedmentorshipapplication.component';
+import { MentorshipapplicationlistComponent } from './components/mentorshipapplicationlist/mentorshipapplicationlist.component';
 
 
 @NgModule({
@@ -31,14 +33,18 @@ import { UserappliedmentorshipapplicationComponent } from './components/userappl
     AdmineditmentorshipprogramComponent,
     AdminnavComponent,
     UserviewmentorshipprogramComponent,
-    UserappliedmentorshipapplicationComponent
+    UserappliedmentorshipapplicationComponent,
+    RequestedmentorshipapplicationComponent,
+    MentorshipapplicationlistComponent
+   
 
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule
 
   ],
   providers: [],
