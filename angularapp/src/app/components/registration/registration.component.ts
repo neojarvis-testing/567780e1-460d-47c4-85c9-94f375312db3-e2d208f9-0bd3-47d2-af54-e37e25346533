@@ -3,59 +3,62 @@ import { Router } from '@angular/router';
 import { User } from '../../models/user.model';
 import { AuthService } from '../../services/auth.service';
 
-// The @Component decorator defines metadata about this RegistrationComponent.
 @Component({
-  selector: 'app-registration', // Specifies the HTML tag used to identify this component.
-  templateUrl: './registration.component.html' // Links the associated HTML template for the component's view.
+  selector: 'app-registration',
+  templateUrl: './registration.component.html',
+  styleUrls: ['./registration.component.css']
 })
 export class RegistrationComponent {
   
-  // User model to hold registration form data.
+  // User model to hold registration form data
   user: User = {
-    Email: '', // Email field initialized as an empty string.
-    Password: '', // Password field initialized as an empty string.
-    Username: '', // Username field initialized as an empty string.
-    MobileNumber: '', // Mobile Number field initialized as an empty string.
-    UserRole: '', // User role field initialized as an empty string.
-    SecretKey: '' // Secret Key field initialized as an empty string.
+    Email: '',
+    Password: '',
+    Username: '',
+    MobileNumber: '',
+    UserRole: '',
+    SecretKey: ''
   };
 
-  // Hardcoded secret key for Admin role verification. This should be replaced with dynamic value in a production setup.
-  secretKeyValue: string = 'Admin@123';
+  confirmPassword: string = ''; // Holds Confirm Password field value
+  secretKeyValue: string = 'Admin@123'; // Hardcoded Secret Key for Admin role
+  errorMessage: string = ''; // To show error messages
+  showSecretKeyField: boolean = false; // Boolean to toggle Secret Key field display for Admin
 
-  // Variable to store error messages, displayed in the UI when validation or registration fails.
-  errorMessage: string = '';
-
-  // Boolean to determine if the Secret Key field should be displayed.
-  showSecretKeyField: boolean = false;
-
-  // Constructor initializes required services like AuthService for authentication and Router for navigation.
   constructor(private authService: AuthService, private router: Router) {}
 
-  // Method triggered when the user role changes in the registration form.
+  // Called when the User Role field changes
   onRoleChange() {
-    // Show the Secret Key field only if the user selects the Admin role.
     this.showSecretKeyField = (this.user.UserRole === 'Admin');
   }
 
-  // Method to handle the registration process.
+  // Validates if Password and Confirm Password match
+  passwordMismatch(): boolean {
+    return this.user.Password !== this.confirmPassword;
+  }
+
+  // Method to handle form submission and registration
   register() {
-    // Validate the Secret Key for Admin registration.
+    // If the Admin role is selected, validate the Secret Key
     if (this.user.UserRole === 'Admin' && this.user.SecretKey !== this.secretKeyValue) {
-      // Show an error message if the Secret Key is invalid.
       this.errorMessage = 'Invalid Secret Key for Admin registration!';
-      return; // Exit the function without proceeding further.
+      return;
     }
 
-    // Call the register method of AuthService to register the user.
+    // Check for password mismatch
+    if (this.passwordMismatch()) {
+      this.errorMessage = 'Passwords do not match!';
+      return;
+    }
+
+    // Make API call to register the user
     this.authService.register(this.user).subscribe({
       next: (res) => {
-        // Show a success alert and navigate to the login page after successful registration.
         alert('Registered Successfully!');
         this.router.navigate(['/login']);
       },
       error: (err) => {
-        // Handle errors and display an appropriate error message.
+        console.error('Registration error:', err); // Debugging log for error
         this.errorMessage = err.error.message || 'Registration failed!';
       }
     });

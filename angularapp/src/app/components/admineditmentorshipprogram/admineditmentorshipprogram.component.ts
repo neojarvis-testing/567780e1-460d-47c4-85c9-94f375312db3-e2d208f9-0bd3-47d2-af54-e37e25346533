@@ -11,7 +11,7 @@ import { MentorshipProgram } from 'src/app/models/mentorshipprogram.model';
 
   selector: 'app-admineditmentorshipprogram',
 
-  templateUrl: './admineditmentorshipprogram.component.html'
+  templateUrl:'./admineditmentorshipprogram.component.html'
 
 })
 
