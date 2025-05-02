@@ -13,7 +13,8 @@ export class MentorshipService {
   // }
 
   // Base URL for API endpoints related to mentorship programs and applications.
-  public apiUrl = "https://8080-cbaeecfcadbcfceefbaaddebedfbddafee.premiumproject.examly.io";
+
+  public apiUrl = "https://8080-cdcacccccaadbcfceefbaaddebedfbddafee.premiumproject.examly.io/api";
 
   // Injecting HttpClient for performing HTTP operations.
   constructor(private http: HttpClient) { }
@@ -24,7 +25,7 @@ export class MentorshipService {
    * returns An object containing headers with an Authorization token.
    */
   private getHeaders() {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('jwtToken');
     return {
       headers: new HttpHeaders({
         'Authorization': `Bearer ${token}`

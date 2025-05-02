@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 
   selector: 'app-creatementorshipprogram',
 
+  styleUrls:['./creatementorshipprogram.component.css'],
   templateUrl: './creatementorshipprogram.component.html'
 
 })
@@ -45,7 +46,7 @@ export class CreatementorshipprogramComponent {
 
         alert('Successfully Added!');
 
-        this.router.navigate(['/admin/view-mentorships']);
+        this.router.navigate(['/view-mentorships']);
 
       },
 

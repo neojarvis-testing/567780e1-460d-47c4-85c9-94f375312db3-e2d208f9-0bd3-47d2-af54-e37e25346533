@@ -10,6 +10,8 @@ import { Router } from '@angular/router';
 
   selector: 'app-userviewmentorshipprogram',
 
+  styleUrls: ['./userviewmentorshipprogram.component.css'],
+
   templateUrl: './userviewmentorshipprogram.component.html'
 
 })
@@ -20,7 +22,7 @@ export class UserviewmentorshipprogramComponent implements OnInit {
 
   searchTerm: string = '';
 
-  constructor(private mentorshipService: MentorshipService, private router: Router) {}
+  constructor(private mentorshipService: MentorshipService, private router: Router) { }
 
   ngOnInit(): void {
 

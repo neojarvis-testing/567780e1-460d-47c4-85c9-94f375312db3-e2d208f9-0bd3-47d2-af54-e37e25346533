@@ -1,0 +1,56 @@
+.user-view-mentorships {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+  }
+  
+  .user-view-mentorships h1 {
+    color: #333;
+    text-align: center;
+  }
+  
+  .user-view-mentorships input[type="text"] {
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .user-view-mentorships table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+  
+  .user-view-mentorships th, .user-view-mentorships td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .user-view-mentorships th {
+    background-color: #f2f2f2;
+    color: #333;
+  }
+  
+  .user-view-mentorships tr:hover {
+    background-color: #f5f5f5;
+  }
+  
+  .user-view-mentorships button {
+    padding: 10px 15px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .user-view-mentorships button:hover {
+    background-color: #45a049;
+  }
+  
+  .user-view-mentorships .noData {
+    text-align: center;
+    color: #999;
+  }
+  

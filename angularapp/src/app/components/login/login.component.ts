@@ -13,7 +13,7 @@ export class LoginComponent implements OnInit {
   email: string = '';
   password: string = '';
 
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
     this.authService.logout();
@@ -28,7 +28,6 @@ export class LoginComponent implements OnInit {
     if (loginUser.Email && loginUser.Password) {
       this.authService.login(loginUser).subscribe({
         next: user => {
-          alert("Logged in");
           if (this.authService.isAdmin()) {
             console.log("navigating to admin");
             this.router.navigate(['/admin']);
@@ -43,7 +42,7 @@ export class LoginComponent implements OnInit {
         }
       });
     } else {
-      alert("Incorrect email or password");
+      return;
     }
   }
 }

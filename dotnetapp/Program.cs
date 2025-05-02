@@ -5,30 +5,36 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Models;
 using System.Text;
+using System.Buffers;
+using System.Data.SqlClient;
+using System.Linq;
+using System.Runtime.Intrinsics.X86;
+using System.Configuration;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container
+// Add services to the container.
 builder.Services.AddControllers()
-        .AddJsonOptions(opt =>
-        {
-            opt.JsonSerializerOptions.PropertyNamingPolicy = null;
+        .AddJsonOptions(opt=> {
+            opt.JsonSerializerOptions.PropertyNamingPolicy=null;
         });
 
 // Enables API documentation with Swagger
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
-    // Add Authorization Header to Swagger
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
+
+    // Enable Authorization in Swagger UI
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
-        Description = "Enter 'Bearer' [space] and your valid token",
         Name = "Authorization",
-        In = ParameterLocation.Header,
+        Type = SecuritySchemeType.Http,
         Scheme = "Bearer",
-        Type = SecuritySchemeType.ApiKey
+        In = ParameterLocation.Header,
+        Description = "Enter 'Bearer' [space] and then your token."
     });
 
     c.AddSecurityRequirement(new OpenApiSecurityRequirement
@@ -46,21 +52,18 @@ builder.Services.AddSwaggerGen(c =>
         }
     });
 });
-
 // Configures the database context with SQL Server using the connection string from appsettings.json
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("connectionString")));
 
-// Configure CORS (global policy)
-builder.Services.AddCors(options =>
-{
-    options.AddDefaultPolicy(builder =>
-    {
+builder.Services.AddCors(options=>{
+    options.AddDefaultPolicy(builder=>{
         builder.AllowAnyOrigin()
-               .AllowAnyHeader()
-               .AllowAnyMethod();
+        .AllowAnyHeader()
+        .AllowAnyMethod();
     });
 });
+
 
 // Configure Identity for authentication
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
@@ -89,88 +92,24 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
-// CORS for Angular
-builder.Services.AddCors(options =>
-{
-   
-        options.AddDefaultPolicy( builder =>
-        {
-            builder.AllowAnyOrigin()
-                   .AllowAnyMethod()
-                   .AllowAnyHeader();
-        });
-   
+// Registers application services with dependency injection for scoped lifetime
+builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<FeedbackService>();
+builder.Services.AddScoped<MentorshipApplicationService>();
+builder.Services.AddScoped<MentorshipProgramService>();
 
-});
-
-
-builder.Services.AddControllers();
-
-builder.Services.AddEndpointsApiExplorer();
-
-builder.Services.AddSwaggerGen(c =>
-
-{
-
-    // Add Authorization Header to Swagger
-
-    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-
-    {
-
-        Description = "Enter 'Bearer' [space] and your valid token",
-
-        Name = "Authorization",
-
-        In = ParameterLocation.Header,
-
-        Scheme = "Bearer",
-
-        Type = SecuritySchemeType.ApiKey
-
-    });
-
-    c.AddSecurityRequirement(new OpenApiSecurityRequirement
-
-    {
-
-        {
-
-              new OpenApiSecurityScheme
-
-              {
-
-                  Reference = new OpenApiReference
-
-                  {
-
-                      Type = ReferenceType.SecurityScheme,
-
-                      Id = "Bearer"
-
-                  }
-
-              },
-
-             new string[] {}
-
-        }
-
-    });
-
-});
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline
+// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
+app.UseHttpsRedirection();
 app.UseCors();
-
 // Enable authentication and authorization middleware
 app.UseAuthentication();
 app.UseAuthorization();
