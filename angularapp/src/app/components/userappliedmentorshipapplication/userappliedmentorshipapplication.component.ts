@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { MentorshipService } from 'src/app/services/mentorship.service';
+
+import { MentorshipService } from '../../services/mentorship.service';
 
 import { MentorshipApplication } from 'src/app/models/mentorshipapplication.model';
 import { MentorshipProgram } from 'src/app/models/mentorshipprogram.model';
@@ -19,7 +19,7 @@ export class UserappliedmentorshipapplicationComponent implements OnInit {
 
   userId: number = 0;
 
-  constructor(private service: MentorshipService ,private router:Router) {}
+  constructor(private service: MentorshipService) {}
 
   ngOnInit(): void {
 
