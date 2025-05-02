@@ -11,6 +11,8 @@ import { MentorshipProgram } from 'src/app/models/mentorshipprogram.model';
 
   selector: 'app-admineditmentorshipprogram',
 
+  styleUrls:['./admineditmentorshipprogram.component.css'],
+
   templateUrl:'./admineditmentorshipprogram.component.html'
 
 })
@@ -92,7 +94,7 @@ export class AdmineditmentorshipprogramComponent implements OnInit {
 
         alert('Updated successfully!');
 
-        this.router.navigate(['/admin/view-mentorships']);
+        this.router.navigate(['/view-mentorships']);
 
       },
 
@@ -108,7 +110,7 @@ export class AdmineditmentorshipprogramComponent implements OnInit {
 
   back() {
 
-    this.router.navigate(['/admin/view-mentorships']);
+    this.router.navigate(['/view-mentorships']);
 
   }
 

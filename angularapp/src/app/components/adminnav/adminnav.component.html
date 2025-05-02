@@ -1,15 +1,19 @@
+
 <nav>
     <h1>Admin Dashboard</h1>  
-    <a routerLink="/admin/home">Home</a> |  
-    <div style="display: inline-block;">  
+    <a routerLink="/home">Home</a> |  
+    <div class="indiv">  
       <span>Mentorship Program</span>  
       <ul>  
-        <li><a routerLink="/admin/add-mentorship">Add Mentorship Program</a></li>  
-        <li><a routerLink="/admin/view-mentorships">View Mentorship Programs</a></li>  
+        <li><a routerLink="/add-mentorship">Add Mentorship Program</a></li>  
+        <li><a routerLink="/view-mentorships">View Mentorship Programs</a></li>  
       </ul>  
     </div>   
-    <a routerLink="/admin/requested-applications">Mentorship Applications</a> |  
-    <a routerLink="/admin/feedbacks">Feedbacks</a> |  
+    <a routerLink="/requested-applications">Mentorship Applications</a> |  
+    <a routerLink="/feedbacks">Feedbacks</a> |  
     <a (click)="logout()" style="cursor:pointer;">Logout</a>  
-  </nav>  
+ </nav>  
 <hr>
+</div>
+
+<app-home></app-home>

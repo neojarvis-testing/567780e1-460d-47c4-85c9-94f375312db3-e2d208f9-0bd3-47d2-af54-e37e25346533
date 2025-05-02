@@ -4,11 +4,12 @@
 
   <!-- Header displaying the title of the application -->
 
-  <div *ngIf="!authService.isLoggedIn()">
+  <div>
       <!-- This section is conditionally displayed using Angular's *ngIf directive.
            It will only show if the user is not logged in (authService.isLoggedIn() returns false). -->
 
       <a routerLink="/register">Register</a>
+
       <!-- Link to the registration page using Angular's routerLink for navigation -->
 
       <a routerLink="/login">Login</a>
