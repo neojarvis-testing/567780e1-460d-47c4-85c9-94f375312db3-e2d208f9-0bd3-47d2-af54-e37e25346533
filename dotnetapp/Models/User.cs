@@ -8,7 +8,7 @@ namespace dotnetapp.Models
     public class User
     {
         [Key]
-        [JsonIgnore]
+      
         public int UserId{get;set;}
 
         [Required(ErrorMessage="Email is required.")]

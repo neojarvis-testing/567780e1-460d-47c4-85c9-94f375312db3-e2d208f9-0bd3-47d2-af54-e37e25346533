@@ -9,7 +9,7 @@ import { tap } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class AuthService {
-  public baseUrl = "https://8080-cdcacccccaadbcfceefbaaddebedfbddafee.premiumproject.examly.io/api";
+  public baseUrl = 'https://8080-cdcacccccaadbcfceefbaaddebedfbddafee.premiumproject.examly.io/api';
   private currentUserSubject: BehaviorSubject<User | null>;
   public currentUser: Observable<User | null>;
  
@@ -30,25 +30,20 @@ export class AuthService {
   }
  
   login(loginData: Login): Observable<any> {
-    try {
-      return this.http.post<{ token: string; user: User }>(`${this.baseUrl}/login`, loginData).pipe(
-        tap(response => {
-          console.log('Login API response:', response);
-          const token = response.Token;
-          const user = response.User;
-          console.log('Storing token:', token);
-          console.log('Storing user:', user);      
-          if (token && user) {
-            localStorage.setItem('jwtToken', token);
-            localStorage.setItem('currentUser', JSON.stringify(user));
-            this.currentUserSubject.next(user);
-          }
-        })
-      );
-      
-    } catch (error) {
-        console.error();
-    }
+    return this.http.post<{ token: string; user: User }>(`${this.baseUrl}/login`, loginData).pipe(
+      tap(response => {
+        console.log('Login API response:', response);
+        const token = response.Token;
+        const user = response.User;
+        console.log('Storing token:', token);
+        console.log('Storing user:', user);      
+        if (token && user) {
+          localStorage.setItem('jwtToken', token);
+          localStorage.setItem('currentUser', JSON.stringify(user));
+          this.currentUserSubject.next(user);
+        }
+      })
+    );
   }
  
   isLoggedIn(): boolean {

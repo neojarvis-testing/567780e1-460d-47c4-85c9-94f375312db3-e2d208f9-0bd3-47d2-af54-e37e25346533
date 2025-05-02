@@ -7,7 +7,7 @@ namespace dotnetapp.Models
     public class Feedback
     {
         [Key]
-        [JsonIgnore]
+    
         public int FeedbackId { get; set; }
 
         [Required(ErrorMessage = "User Id is required.")]

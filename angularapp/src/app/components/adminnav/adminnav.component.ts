@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-adminnav',
+  styleUrls:['./adminnav.component.css'],
   templateUrl: './adminnav.component.html'
 })
 export class AdminnavComponent {
