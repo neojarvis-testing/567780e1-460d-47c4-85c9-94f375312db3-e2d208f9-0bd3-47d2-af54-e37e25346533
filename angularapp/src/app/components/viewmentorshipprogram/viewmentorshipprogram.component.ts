@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 @Component({
 
   selector: 'app-viewmentorshipprogram',
+  styleUrls: ['./viewmentorshipprogram.component.css'],
 
   templateUrl: './viewmentorshipprogram.component.html'
 
@@ -25,7 +26,7 @@ export class ViewmentorshipprogramComponent implements OnInit {
 
   searchTerm: string = '';
 
-  constructor(private mentorshipService: MentorshipService, private router: Router) {}
+  constructor(private mentorshipService: MentorshipService, private router: Router) { }
 
   ngOnInit(): void {
 
@@ -71,7 +72,7 @@ export class ViewmentorshipprogramComponent implements OnInit {
 
   editProgram(id: number) {
 
-    this.router.navigate(['/admin/edit-mentorship', id]);
+    this.router.navigate(['/edit-mentorship', id]);
 
   }
 

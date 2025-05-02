@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.EntityFrameworkCore;
- 
+
 namespace dotnetapp.Services
 {
     public class AuthService : IAuthService
@@ -19,7 +19,7 @@ namespace dotnetapp.Services
         private readonly RoleManager<IdentityRole> roleManager;
         private readonly IConfiguration _configuration;
         private readonly ApplicationDbContext _context;
- 
+
         public AuthService(UserManager<ApplicationUser> userManager,
             RoleManager<IdentityRole> roleManager,
             IConfiguration configuration,
@@ -30,29 +30,29 @@ namespace dotnetapp.Services
             _configuration = configuration;
             _context = context;
         }
- 
+
         public async Task<(int, string)> Registration(User model, string role)
         {
             var userExists = await _context.Users.FirstOrDefaultAsync(u => u.Email == model.Email);
             if (userExists != null)
                 return (0, "User already exists");
- 
+
             var appUser = new ApplicationUser
             {
                 Email = model.Email,
                 UserName = model.Email,
                 Name = model.Username.Length > 30 ? model.Username.Substring(0, 30) : model.Username // Store current user's name
             };
- 
+
             var identityResult = await userManager.CreateAsync(appUser, model.Password);
             if (!identityResult.Succeeded)
                 return (0, "User creation failed! Please check user details and try again");
- 
+
             if (!await roleManager.RoleExistsAsync(role))
                 await roleManager.CreateAsync(new IdentityRole(role));
- 
+
             await userManager.AddToRoleAsync(appUser, role);
- 
+
             var newUser = new User
             {
                 Email = model.Email,
@@ -63,39 +63,39 @@ namespace dotnetapp.Services
             };
             _context.Users.Add(newUser);
             await _context.SaveChangesAsync();
- 
+
             return (1, "User created successfully!");
         }
- 
+
         public async Task<(int, string)> Login(LoginModel model)
         {
             var user = await userManager.FindByEmailAsync(model.Email);
             if (user == null)
                 return (0, "Invalid email");
- 
+
             if (!await userManager.CheckPasswordAsync(user, model.Password))
                 return (0, "Invalid password");
- 
+
             var userRoles = await userManager.GetRolesAsync(user);
             var authClaims = new List<Claim>
             {
                 new Claim(ClaimTypes.Name, user.Name), // Store authenticated user's name
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
             };
- 
+
             foreach (var userRole in userRoles)
             {
                 authClaims.Add(new Claim(ClaimTypes.Role, userRole));
             }
- 
+
             var token = GenerateToken(authClaims);
             return (1, token);
         }
- 
+
         private string GenerateToken(IEnumerable<Claim> claims)
         {
             var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"]));
- 
+
             var token = new JwtSecurityToken(
                 issuer: _configuration["JWT:ValidIssuer"],
                 audience: _configuration["JWT:ValidAudience"],
@@ -103,7 +103,7 @@ namespace dotnetapp.Services
                 claims: claims,
                 signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
             );
- 
+
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
     }
