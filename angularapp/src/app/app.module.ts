@@ -8,17 +8,23 @@ import { ViewmentorshipprogramComponent } from './components/viewmentorshipprogr
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
-
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RegistrationComponent } from './components/registration/registration.component';
+import { ErrorComponent } from './components/error/error.component';
 import { RegistrationComponent } from './components/registration/registration.component';
 import { ErrorComponent } from './components/error/error.component';
 import { UserviewmentorshipprogramComponent } from './components/userviewmentorshipprogram/userviewmentorshipprogram.component';
-import { FormsModule } from '@angular/forms';
 import { UseraddfeedbackComponent } from './components/useraddfeedback/useraddfeedback.component';
 import { UserviewfeedbackComponent } from './components/userviewfeedback/userviewfeedback.component';
 import { AdmineditmentorshipprogramComponent } from './components/admineditmentorshipprogram/admineditmentorshipprogram.component';
 import { AdminnavComponent } from './components/adminnav/adminnav.component';
-import { HttpClientModule } from '@angular/common/http';
 import { RequestedmentorshipapplicationComponent } from './components/requestedmentorshipapplication/requestedmentorshipapplication.component';
+import { AdmineditmentorshipprogramComponent } from './components/admineditmentorshipprogram/admineditmentorshipprogram.component';
+// import { ActivatedRoute } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
+import { MentorshipapplicationlistComponent } from './components/mentorshipapplicationlist/mentorshipapplicationlist.component';
+import { UserappliedmentorshipapplicationComponent } from './components/userappliedmentorshipapplication/userappliedmentorshipapplication.component';
+
 
 
 
@@ -29,6 +35,8 @@ import { RequestedmentorshipapplicationComponent } from './components/requestedm
     ViewmentorshipprogramComponent,
     NavbarComponent,
     HomeComponent,
+    RegistrationComponent,
+    ErrorComponent,
     LoginComponent,
     RegistrationComponent,
     ErrorComponent,
@@ -36,9 +44,11 @@ import { RequestedmentorshipapplicationComponent } from './components/requestedm
     AdmineditmentorshipprogramComponent,
     AdminnavComponent,
     UseraddfeedbackComponent,
+    RequestedmentorshipapplicationComponent,
     UserviewfeedbackComponent,
-    LoginComponent,
-    RequestedmentorshipapplicationComponent
+    MentorshipapplicationlistComponent,
+    UserappliedmentorshipapplicationComponent
+
 
   ],
 
@@ -46,7 +56,9 @@ import { RequestedmentorshipapplicationComponent } from './components/requestedm
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule
+
   ],
   providers: [],
   bootstrap: [AppComponent]

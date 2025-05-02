@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { MentorshipService } from 'src/app/services/mentorship.service';
 import { MentorshipApplication } from 'src/app/models/mentorshipapplication.model';
 
+import { FormsModule } from '@angular/forms';
+
 @Component({
   selector: 'app-requestedmentorshipapplication',
   styleUrls: ['./requestedmentorshipapplication.component.css'],
@@ -23,11 +25,15 @@ export class RequestedmentorshipapplicationComponent implements OnInit {
     this.mentorshipService.getAllMentorshipApplications().subscribe({
       next: (res) => {
         this.applications = res;
+
         this.filteredApplications = res;
       },
       error: (err) => {
         alert('Failed to load mentorship applications!');
       }
+        this.filteredApplications = this.applications;
+
+      },
     });
   }
 

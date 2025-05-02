@@ -12,6 +12,7 @@ namespace dotnetapp.Models
 
         [Required(ErrorMessage = "User Id is required.")]
         [ForeignKey("User")]
+        [JsonIgnore]
         public int UserId { get; set; }
 
         [Required(ErrorMessage = "Feedback Text is required.")]
