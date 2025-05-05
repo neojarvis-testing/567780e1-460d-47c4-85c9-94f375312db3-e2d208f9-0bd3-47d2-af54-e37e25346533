@@ -1,30 +1,36 @@
-<div class="admin-feedback">
-
-  <h1>Feedback Details</h1>
-
-  <table border="1" width="100%" *ngIf="feedbacks.length > 0; else noData">
-
-    <thead>
-      <tr>
-        <th>User ID</th>
-        <th>Feedback</th>
-        <th>Date</th>
-      </tr>
-    </thead>
-
-    <tbody>
-      <tr *ngFor="let feedback of feedbacks">
-        <td>{{ feedback.UserId }}</td>
-        <td>{{ feedback.FeedbackText }}</td>
-        <td>{{ feedback.Date | date: 'medium' }}</td>
-      </tr>
-    </tbody>
-
-  </table>
-
-  <ng-template #noData>
-    <p>No data found</p>
-  </ng-template>
-
+<app-adminnav></app-adminnav>
+ 
+<div class="container">
+  <h1 class="text-center form-title mb-4">Feedback Details</h1>
+ 
+  <div *ngIf="feedbacks.length === 0" class="alert alert-warning text-center no-data">
+    No feedback data available
+  </div>
+ 
+  <div *ngIf="feedbacks.length > 0">
+    <div class="table-responsive">
+      <table class="table table-bordered table-hover feedback-table">
+        <thead>
+          <tr>
+            <th>Sr No</th>
+            <th>Username</th>
+            <th>Feedback</th>
+            <th>Date</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let feedback of feedbacks; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>{{ getUserDetails(feedback.UserId)?.Username || 'N/A' }}</td>
+            <td>{{ feedback.FeedbackText }}</td>
+            <td>{{ feedback.Date | date: 'yyyy-MM-dd' }}</td>
+            <td>
+              <button class="btn btn-outline-primary btn-sm btn-action" (click)="showProfile(feedback)">Show Profile</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>
-`

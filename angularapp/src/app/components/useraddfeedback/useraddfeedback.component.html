@@ -1,13 +1,19 @@
-<div>
+<app-usernav></app-usernav>
 
-    <h2>Add Feedback</h2>
-  
-    <form (ngSubmit)="submit()">
-  
-      <textarea [(ngModel)]="feedback.FeedbackText" name="feedback" rows="5" cols="40" required></textarea><br><br>
-  
-      <button type="submit">Submit</button>
-  
+<div class="container">
+  <div class="feedback-box">
+    <h3 class="feedback-title">Add Feedback</h3>
+    <form>
+      <label class="feedback-label">You can write your feedback here:<span class="required">*</span></label><br>
+      <textarea 
+        class="feedback-textarea" 
+        placeholder="Feedback" 
+        name="feedback" 
+        [(ngModel)]="feedback.FeedbackText">
+      </textarea><br>
+      <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+      <button type="button" class="btn-submit" (click)="addFeedback()">Submit</button>
     </form>
-  
   </div>
+</div>
+

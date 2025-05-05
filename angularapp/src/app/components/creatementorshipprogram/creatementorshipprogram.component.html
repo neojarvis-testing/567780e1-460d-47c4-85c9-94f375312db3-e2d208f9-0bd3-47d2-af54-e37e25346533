@@ -1,42 +1,73 @@
+<app-adminnav></app-adminnav>
 
-<div class="create-mentorship">
-
-    <h1>Create New Mentorship Program</h1>
-  
-    <form (ngSubmit)="submit()">
-  
-      <label>Program Name*</label><br>
-  
-      <input type="text" [(ngModel)]="mentorship.ProgramName" name="ProgramName" required><br><br>
-  
-      <label>Description*</label><br>
-  
-      <input type="text" [(ngModel)]="mentorship.Description" name="Description" required><br><br>
-  
-      <label>Field Of Mentorship*</label><br>
-  
-      <input type="text" [(ngModel)]="mentorship.FieldOfMentorship" name="FieldOfMentorship" required><br><br>
-  
-      <label>Duration (in Months)*</label><br>
-  
-      <input type="number" [(ngModel)]="mentorship.DurationInMonths" name="DurationInMonths" required><br><br>
-  
-      <label>Mentor Name*</label><br>
-  
-      <input type="text" [(ngModel)]="mentorship.MentorName" name="MentorName" required><br><br>
-  
-      <label>Experience Level*</label><br>
-  
-      <input type="text" [(ngModel)]="mentorship.ExperienceLevel" name="ExperienceLevel" required><br><br>
-  
-      <label>Mode Of Mentorship*</label><br>
-  
-      <input type="text" [(ngModel)]="mentorship.ModeOfMentorship" name="ModeOfMentorship" required><br><br>
-  
-      <button type="submit">Submit</button>
-  
-    </form>
-  
+<div class="container">
+  <div class="left-side">
+    <h2>Create<br>New<br>Mentorship<br>Program</h2>
   </div>
-  
-  
+  <div class="right-side">
+    <div class="registration-popup">
+      <form #form="ngForm" (ngSubmit)="onSubmit(form)">
+        <div class="form-group">
+          <label>Program Name</label>
+          <input name="programName" ngModel class="form-control" required #programName="ngModel" />
+          <div class="error-message" *ngIf="programName.errors?.required && (programName.touched || programName.dirty)">
+            <p class="text-danger">*Program Name is required</p>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Description</label>
+          <input name="description" ngModel class="form-control" required #description="ngModel" />
+          <div class="error-message" *ngIf="description.errors?.required && (description.touched || description.dirty)">
+            <p class="text-danger">*Description is required</p>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Field of Mentorship</label>
+          <input name="fieldOfMentorship" ngModel class="form-control" required #fieldOfMentorship="ngModel" />
+          <div class="error-message" *ngIf="fieldOfMentorship.errors?.required && (fieldOfMentorship.touched || fieldOfMentorship.dirty)">
+            <p class="text-danger">*Field of Mentorship is required</p>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Duration (Months)</label>
+          <input type="number" name="durationInMonths" ngModel class="form-control" required #durationInMonths="ngModel" />
+          <div class="error-message" *ngIf="durationInMonths.errors?.required && (durationInMonths.touched || durationInMonths.dirty)">
+            <p class="text-danger">*Duration is required</p>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Mentor Name</label>
+          <input name="mentorName" ngModel class="form-control" required #mentorName="ngModel" />
+          <div class="error-message" *ngIf="mentorName.errors?.required && (mentorName.touched || mentorName.dirty)">
+            <p class="text-danger">*Mentor Name is required</p>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Experience Level</label>
+          <select name="experienceLevel" ngModel class="form-control" required #experienceLevel="ngModel">
+            <option value="">Select Experience Level</option>
+            <option value="Beginner">Beginner</option>
+            <option value="Intermediate">Intermediate</option>
+            <option value="Experienced">Experienced</option>
+          </select>
+          <div class="error-message" *ngIf="experienceLevel.errors?.required && (experienceLevel.touched || experienceLevel.dirty)">
+            <p class="text-danger">*Experience Level is required</p>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Mode of Mentorship</label>
+          <select name="modeOfMentorship" ngModel class="form-control" required #modeOfMentorship="ngModel">
+            <option value="">Select Mode</option>
+            <option value="Online">Online</option>
+            <option value="Offline">Offline</option>
+            <option value="Hybrid">Hybrid</option>
+          </select>
+          <div class="error-message" *ngIf="modeOfMentorship.errors?.required && (modeOfMentorship.touched || modeOfMentorship.dirty)">
+            <p class="text-danger">*Mode of Mentorship is required</p>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary" [disabled]="isSubmitting">Submit</button>
+      </form>
+    </div>
+  </div>
+</div>

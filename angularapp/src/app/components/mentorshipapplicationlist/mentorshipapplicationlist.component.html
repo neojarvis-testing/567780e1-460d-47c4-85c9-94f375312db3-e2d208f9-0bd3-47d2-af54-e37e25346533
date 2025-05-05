@@ -1,37 +1,36 @@
-<div>
+<app-adminnav></app-adminnav>
 
-    <h2>All Mentorship Applications</h2>
-  
-    <input type="text" [(ngModel)]="searchTerm" placeholder="Search Career Goals"><br><br>
-  
-    <table border="1">
-  
+<div>
+  <button type="button" (click)="goBack()">Back</button>
+
+  <div *ngFor="let program of programs">
+    <p>Program Name:</p>
+    <p> {{ program.ProgramName }} <span> ({{ programApplicationMap[program.ProgramName]?.length || 0 }} Applicants)</span></p>
+
+
+    <table *ngIf="programApplicationMap[program.ProgramName]?.length > 0">
       <thead>
-  
         <tr>
-  
-          <th>ID</th><th>User</th><th>Program</th><th>Status</th>
-  
+          <th>Username</th>
+          <th>Reason for Applying</th>
+          <th>Career Goals</th>
+          <th>Application Date</th>
+          <th>Portfolio Link</th>
+          <th>Status</th>
         </tr>
-  
       </thead>
-  
       <tbody>
-  
-        <tr *ngFor="let app of applications" [hidden]="!app.CareerGoals.toLowerCase().includes(searchTerm.toLowerCase())">
-  
-          <td>{{ app.MentorshipApplicationId }}</td>
-  
-          <td>{{ app.UserId }}</td>
-  
-          <td>{{ app.MentorshipProgramId }}</td>
-  
-          <td>{{ app.ApplicationStatus }}</td>
-  
+        <tr *ngFor="let u of programApplicationMap[program.ProgramName]">
+          <td>{{ u.Username }}</td>
+          <td>{{ u.ReasonForApplying }}</td>
+          <td>{{ u.CareerGoals }}</td>
+          <td>{{ u.ApplicationDate }}</td>
+          <td><a [href]="u.PortfolioLink" target="_blank">Portfolio</a></td>
+          <td>{{ u.ApplicationStatus }}</td>
         </tr>
-  
       </tbody>
-  
     </table>
-  
+    <p *ngIf="programApplicationMap[program.ProgramName]?.length === 0">No Applicants</p>
   </div>
+</div>
+

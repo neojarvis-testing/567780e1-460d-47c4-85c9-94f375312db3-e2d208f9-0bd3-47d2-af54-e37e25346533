@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Mentorship Program Application | Home</title>
+    <!-- <link rel="stylesheet" href="style.css" /> -->
+  </head>
+  <body>
+    <!-- Angular conditionally rendered content -->
+    <div *ngIf="isAdmin()">
+      <app-adminnav></app-adminnav>
+    </div>
+    <div *ngIf="isUser()">
+      <app-usernav></app-usernav>
+    </div>
+
+    <div class="hero">
+      <div class="hero-text">
+        <h2>Welcome to Mentorship Program Application</h2>
+        <p>Empowering Mentor-Mentee Connections for Skill Development</p>
+        <div class="buttons">
+          <a href="#features" class="btn">Explore</a>
+        </div>
+      </div>
+      <!-- <img src="/assets/images/Untitled design.png" alt="Illustration of mentorship and learning"/> -->
+    </div>
+ 
+    <div class="section" id="about">
+      <h3>About Mentorship Program Application</h3>
+      <p>
+        Mentorship Program Application is a dynamic mentorship platform connecting mentees with experienced mentors across various domains.
+        Our aim is to foster learning, growth, and skill development through meaningful mentor-mentee interactions.
+      </p>
+      <br>
+      <p>
+        Vision:
+        
+        To become a global platform that empowers individuals through meaningful mentorship, fostering personal growth, career development, 
+        and lifelong learning in an ever-evolving world.
+      </p>
+    </div>
+ 
+    <div class="section" id="features">
+      <h3>Features</h3>
+      <div class="card-container">
+        <div class="card">Role-Based Access (Admin/User)</div>
+        <div class="card">Secure Login & Registration</div>
+        <div class="card">Personalized Dashboards</div>
+        <div class="card">Interactive Learning Paths</div>
+      </div>
+    </div>
+ 
+    <div class="section" id="contact">
+      <h3>Contact Us</h3>
+      <p>Email: support@Mentorship Program Application.com | Phone: 9894295718</p>
+    </div>
+ 
+    <script>
+      const menuToggle = document.getElementById('hamburger-btn');
+      const navLinks = document.getElementById('nav-links');
+ 
+      menuToggle.addEventListener('click', () => {
+        navLinks.classList.toggle('active');
+      });
+    </script>
+  </body>
+</html>

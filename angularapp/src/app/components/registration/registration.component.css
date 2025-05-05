@@ -1,79 +1,168 @@
-body {
-    margin: 0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(to right, #eaf6ff, #f9fbff);
-  }
-  
-  .form-container {
-    max-width: 480px;
-    margin: 80px auto;
-    background-color: #ffffff;
-    padding: 35px;
-    border-radius: 12px;
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
-  }
-  
-  h2 {
-    text-align: center;
-    font-size: 24px;
-    color: #004080;
-    text-transform: uppercase;
-    margin-bottom: 25px;
-  }
-  
-  label {
+/* General Form Styling */
+.form-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 90vh;
+  padding: 20px;
+  margin-top: 60px;
+}
+ 
+.auth-form {
+  background: rgba(255, 255, 255, 0.8);
+  padding: 30px;
+  border-radius: 15px;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 0 10px rgba(72, 0, 255, 0.5);
+  display: flex;
+  flex-direction: column;
+  color: #333;
+}
+ 
+.input-group {
+  position: relative;
+  margin-bottom: 15px;
+}
+ 
+/* Heading */
+.auth-form h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #000;
+}
+ 
+/* Input fields */
+.auth-form input,
+.auth-form select {
+  width: calc(100% - 30px);
+  padding: 10px 15px;
+  border: 1px solid #4800ff;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.9);
+  color: #333;
+}
+ 
+.auth-form select {
+  color: #333;
+  appearance: none;
+  padding-right: 30px;
+}
+ 
+/* Placeholder Text */
+.auth-form input::placeholder {
+  color: #666;
+}
+ 
+/* Buttons */
+.auth-form button.btn {
+  padding: 10px;
+  border: none;
+  border-radius: 25px;
+  background: #3300ff;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+ 
+.auth-form button.btn:hover {
+  background: #0e00cc;
+}
+ 
+.auth-form button.btn:disabled {
+  background: #cccccc;
+  cursor: not-allowed;
+}
+ 
+/* Error Handling */
+.auth-form .error {
+  color: #ff4d4d;
+  font-size: 0.875rem;
+  margin-top: 5px;
+}
+ 
+.error-input {
+  border-color: #ff4d4d !important;
+}
+ 
+/* Password & Admin Key Toggles */
+.password-group {
+  position: relative;
+}
+ 
+.toggle-password-icon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #0004ff;
+  font-size: 1.2rem;
+}
+ 
+.toggle-password-icon:hover {
+  color: #0000cc;
+}
+ 
+/* Navbar */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 10;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+}
+ 
+.nav-links {
+  display: flex;
+}
+ 
+.nav-links a {
+  color: white;
+  text-decoration: none;
+  margin: 0 15px;
+  transition: color 0.3s ease;
+}
+ 
+.nav-links a:hover {
+  color: #2f00ff;
+}
+ 
+/* Responsive Navbar */
+.hamburger {
+  display: none;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+ 
+@media (max-width: 768px) {
+  .hamburger {
     display: block;
-    font-weight: 600;
-    margin-top: 16px;
-    margin-bottom: 5px;
-    color: #333;
   }
-  
-  input[type="text"],
-  input[type="email"],
-  input[type="password"],
-  select {
+ 
+  .nav-links {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    flex-direction: column;
     width: 100%;
-    padding: 10px 12px;
-    font-size: 14px;
-    border: 1px solid #ccd6e0;
-    border-radius: 6px;
-    box-sizing: border-box;
+    background-color: rgba(0, 0, 0, 0.8);
+    padding: 10px 0;
+    display: none;
   }
-  
-  select {
-    background-color: #fff;
-    cursor: pointer;
+ 
+  .nav-links.active {
+    display: flex;
   }
-  
-  button {
-    width: 100%;
-    padding: 12px;
-    margin-top: 25px;
-    background-color: #005b96;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    font-weight: bold;
-    font-size: 15px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+ 
+  .nav-links a {
+    margin: 10px 0;
+    padding: 0 20px;
   }
-  
-  button:hover {
-    background-color: #004080;
-  }
-  
-  button:disabled {
-    background-color: #cccccc;
-    color: #666666;
-    cursor: not-allowed;
-    opacity: 0.7;
-  }
-  
-  .error {
-    color: #cc0000;
-    font-size: 13px;
-    margin-top: 4px;
-  }
-  
+}
+ 

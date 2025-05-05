@@ -1,4 +1,8 @@
-export interface MentorshipApplication {
+import { MentorshipProgram } from "./mentorshipprogram.model";
+import { User } from "./user.model";
+
+export interface MentorshipApplication
+{
     MentorshipApplicationId?: number;
     UserId: number;
     MentorshipProgramId: number;
@@ -8,4 +12,6 @@ export interface MentorshipApplication {
     PortfolioLink?: string;
     ApplicationStatus: string;
     ApplicationDate: string;
+    User? : User;
+    MentorshipProgram?:MentorshipProgram;
 }

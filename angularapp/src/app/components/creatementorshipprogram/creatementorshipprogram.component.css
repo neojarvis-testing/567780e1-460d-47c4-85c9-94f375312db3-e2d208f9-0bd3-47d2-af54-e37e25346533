@@ -1,58 +1,81 @@
-body {
-    margin: 0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(to right, #eaf6ff, #f9fbff);
-  }
-  
-  .create-mentorship {
-    max-width: 550px;
-    margin: 60px auto;
-    background-color: #ffffff;
-    padding: 40px;
-    border-radius: 12px;
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
-  }
-  
-  .create-mentorship h1 {
-    text-align: center;
-    font-size: 24px;
-    color: #004080;
-    margin-bottom: 30px;
-    text-transform: uppercase;
-  }
-  
-  label {
-    display: block;
-    font-weight: bold;
-    color: #333;
-    margin-bottom: 6px;
-  }
-  
-  input[type="text"],
-  input[type="number"] {
-    width: 100%;
-    padding: 10px 12px;
-    font-size: 14px;
-    border: 1px solid #ccd6e0;
-    border-radius: 6px;
-    box-sizing: border-box;
-    margin-bottom: 20px;
-  }
-  
-  button {
-    width: 100%;
-    padding: 12px;
-    background-color: #005b96;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    font-weight: bold;
-    font-size: 15px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  button:hover {
-    background-color: #004080;
-  }
-  
+.container {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+.left-side {
+  width: 40%;
+  word-break: break-all;
+  margin-top: 20px;
+}
+
+.left-side h2 {
+  font-size: 5em;
+  font-weight: bolder;
+  line-height: 1.2;
+  color:  #1D4A60ff;
+}
+
+
+.right-side {
+  width: 55%;
+}
+
+.registration-popup {
+  padding: 20px;
+  border: 2px solid #325C70ff;
+  /* Added border to the form */
+  border-radius: 8px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  font-weight: bold;
+}
+
+.form-control {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ACDBDF;
+  border-radius: 4px;
+}
+
+.form-control:focus {
+  border-color: #1D4A60ff;
+  outline: none;
+}
+
+.is-invalid {
+  border-color: #FF6F61;
+  /* Change border color on validation error */
+}
+
+.error-message {
+  color: #FF6F61;
+  font-size: 12px;
+}
+
+.btn-primary {
+  background-color: #1D4A60ff;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 100%;
+}
+
+.btn-primary:hover {
+  background-color: #1D4A60ff;
+  color: white;
+}
+
+
+.btn-primary:disabled {
+  background-color: #5C8A93ff;
+  cursor: not-allowed;
+}

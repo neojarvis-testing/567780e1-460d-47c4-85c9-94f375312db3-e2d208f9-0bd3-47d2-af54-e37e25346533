@@ -1,20 +1,47 @@
-import { Component } from '@angular/core';
-import { AuthService } from '../../services/auth.service';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { RouterTestingModule } from '@angular/router/testing';
-
+import { AuthService } from 'src/app/services/auth.service';
+import Swal from 'sweetalert2';
 @Component({
-  selector: 'app-adminnav',
-  styleUrls:['./adminnav.component.css'],
-  templateUrl: './adminnav.component.html'
+ selector: 'app-adminnav',
+ templateUrl: './adminnav.component.html',
+ styleUrls: ['./adminnav.component.css']
 })
-export class AdminnavComponent {
-  constructor(private authService: AuthService, private router: Router) {}
+export class AdminnavComponent implements OnInit {
 
-  logout(): void {
-    if (confirm('Are you sure you want to logout?')) {
-      this.authService.logout(); // AuthService's logout method will be tested as-is
-      this.router.navigate(['/login']); // Navigation will follow as per the test case
+  userName:string;
+  userRole:string;
+  constructor(private router:Router, private authService:AuthService) { }
+
+ 
+  ngOnInit(): void {
+    this.userName=localStorage.getItem('userName');
+    this.userRole=localStorage.getItem('userRole');
+
+  }
+
+  onDropdownChange(event: any): void {
+    const selectedValue = event.target.value;
+    if (selectedValue) {
+      this.router.navigate([`/admin/${selectedValue}`]);
     }
+  }
+
+  showLogoutAlert() {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You want to log out!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33', // Red color for logout
+      cancelButtonColor: '#3085d6', // Blue color for cancel
+      confirmButtonText: 'Logout',
+      cancelButtonText: 'Cancel'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.authService.logout();
+        this.router.navigate([`/home`]);
+      }
+    });
   }
 }

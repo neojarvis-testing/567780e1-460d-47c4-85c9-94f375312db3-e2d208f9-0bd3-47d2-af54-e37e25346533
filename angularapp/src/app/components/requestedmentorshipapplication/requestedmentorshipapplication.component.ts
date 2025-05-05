@@ -1,85 +1,176 @@
 import { Component, OnInit } from '@angular/core';
-import { MentorshipService } from 'src/app/services/mentorship.service';
+import Swal from 'sweetalert2';
 import { MentorshipApplication } from 'src/app/models/mentorshipapplication.model';
-
-import { FormsModule } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { MentorshipService } from 'src/app/services/mentorship.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AuthService } from 'src/app/services/auth.service';
+import { User } from 'src/app/models/user.model';
 
 @Component({
   selector: 'app-requestedmentorshipapplication',
-  styleUrls: ['./requestedmentorshipapplication.component.css'],
-  templateUrl: './requestedmentorshipapplication.component.html'
+  templateUrl: './requestedmentorshipapplication.component.html',
+  styleUrls: ['./requestedmentorshipapplication.component.css']
 })
 export class RequestedmentorshipapplicationComponent implements OnInit {
   applications: MentorshipApplication[] = [];
+  users: User[] = [];
+  combinedApplications: any[] = [];
   filteredApplications: MentorshipApplication[] = [];
   searchTerm: string = '';
-  statusFilter: string = '';
+  statusFilter: string = 'all';
+  showProfileImagePopup: boolean = false;
+  selectedProfileImage: string | null = null;
+  selectedApplication: MentorshipApplication | null = null;
+  currentPage: number = 1;
+  itemsPerPage: number = 15;
 
-  constructor(private mentorshipService: MentorshipService) { }
+  constructor(
+    private mentorshipService: MentorshipService,
+    private router: Router,
+    private userService: AuthService
+  ) {}
 
   ngOnInit(): void {
-    this.loadApplications();
+    this.loadUsersAndApplications();
   }
 
-  loadApplications() {
-    this.mentorshipService.getAllMentorshipApplications().subscribe({
-      next: (res) => {
-        this.applications = res;
-
-        this.filteredApplications = res;
-      },
-      error: (err) => {
-        alert('Failed to load mentorship applications!');
+  loadUsersAndApplications(): void {
+    // Show loading indicator with a custom message
+    Swal.fire({
+      title: 'Fetching Request Details...',
+      text: 'Please wait while we load the mentorship applications.',
+      allowOutsideClick: false,
+      didOpen: () => {
+        Swal.showLoading();
       }
-        this.filteredApplications = this.applications;
-
-      },
     });
-  }
 
-  search() {
-    const term = this.searchTerm.toLowerCase();
-    this.filteredApplications = this.applications.filter(app =>
-      app.CareerGoals.toLowerCase().includes(term)
+    this.userService.getAllUsers().subscribe(
+      (usersData: User[]) => {
+        this.users = usersData;
+
+        this.mentorshipService.getAllMentorshipApplications().subscribe(
+          (applicationData: MentorshipApplication[]) => {
+            this.applications = applicationData;
+
+            // Combine username with application for display
+            this.combinedApplications = this.applications.map(app => {
+              const matchedUser = this.users.find(user => user.UserId === app.UserId);
+              return {
+                ...app,
+                Username: matchedUser ? matchedUser.Username : 'Unknown User'
+              };
+            });
+
+            // Close loading indicator
+            Swal.close();
+          },
+          (error) => {
+            // Handle error and close loading indicator
+            Swal.close();
+            Swal.fire('Error', 'Failed to fetch applications. Please try again later.', 'error');
+            console.error('Error fetching applications:', error);
+          }
+        );
+      },
+      (error) => {
+        // Handle error and close loading indicator
+        Swal.close();
+        Swal.fire('Error', 'Failed to fetch users. Please try again later.', 'error');
+        console.error('Error fetching users:', error);
+      }
     );
-    this.applyStatusFilter();
   }
 
-  applyStatusFilter() {
-    if (this.statusFilter) {
-      this.filteredApplications = this.filteredApplications.filter(app =>
-        app.ApplicationStatus === this.statusFilter
-      );
-    }
-  }
+  toggleApplicationStatus(application: MentorshipApplication, status: string): void {
+    application.ApplicationStatus = status;
 
-  approve(app: MentorshipApplication) {
-    if (confirm('Approve this application?')) {
-      app.ApplicationStatus = 'Approved';
-      this.updateApplication(app);
-    }
-  }
-
-  reject(app: MentorshipApplication) {
-    if (confirm('Reject this application?')) {
-      app.ApplicationStatus = 'Rejected';
-      this.updateApplication(app);
-    }
-  }
-
-  updateApplication(app: MentorshipApplication) {
-    this.mentorshipService.updateApplicationStatus(app.MentorshipApplicationId!, app).subscribe({
-      next: () => {
-        alert('Status updated successfully!');
-        this.loadApplications();
+    this.mentorshipService.updateApplicationStatus(application.MentorshipApplicationId, application).subscribe(
+      () => {
+        localStorage.setItem(`status_${application.MentorshipApplicationId}`, application.ApplicationStatus);
+        Swal.fire({
+          title: 'Success!',
+          text: `Application status changed to ${application.ApplicationStatus}`,
+          icon: 'success',
+          timer: 1500,
+          showConfirmButton: false
+        });
       },
-      error: (err) => {
-        alert(err.error.message || 'Failed to update status!');
-      }
-    });
+      (error) => console.error('Error updating status:', error)
+    );
   }
 
-  viewProfileImage(imageUrl: string) {
-    window.open(imageUrl, "_blank");
+  searchApplications(): void {
+    this.combinedApplications = this.applications
+      .filter(application => application.CareerGoals.toLowerCase().includes(this.searchTerm.toLowerCase()))
+      .map(app => {
+        const matchedUser = this.users.find(user => user.UserId === app.UserId);
+        return {
+          ...app,
+          Username: matchedUser ? matchedUser.Username : 'Unknown User'
+        };
+      });
+  }
+
+  onStatusChange(status: string): void {
+    this.statusFilter = status;
+    if (status === 'all') {
+      this.combinedApplications = this.applications.map(app => {
+        const matchedUser = this.users.find(user => user.UserId === app.UserId);
+        return {
+          ...app,
+          Username: matchedUser ? matchedUser.Username : 'Unknown User'
+        };
+      });
+    } else {
+      this.combinedApplications = this.applications
+        .filter(application => application.ApplicationStatus === status)
+        .map(app => {
+          const matchedUser = this.users.find(user => user.UserId === app.UserId);
+          return {
+            ...app,
+            Username: matchedUser ? matchedUser.Username : 'Unknown User'
+          };
+        });
+    }
+  }
+
+  viewProfileImage(application: MentorshipApplication): void {
+    this.selectedProfileImage = application.ProfileImage;
+    this.showProfileImagePopup = true;
+  }
+
+  closeProfileImagePopup(): void {
+    this.showProfileImagePopup = false;
+    this.selectedProfileImage = null;
+  }
+
+  viewAllDetails() {
+    this.router.navigate([`/admin/mentorshipapplicationlist`]);
+  }
+
+  closeModal(): void {
+    this.selectedApplication = null;
+  }
+
+  get paginatedApplications(): any[] {
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    const endIndex = startIndex + this.itemsPerPage;
+    return this.combinedApplications.slice(startIndex, endIndex);
+  }
+
+  get totalPages(): number {
+    return Math.ceil(this.combinedApplications.length / this.itemsPerPage);
+  }
+
+  get pages(): number[] {
+    return Array(this.totalPages).fill(0).map((_, i) => i + 1);
+  }
+
+  changePage(page: number): void {
+    if (page > 0 && page <= this.totalPages) {
+      this.currentPage = page;
+    }
   }
 }

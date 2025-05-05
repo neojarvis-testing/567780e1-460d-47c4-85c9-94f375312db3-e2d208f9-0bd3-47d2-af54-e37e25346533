@@ -1,0 +1,163 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body, html {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(to right, #0f0f27, #202243, #322c64);
+    color: #fff;
+    scroll-behavior: smooth;
+  }
+  
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    background-color: rgba(0, 0, 0, 0.6);
+  }
+  
+  .logo {
+    font-size: 2rem; /* Increased font size */
+    font-weight: bold;
+  }
+  
+  .nav-links a {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 15px;
+    transition: color 0.3s;
+  }
+  
+  .nav-links a:hover {
+    color: #0011ff;
+  }
+  
+  .hamburger {
+    font-size: 2.2rem; /* Increased font size */
+    color: #fff;
+    cursor: pointer;
+    display: none;
+  }
+  
+  .hero {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    min-height: 90vh;
+    padding: 40px 20px;
+    text-align: center;
+  }
+  
+  .hero-text h2 {
+    font-size: 3rem; /* Increased font size */
+    margin-bottom: 10px;
+  }
+  
+  .hero-text p {
+    font-size: 1.5rem; /* Increased font size */
+    margin-bottom: 20px;
+  }
+  
+  .hero img {
+    width: 800px; /* Increased image size */
+    max-width: 90%;
+  }
+  
+  .buttons {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+  }
+  
+  .btn {
+    padding: 10px 25px;
+    border: 2px solid #0026ff;
+    color: #1100ff;
+    background: transparent;
+    cursor: pointer;
+    text-decoration: none;
+    transition: 0.3s ease;
+    border-radius: 25px;
+  }
+  
+  .btn:hover {
+    background: #6f00ff;
+    color: #000;
+  }
+  
+  .section {
+    padding: 60px 30px;
+    text-align: center;
+  }
+  
+  .section h3 {
+    font-size: 2.5rem; /* Increased font size */
+    margin-bottom: 20px;
+  }
+  
+  .card-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  .card {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 1rem;
+    padding: 20px;
+    min-width: 250px;
+    max-width: 300px;
+    color: #fff;
+    transition: transform 0.3s ease;
+  }
+  
+  .card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 20px rgba(71, 178, 228, 0.3);
+  }
+  
+  @media screen and (max-width: 768px) {
+    .nav-links {
+      display: none;
+      flex-direction: column;
+      background: #111;
+      position: absolute;
+      top: 60px;
+      right: 0;
+      width: 100%;
+      text-align: center;
+      padding: 10px 0;
+    }
+  
+    .nav-links.active {
+      display: flex;
+    }
+  
+    .hamburger {
+      display: block;
+    }
+  
+    .hero {
+      flex-direction: column;
+    }
+  
+    .hero img {
+      display: none;
+    }
+  
+    .hero-text h2 {
+      font-size: 2.5rem; /* Increased font size */
+    }
+  
+    .hero-text p {
+      font-size: 1.2rem; /* Increased font size */
+    }
+  }
+  
+  
+  

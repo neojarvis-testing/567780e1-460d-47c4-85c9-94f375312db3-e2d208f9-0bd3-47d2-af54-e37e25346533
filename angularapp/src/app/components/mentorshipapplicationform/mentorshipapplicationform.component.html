@@ -1,35 +1,41 @@
-<!-- <div class="apply-mentorship-form">
-    <h2>Mentorship Application Form</h2>
+<app-usernav></app-usernav>
+<h1 class="form-title">Mentorship Application Form</h1>
+<form [formGroup]="applicationForm" (ngSubmit)="onSubmit()" class="form-container">
 
-    <form  (ngSubmit)="submit()" novalidate>
+  <div class="form-group">
+    <label for="reason">Reason for Applying:</label>
+    <input id="reason" formControlName="reason" required />
+    <div *ngIf="applicationForm.get('reason')?.invalid && applicationForm.get('reason')?.touched">
+      <small class="text-danger">Reason for applying is required.</small>
+    </div>
+  </div>
 
-        <div class="form-group">
-            <label for="reasonForApplying">Reason For Applying*</label>
-            <input type="text" id="reasonForApplying" [(ngModel)]="mentorshipApplication.ReasonForApplying" name="ReasonForApplying" required #reasonInput="ngModel">
-            <div class="error" *ngIf="reasonInput.invalid && reasonInput.touched">Reason for Applying is required.</div>
-        </div>
+  <div class="form-group">
+    <label for="goal">Career Goal:</label>
+    <input id="goal" formControlName="goal" required />
+    <div *ngIf="applicationForm.get('goal')?.invalid && applicationForm.get('goal')?.touched">
+      <small class="text-danger">Career goal is required.</small>
+    </div>
+  </div>
 
-        <div class="form-group">
-            <label for="careerGoals">Career Goals*</label>
-            <input type="text" id="careerGoals" [(ngModel)]="mentorshipApplication.CareerGoals" name="CareerGoals" required #careerInput="ngModel">
-            <div class="error" *ngIf="careerInput.invalid && careerInput.touched">Career Goals are required.</div>
-        </div>
+  <div class="form-group">
+    <label for="image">Profile Image:</label>
+    <input id="image" type="file" (change)="onFileChange($event)" />
+    <div *ngIf="fileError ">
+      <small class="text-danger">{{ fileError }}</small>
+    </div>
+  </div>
 
-        <div class="form-group">
-            <label for="profileImage">Profile Image URL*</label>
-            <input type="url" id="profileImage" [(ngModel)]="mentorshipApplication.ProfileImage" name="ProfileImage" required #profileInput="ngModel"> -->
-            <!-- <div class="error" *ngIf="profileInput.invalid && profileInput.touched">Please enter a valid URL.</div> -->
-        <!-- </div>
+  <div class="form-group">
+    <label for="portfolio">Portfolio Link:</label>
+    <input id="portfolio" formControlName="portfolio" required />
+    <div *ngIf="applicationForm.get('portfolio')?.invalid && applicationForm.get('portfolio')?.touched">
+      <small class="text-danger">Portfolio link is required.</small>
+    </div>
+  </div>
 
-        <div class="form-group">
-            <label for="portfolioLink">Portfolio Link (Optional)</label>
-            <input type="url" id="portfolioLink" [(ngModel)]="mentorshipApplication.PortfolioLink" name="PortfolioLink">
-        </div>
-
-        <div class="button-group">
-            <button type="submit" [disabled]="mentorshipForm.invalid">Submit</button>
-            <button type="button" (click)="back()">Back</button>
-        </div>
-
-    </form>
-</div> -->
+  <div class="button-group">
+    <button type="submit" class="btn-submit">Submit</button>
+    <button type="button" class="btn-back" (click)="goBack()">Back</button>
+  </div>
+</form>

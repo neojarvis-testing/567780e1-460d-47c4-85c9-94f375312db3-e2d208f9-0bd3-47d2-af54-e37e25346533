@@ -1,9 +1,104 @@
-<div class="home-container">
 
-    <h1>Mentorship Program Application</h1>
-  
-    <p>Welcome to the Mentorship Application System.<br>
-  
-    Apply for mentorship programs and shape your career!</p>
-  
+ 
+<!DOCTYPE html>
+<html lang="en">
+ 
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mentorship Program Application | Home</title>
+  <!-- <link rel="stylesheet" href="style.css" /> -->
+</head>
+ 
+<body>
+  <div class="navbar">
+    <div class="logo">Mentorship Program Application</div>
+    <div class="nav-links" id="nav-links">
+      <a href="#about">About</a>
+      <a href="#features">Features</a>
+      <a href="#contact">Contact</a>
+      <a href="/register">Register</a>
+      <a href="/login">Login</a>
+    </div>
+    <div class="hamburger" id="hamburger-btn">&#9776;</div>
   </div>
+ 
+  <div class="hero">
+    <div class="hero-text">
+      <h2>Welcome to Mentorship Program Application</h2>
+      <p><span id="typewriter" class="typewriter-text"></span></p>
+      <div class="buttons">
+        <a href="/register" class="btn">Get Started</a>
+        <a href="#features" class="btn">Explore</a>
+      </div>
+    </div>
+    <!-- <img src="/assets/images/Untitled design.png" alt="Illustration of mentorship and learning"/> -->
+  </div>
+ 
+  <div class="section" id="about">
+    <h3>About Mentorship Program Application</h3>
+    <p>
+      Mentorship Program Application is a dynamic mentorship platform connecting mentees with experienced mentors across
+      various domains.
+      Our aim is to foster learning, growth, and skill development through meaningful mentor-mentee interactions.
+      Mentorship Program Application was built with this vision — to empower individuals by connecting them with
+      experienced mentors who can guide,
+      support, and inspire. As industries evolve and skills become more dynamic, having access to structured mentorship
+      is more
+      important than ever. Mentorship Program Application stands as a step toward making mentorship accessible,
+      meaningful, and impactful for everyone.
+    </p>
+    <br>
+    <p>
+      Vision:
+ 
+      To become a global platform that empowers individuals through meaningful mentorship, fostering personal growth,
+      career development,
+      and lifelong learning in an ever-evolving world.
+    </p>
+    <br>
+    <p>
+      Mission:
+ 
+      Our mission is to connect aspiring individuals with experienced mentors, creating accessible, inclusive, and
+      impactful mentorship
+      experiences. We aim to bridge the gap between ambition and opportunity by offering structured guidance, inspiring
+      confidence,
+      and nurturing talent across diverse fields.
+    </p>
+  </div>
+ 
+  <div class="section" id="features">
+    <h3>Features</h3>
+    <div class="card-container">
+      <div class="card">Role-Based Access (Admin/User)</div>
+      <div class="card">Secure Login & Registration</div>
+      <div class="card">Personalized Dashboards</div>
+      <div class="card">Interactive Learning Paths</div>
+    </div>
+  </div>
+ 
+  <div class="section" id="contact">
+    <h3>Contact Us</h3>
+    <p>Email: support@MentorshipProgramApplication.com | Phone: 7574854858</p>
+  </div>
+ 
+  <!-- Angular conditionally rendered content -->
+  <div *ngIf="isAdmin()">
+    <app-adminnav></app-adminnav>
+  </div>
+  <div *ngIf="isUser()">
+    <app-usernav></app-usernav>
+  </div>
+ 
+  <script>
+    const menuToggle = document.getElementById('hamburger-btn');
+    const navLinks = document.getElementById('nav-links');
+ 
+    menuToggle.addEventListener('click', () => {
+      navLinks.classList.toggle('active');
+    });
+  </script>
+</body>
+ 
+</html>

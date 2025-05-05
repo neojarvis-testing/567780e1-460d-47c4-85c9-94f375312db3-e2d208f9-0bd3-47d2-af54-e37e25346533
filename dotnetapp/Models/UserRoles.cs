@@ -1,3 +1,8 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
 namespace dotnetapp.Models
 {
     public class UserRoles
@@ -6,4 +11,3 @@ namespace dotnetapp.Models
         public const string User = "User";
     }
 }
-
