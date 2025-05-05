@@ -1,15 +1,48 @@
-<div>
+<app-usernav></app-usernav>
 
-    <h2>My Feedback</h2>
-  
-    <ul>
-  
-      <li *ngFor="let fb of feedbacks">
-  
-        "{{ fb.FeedbackText }}" - {{ fb.Date | date:'medium' }}
-  
-      </li>
-  
-    </ul>
-  
+<div class="container">
+  <div  [ngClass]="{'blur-background': isPopUpOpen}">
+    <h1 class="feedback-title">My Feedback</h1>
+    <div>
+      <table class="mentorship-table" *ngIf="feedbacks.length > 0; else noRecords">
+        <thead>
+          <tr>
+            <th>S.No</th>
+            <th>Feedback</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let feedback of feedbacks; let i = index" class="table-row">
+            <td>{{i + 1}}</td>
+            <td>{{feedback.FeedbackText}}</td>
+            <td>
+              <button id="delete" class="btn-custom-delete" (click)="openDeletePopUp(feedback.FeedbackId)">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <ng-template #noRecords>
+        <div class="no-records">
+          Oops! No records Found
+        </div>
+      </ng-template>
+    </div>
   </div>
+</div>
+
+<div *ngIf="isPopUpOpen" class="popup">
+  <div class="popup-content">
+    <div class="popup-header">
+      <h3>Confirmation</h3>
+    </div>
+    <div class="popup-body">
+      Are you sure you want to delete?
+    </div>
+    <div class="popup-footer">
+      <button type="button" class="btn-delete" (click)="deleteFeedback()">Yes, Delete</button>
+      <button type="button" class="btn-cancel" (click)="closeDeletePopUp()">Cancel</button>
+    </div>
+  </div>
+</div>
+

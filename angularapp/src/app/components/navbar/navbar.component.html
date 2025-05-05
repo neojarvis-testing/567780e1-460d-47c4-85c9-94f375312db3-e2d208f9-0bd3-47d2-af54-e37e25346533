@@ -1,22 +1,20 @@
-<nav>
-
-  <h1>MENTORSHIP PROGRAM APPLICATION </h1>
-
-  <!-- Header displaying the title of the application -->
-
-  <div>
-      <!-- This section is conditionally displayed using Angular's *ngIf directive.
-           It will only show if the user is not logged in (authService.isLoggedIn() returns false). -->
-
-      <a routerLink="/register">Register</a>
-
-      <!-- Link to the registration page using Angular's routerLink for navigation -->
-
-      <a routerLink="/login">Login</a>
-      <!-- Link to the login page using Angular's routerLink for navigation -->
-
+<nav class="navbar navbar-expand-lg custom-navbar shadow-sm fixed-top">
+  <div class="container">
+    <a class="navbar-brand fw-bold text-white" href="/home">Mentorship Application System</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+      data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+      aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+      <ul class="navbar-nav me-3">
+     
+      </ul>
+      <div class="d-flex gap-2">
+        <a routerLink="/login" class="btn btn-outline-light btn-sm">Login</a>
+        <a routerLink="/register" class="btn btn-light btn-sm">Register</a>
+      </div>
+    </div>
   </div>
 </nav>
-
-<hr>
-<!-- Horizontal line to separate the navigation bar from the rest of the content -->
+ 

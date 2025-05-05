@@ -1,96 +1,123 @@
-body {
-    margin: 0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(to right, #eaf6ff, #f9fbff);
+#bgVideo {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1; /* Send the video to the background */
+  filter: blur(8px); /* Apply blur effect */
+}
+ 
+/* Centering login form */
+form {
+  max-width: 400px;
+  margin: 200px auto; /* Add space from the navbar */
+  padding: 30px; /* Add more padding for a clean look */
+  background: #fff; /* Change to solid white */
+  border-radius: 10px;
+  box-shadow: 0 10px 20px rgba(71, 178, 228, 0.3);
+  position: relative; /* Ensure it stays in the flow of the page */
+}
+ 
+/* Form Header */
+form h1 {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #333; /* Dark text for contrast with white background */
+}
+ 
+/* Form Labels */
+form label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #333; /* Dark text for better visibility */
+}
+ 
+/* Form Inputs */
+form input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #00c6ff;
+  border-radius: 5px;
+  background: #f9f9f9; /* Light background for inputs */
+  color: #333; /* Dark text for better visibility */
+  font-size: 1rem;
+}
+ 
+form input:focus {
+  outline: none;
+  border-color: #00c6ff;
+  box-shadow: 0 0 10px rgba(72, 0, 255, 0.5);
+  background: #fff; /* Solid background on focus */
+}
+ 
+/* Error Messages */
+.error-message small {
+  color: #ff4d4d;
+  font-size: 0.875rem;
+}
+ 
+/* Submit Button */
+form button {
+  width: 100%;
+  padding: 10px 20px;
+  border: 2px solid #4000ff;
+  color: #fff;
+  background: #1100ff; /* Filled blue background */
+  cursor: pointer;
+  text-transform: uppercase;
+  font-weight: bold;
+  letter-spacing: 1px;
+  border-radius: 25px;
+  transition: 0.3s ease;
+}
+ 
+form button:disabled {
+  background: rgba(0, 0, 255, 0.3);
+  border-color: rgba(76, 0, 255, 0.3);
+  color: #fff;
+  cursor: not-allowed;
+}
+ 
+form button:hover:enabled {
+  background: #008ecf;
+  border-color: #008ecf;
+}
+ 
+/* Ensuring the form is centered vertically and horizontally */
+body, html {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(to right, #0f2027, #203a43, #2c5364); /* Backup for video */
+  color: #fff;
+}
+ 
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+  form {
+    padding: 15px;
+    margin: 80px auto; /* Adjust margin for smaller screens */
   }
-  
-  .login-container {
-    width: 380px;
-    margin: 80px auto;
-    padding: 30px 35px;
-    background-color: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+ 
+  form h1 {
+    font-size: 1.5rem;
   }
-  
-  h1 {
-    text-align: center;
-    margin-bottom: 25px;
-    font-size: 26px;
-    color: #004080;
-    text-transform: uppercase;
+ 
+  form input {
+    font-size: 0.9rem;
   }
-  
-  label {
-    font-weight: 600;
-    display: block;
-    margin-top: 15px;
-    color: #333;
+ 
+  form button {
+    font-size: 0.9rem;
+    padding: 8px 15px;
   }
-  
-  input[type="email"],
-  input[type="password"] {
-    width: 100%;
-    padding: 10px 12px;
-    margin-top: 6px;
-    border: 1px solid #ccd6e0;
-    border-radius: 6px;
-    font-size: 14px;
-    box-sizing: border-box;
-  }
-  
-  button {
-    width: 100%;
-    padding: 12px;
-    background-color: #005b96;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    font-weight: bold;
-    font-size: 15px;
-    cursor: pointer;
-    margin-top: 20px;
-    transition: background-color 0.3s ease;
-  }
-  
-  button:hover {
-    background-color: #004080;
-  }
-  
-  button:disabled {
-    background-color: #cccccc;
-    color: #666666;
-    cursor: not-allowed;
-    opacity: 0.7;
-  }
-  
-  .astrick {
-    color: red;
-    margin-left: 4px;
-  }
-  
-  .error, .success {
-    font-size: 14px;
-    margin-top: 15px;
-    text-align: center;
-  }
-  
-  .error {
-    color: #cc0000;
-  }
-  
-  .success {
-    color: green;
-  }
-  
-  .header-bar {
-    width: 100%;
-    background: linear-gradient(to right, #004080, #0074cc);
-    padding: 12px 20px;
-    color: white;
-    font-weight: bold;
-    font-size: 16px;
-    text-align: center;
-    border-radius: 0 0 8px 8px;
-  }
-  
+}
+

@@ -1,63 +1,47 @@
-
 import { Component } from '@angular/core';
-
-import { MentorshipService } from '../../services/mentorship.service';
-
+import { NgForm } from '@angular/forms';
+import { MentorshipService } from 'src/app/services/mentorship.service';
 import { MentorshipProgram } from 'src/app/models/mentorshipprogram.model';
-
 import { Router } from '@angular/router';
 
 @Component({
-
   selector: 'app-creatementorshipprogram',
-
-  styleUrls:['./creatementorshipprogram.component.css'],
-  templateUrl: './creatementorshipprogram.component.html'
-
+  templateUrl: './creatementorshipprogram.component.html',
+  styleUrls: ['./creatementorshipprogram.component.css']
 })
-
 export class CreatementorshipprogramComponent {
 
-  mentorship: MentorshipProgram = {
-
-    ProgramName: '',
-
-    Description: '',
-
-    FieldOfMentorship: '',
-
-    DurationInMonths: 0,
-
-    MentorName: '',
-
-    ExperienceLevel: '',
-
-    ModeOfMentorship: ''
-
-  };
+  isSubmitting = false;
 
   constructor(private mentorshipService: MentorshipService, private router: Router) {}
 
-  submit() {
+  onSubmit(form: NgForm): void {
+    if (form.invalid) {
+      alert('All Fields are required');
+      return;
+    }
 
-    this.mentorshipService.addMentorshipProgram(this.mentorship).subscribe({
+    this.isSubmitting = true;
+    const mentorshipProgram: MentorshipProgram = form.value;
 
+    this.mentorshipService.addMentorshipProgram(mentorshipProgram).subscribe({
       next: () => {
-
         alert('Successfully Added!');
-
-        this.router.navigate(['/view-mentorships']);
-
+        form.reset();
+        this.isSubmitting = false;
       },
-
-      error: (err) => {
-
-        alert(err.error.message || 'Failed to Add!');
-
+      error: (error) => {
+        this.isSubmitting = false;
+        if (error.status === 409) {
+          alert('Program with the same name already exists');
+        } else {
+          alert('Something went wrong. Please try again.');
+        }
       }
-
     });
-
   }
 
+  goBack(): void {
+    this.router.navigate(['/viewmentorshipprogram']);
+  }
 }

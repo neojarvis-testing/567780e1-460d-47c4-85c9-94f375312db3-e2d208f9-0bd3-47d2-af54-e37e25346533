@@ -1,41 +1,72 @@
-<div class="requested-applications">
+<app-adminnav></app-adminnav>
+<div class="container">
   <h1>Mentorship Applications for Approval</h1>
-  <input type="text" placeholder="Search by Career Goals" [(ngModel)]="searchTerm" (input)="search()" style="width:300px;">
-  <select [(ngModel)]="statusFilter" (change)="search()">
-    <option value="">All Status</option>
-    <option value="Pending">Pending</option>
-    <option value="Approved">Approved</option>
-    <option value="Rejected">Rejected</option>
-  </select>
-  <br><br>
-  <table border="1" width="100%">
+
+  <div class="search-filter">
+    <input type="text" placeholder="Search by Career Goals..." [(ngModel)]="searchTerm" (input)="searchApplications()" />
+
+    <div class="status-filter">
+      <label for="status-filter">Filter by Status:</label>
+      <select id="status-filter" [(ngModel)]="statusFilter" (change)="onStatusChange($event.target.value)">
+        <option value="all">All</option>
+        <option value="Pending">Pending</option>
+        <option value="Approved">Approved</option>
+        <option value="Rejected">Rejected</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Applications Table -->
+  <table>
     <thead>
       <tr>
-        <th>User ID</th>
-        <th>Program ID</th>
+        <th>S.No</th>
+        <th>Username</th>
+        <th>Reason for Applying</th>
         <th>Career Goals</th>
-        <th>Reason</th>
-        <th>Profile Image</th>
+        <th>Application Date</th>
+        <th>Portfolio Link</th>
         <th>Status</th>
-        <th>Actions</th>
+        <th>Action</th>
       </tr>
     </thead>
-    <tbody *ngIf="filteredApplications.length > 0; else noData">
-      <tr *ngFor="let app of filteredApplications">
-        <td>{{ app.UserId }}</td>
-        <td>{{ app.MentorshipProgramId }}</td>
-        <td>{{ app.CareerGoals }}</td>
-        <td>{{ app.ReasonForApplying }}</td>
-        <td><button (click)="viewProfileImage(app.ProfileImage)">View Profile Image</button></td>
-        <td>{{ app.ApplicationStatus }}</td>
+    <tbody>
+      <tr *ngIf="combinedApplications.length === 0">
+        <td colspan="8" class="no-records">No records found</td>
+      </tr>
+
+      <tr *ngFor="let application of paginatedApplications; let i = index">
+        <td>{{ (currentPage - 1) * itemsPerPage + i + 1 }}</td>
+        <td>{{ application.Username }}</td>
+        <td>{{ application.ReasonForApplying }}</td>
+        <td>{{ application.CareerGoals }}</td>
+        <td>{{ application.ApplicationDate | date }}</td>
+        <td><a [href]="application.PortfolioLink" target="_blank">View Portfolio</a></td>
+        <td>{{ application.ApplicationStatus }}</td>
         <td>
-          <button *ngIf="app.ApplicationStatus === 'Pending'" (click)="approve(app)">Approve</button>
-          <button *ngIf="app.ApplicationStatus === 'Pending'" (click)="reject(app)">Reject</button>
+          <div class="button-container">
+            <button *ngIf="application.ApplicationStatus === 'Pending' || application.ApplicationStatus === 'Rejected'" (click)="toggleApplicationStatus(application, 'Approved')" class="btn-approve">Approve</button>
+            <button *ngIf="application.ApplicationStatus === 'Pending' || application.ApplicationStatus === 'Approved'" (click)="toggleApplicationStatus(application, 'Rejected')" class="btn-reject">Reject</button>
+            <button (click)="viewProfileImage(application)" class="btn-info">View Profile Image</button>
+          </div>
         </td>
       </tr>
     </tbody>
   </table>
-  <ng-template #noData>
-    <p>Oops! No records Found.</p>
-  </ng-template>
-</div>
+
+  <div class="pagination">
+    <button (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1"><</button>
+    <button *ngFor="let page of pages" (click)="changePage(page)" [class.active]="page === currentPage">{{ page }}</button>
+    <button (click)="changePage(currentPage + 1)" [disabled]="currentPage === totalPages">></button>
+  </div>
+
+
+  <button (click)="viewAllDetails()" class="btn-details">View All Details</button>
+
+  <div class="modal" *ngIf="showProfileImagePopup">
+    <div class="modal-content">
+      <span class="close-btn" (click)="closeProfileImagePopup()">&times;</span>
+      <img [src]="selectedProfileImage" alt="Profile Image">
+    </div>
+  </div>
+  

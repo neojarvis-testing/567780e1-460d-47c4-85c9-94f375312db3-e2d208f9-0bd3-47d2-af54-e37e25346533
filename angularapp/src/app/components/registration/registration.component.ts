@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { User } from 'src/app/models/user.model';
 import { AuthService } from 'src/app/services/auth.service';
+import Swal from 'sweetalert2';
  
 @Component({
   selector: 'app-registration',
@@ -10,63 +11,68 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class RegistrationComponent implements OnInit {
  
-  roles: string[] = ['Admin', 'User'];
-  username: string = '';
-  email: string = '';
-  password: string = '';
-  confirmPassword: string = '';
-  mobileNumber: string = '';
-  userrole: string = '';
+  selectedRole: string = '';
+  newUser: User = {
+    Email: "",
+    Password: "",
+    Username: "",
+    MobileNumber: "",
+    UserRole: ""
+  };
+  err: string = "";
+  showPassword: boolean = false;
+  showConfirmPassword: boolean = false;
+  showAdminKey: boolean = false;  // Toggle for Admin Key visibility
+  confirmPassword: string = "";
+  inputSecretKey: string = '';
+  SECRETKEY: string = '@RegisterAdmin@';
+  checkUserExists: boolean = false;
  
-  formSubmitted:boolean=false;
+  constructor(private authService: AuthService, private router: Router) { }
  
-  constructor(private authService: AuthService, private router: Router) {}
+  ngOnInit(): void {}
  
-  ngOnInit(): void {
-  }
+  register() {
+    this.newUser.UserRole = this.selectedRole;
  
-  register(): void {
-    this.formSubmitted=true;
-      const newUser: User = {
-        Username: this.username,
-        Email: this.email,
-        Password: this.password,
-        MobileNumber: this.mobileNumber,
-        UserRole: this.userrole
-      };
-     
-      if(newUser.Username && newUser.Email && newUser.Password && newUser.MobileNumber && newUser.UserRole)
-      {
-        if(this.validatePassword() && !this.checkpassword()){
-          this.authService.register(newUser).subscribe(() => {
-            alert('Registration successful!');
-            this.router.navigate(['/login']);
-          });
-          console.log(newUser);
-        }
-        else{
-          return;
-        }
-      }
-      else{
-        return;
-      }
-  }
- 
-  validatePassword(): boolean {
-    const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
-    return this.password ? regex.test(this.password) : false;
-  }
- 
-  checkpassword():boolean
-  {
-    if(this.password == this.confirmPassword)
-    {
-      return false;
+    if (this.selectedRole === 'Admin' && !this.matchSecretKey()) {
+      Swal.fire({
+        title: 'Error!',
+        text: 'Invalid Admin Key',
+        icon: 'error',
+        timer: 1500,
+        showConfirmButton: false
+      });
+      return;
     }
-    else{
-      return true;
-    }
+ 
+    this.authService.register(this.newUser).subscribe(
+      (res) => {
+        console.log(res);
+        Swal.fire({
+          title: 'Success!',
+          text: 'Registration Successful!',
+          icon: 'success',
+          timer: 1500,
+          showConfirmButton: false
+        });
+        this.router.navigate(['/login']);
+      },
+      (error) => {
+        this.checkUserExists = true;
+        this.err = error.error;
+        Swal.fire({
+          title: 'Error!',
+          text: 'Registration Failed. Please try again.',
+          icon: 'error',
+          timer: 1500,
+          showConfirmButton: false
+        });
+      }
+    );
+  }
+ 
+  matchSecretKey(): boolean {
+    return this.SECRETKEY === this.inputSecretKey;
   }
 }
- 

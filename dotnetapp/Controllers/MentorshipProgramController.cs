@@ -1,98 +1,114 @@
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using dotnetapp.Models;
-using dotnetapp.Services;
-using dotnetapp.Exceptions;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
-
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using dotnetapp.Models;
+using dotnetapp.Data;
+using dotnetapp.Services;
+using Microsoft.AspNetCore.Authorization;
 namespace dotnetapp.Controllers
 {
     [ApiController]
     [Route("api/mentorship-program")]
     public class MentorshipProgramController : ControllerBase
     {
-        private readonly MentorshipProgramService _service;
-        private readonly ILogger<MentorshipProgramController> _logger;
+        private readonly MentorshipProgramService _mentorshipProgramService;
 
-        public MentorshipProgramController(MentorshipProgramService service, ILogger<MentorshipProgramController> logger)
+        public MentorshipProgramController(MentorshipProgramService mentorshipProgramService)
         {
-            _service = service;
-            _logger = logger;
+            _mentorshipProgramService = mentorshipProgramService;
         }
 
-        // 1. Get all mentorship programs (User & Admin)
         [HttpGet]
-        [Authorize]
-        public async Task<IActionResult> GetAll()
+       
+        public async Task<ActionResult<IEnumerable<MentorshipProgram>>> GetAllMentorshipPrograms()
         {
-            var programs = await _service.GetAllMentorshipPrograms();
-            return Ok(programs);
+            try
+            {
+                var programs = await _mentorshipProgramService.GetAllMentorshipPrograms();
+                return Ok(programs);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
         }
 
-        // 2. Get mentorship program by ID (User & Admin)
-        [HttpGet("{id}")]
-        [Authorize]
-        public async Task<IActionResult> GetById(int id)
+        [HttpGet("{mentorshipProgramId}")]
+        
+        public async Task<ActionResult<MentorshipProgram>> GetMentorshipProgramById(int mentorshipProgramId)
         {
-            var program = await _service.GetMentorshipProgramById(id);
-            if (program == null)
-                return NotFound(new { message = "Program not found" });
-
-            return Ok(program);
+            try
+            {
+                var program = await _mentorshipProgramService.GetMentorshipProgramById(mentorshipProgramId);
+                if (program == null)
+                {
+                    return NotFound(new{message = "Cannot find any mentorship program."});
+                }
+                return Ok(program);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
         }
 
-        // 3. Add a new mentorship program (Admin only)
         [HttpPost]
-        [Authorize(Roles = UserRoles.Admin)]
-        public async Task<IActionResult> Add([FromBody] MentorshipProgram program)
+        
+        public async Task<ActionResult> AddMentorshipProgram([FromBody] MentorshipProgram mentorshipProgram)
         {
             try
             {
-                await _service.AddMentorshipProgram(program);
-                return Ok(new { message = "Program added successfully" });
+                var result = await _mentorshipProgramService.AddMentorshipProgram(mentorshipProgram);
+                if (result)
+                {
+                    return Ok(new{message = "Mentorship Program added successfully."});
+                }
+                return StatusCode(500, "Failed to add mentorship program.");
             }
-            catch (MentorshipProgramException ex)
+            catch (Exception ex)
             {
-                return BadRequest(new { message = ex.Message });
+                return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
 
-        // 4. Update an existing program (Admin only)
-        [HttpPut("{id}")]
-        [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Update(int id, [FromBody] MentorshipProgram program)
+        [HttpPut("{mentorshipProgramId}")]
+     
+        public async Task<ActionResult> UpdateMentorshipProgram(int mentorshipProgramId, [FromBody] MentorshipProgram mentorshipProgram)
         {
             try
             {
-                var updated = await _service.UpdateMentorshipProgram(id, program);
-                if (!updated)
-                    return NotFound(new { message = "Program not found" });
-
-                return Ok(new { message = "Program updated successfully" });
+                var result = await _mentorshipProgramService.UpdateMentorshipProgram(mentorshipProgramId, mentorshipProgram);
+                if (result)
+                {
+                    return Ok(new{message = "Mentorship Program updated successfully."});
+                }
+                return NotFound(new{message = "Cannot find any mentorship program."});
             }
-            catch (MentorshipProgramException ex)
+            catch (Exception ex)
             {
-                return BadRequest(new { message = ex.Message });
+                return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
 
-        // 5. Delete a mentorship program (Admin only)
-        [HttpDelete("{id}")]
-        [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Delete(int id)
+        [HttpDelete("{mentorshipProgramId}")]
+        
+        public async Task<ActionResult> DeleteMentorshipProgram(int mentorshipProgramId)
         {
             try
             {
-                var deleted = await _service.DeleteMentorshipProgram(id);
-                if (!deleted)
-                    return NotFound(new { message = "Program not found" });
-
-                return Ok(new { message = "Program deleted successfully" });
+                var result = await _mentorshipProgramService.DeleteMentorshipProgram(mentorshipProgramId);
+                if (result)
+                {
+                    return Ok(new{message = "Mentorship Program deleted successfully."});
+                }
+                return NotFound(new{message = "Cannot find any mentorship program."});
             }
-            catch (MentorshipProgramException ex)
+            catch (Exception ex)
             {
-                return BadRequest(new { message = ex.Message });
+                return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
     }

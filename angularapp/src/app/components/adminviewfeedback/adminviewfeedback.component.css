@@ -1,52 +1,129 @@
-body {
-    margin: 0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(to right, #eaf6ff, #f9fbff);
-  }
-  
-  .admin-feedback {
-    max-width: 1000px;
-    margin: 60px auto;
-    padding: 30px;
-    background-color: #ffffff;
-    border-radius: 12px;
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
-  }
-  
-  .admin-feedback h1 {
-    text-align: center;
-    color: #004080;
-    font-size: 24px;
-    margin-bottom: 25px;
-    text-transform: uppercase;
-  }
-  
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 10px;
-  }
-  
-  th, td {
-    padding: 12px 14px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-  }
-  
-  thead th {
-    background-color: #f0f8ff;
-    color: #004080;
-    font-weight: 600;
-  }
-  
-  tbody tr:hover {
-    background-color: #f9f9f9;
-  }
-  
-  p {
-    text-align: center;
-    color: #cc0000;
-    font-weight: bold;
-    margin-top: 20px;
-  }
-  
+/* General Container Styling */
+.container {
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #FFFFFF;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+ 
+/* Title Styling */
+.form-title {
+  font-size: 32px;
+  font-weight: bold;
+  color: #325C70ff;
+  text-align: center;
+  margin-bottom: 20px;
+}
+ 
+/* No Data Alert */
+.no-data {
+  color: #ACDBDF;
+  font-size: 18px;
+  padding: 12px;
+  border: 1px solid #ACDBDF;
+  border-radius: 5px;
+  background-color: #F0ECE2;
+  text-align: center;
+}
+ 
+/* Feedback Table */
+.feedback-table {
+  width: 100%;
+  border: none;
+  border-collapse: collapse;
+  border-radius: 8px;
+  overflow: hidden;
+}
+ 
+.feedback-table thead {
+  background-color: #1D4A60ff;
+  color: #F0ECE2;
+  font-weight: bold;
+}
+ 
+.feedback-table th {
+  background-color: #325C70ff;
+  color: #FFFFFF;
+  padding: 14px;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  border: none;
+}
+ 
+/* Ensure Date Column Stays in One Line */
+.feedback-table th:nth-child(4),
+.feedback-table td:nth-child(4) {
+  min-width: 150px;
+  white-space: nowrap; /* Prevents text wrapping */
+  overflow: hidden;
+  text-overflow: ellipsis; /* Ensures long text doesn't break */
+}
+ 
+.feedback-table td {
+  padding: 12px;
+  font-size: 15px;
+  color: #273255ff;
+  text-align: center;
+  border: none;
+}
+ 
+.feedback-table tbody tr {
+  transition: background-color 0.2s ease-in-out;
+}
+ 
+.feedback-table tbody tr:hover {
+  background-color: #5C8A93ff;
+  color: #F0ECE2;
+}
+ 
+/* Action Button */
+.btn-action {
+  background-color: transparent;
+  border: 2px solid #325C70ff;
+  color: #325C70ff;
+  padding: 8px 12px;
+  font-size: 14px;
+  border-radius: 5px;
+  transition: all 0.3s ease-in-out;
+}
+ 
+.btn-action:hover {
+  background-color: #1D4A60ff;
+  color: #F0ECE2;
+}
+ 
+/* SweetAlert2 Modal Styling */
+.modal-profile {
+  background-color: #FFFFFF;
+  border-radius: 10px;
+  padding: 20px;
+}
+ 
+.modal-title {
+  font-size: 22px;
+  font-weight: bold;
+  color: #F0ECE2;
+  text-align: center;
+}
+ 
+.modal-body p {
+  font-size: 16px;
+  color: #273255ff;
+  margin: 8px 0;
+}
+ 
+.btn-close-modal {
+  background-color: #5C8A93ff;
+  color: #F0ECE2;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease-in-out;
+}
+ 
+.btn-close-modal:hover {
+  background-color: #325C70ff;
+}

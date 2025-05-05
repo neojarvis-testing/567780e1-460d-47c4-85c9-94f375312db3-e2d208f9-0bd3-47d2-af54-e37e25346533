@@ -1,48 +1,60 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from '../../services/auth.service';
-import { NgForm } from '@angular/forms';
 import { Login } from 'src/app/models/login.model';
-
+import { AuthService } from 'src/app/services/auth.service';
+import  Swal  from 'sweetalert2';
+ 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  email: string = '';
-  password: string = '';
-
-  constructor(private authService: AuthService, private router: Router) {}
-
+ 
+  userLogin:Login={
+    "Email":"",
+    "Password":""
+  }
+  checkEmailandPassword:boolean=false;
+  role:string='';
+  showPassword:boolean=false;
+  constructor(private authService:AuthService,private router:Router) { }
+ 
   ngOnInit(): void {
-    this.authService.logout();
   }
-
-  login(form: NgForm): void {
-    const loginUser: Login = {
-      Email: this.email,
-      Password: this.password
-    };
-
-    if (loginUser.Email && loginUser.Password) {
-      this.authService.login(loginUser).subscribe({
-        next: user => {
-          if (this.authService.isAdmin()) {
-            console.log("navigating to admin");
-            this.router.navigate(['/admin']);
-          } else if (this.authService.isUser()) {
-            console.log("navigating to user");
-            this.router.navigate(['/user']);
-          }
-        },
-        error: err => {
-          console.error('Login failed', err);
-          alert("Login failed. Please check your credentials and try again.");
-        }
+ 
+  addlogin()
+  {
+    this.authService.login(this.userLogin).subscribe((res)=>{
+      console.log(res);
+      localStorage.setItem("token",res.token);
+      this.authService.isRole();
+      this.role = localStorage.getItem('userRole');
+      console.log(this.role);
+      if(this.role=="Admin")
+      this.router.navigate([`/admin/home`]);
+      else
+      this.router.navigate(['/user/home']);
+      Swal.fire({
+        title: 'Success!',
+        text: 'Login Successful!',
+        icon: 'success',
+        timer: 1500,
+        showConfirmButton: false
       });
-    } else {
-      return;
-    }
+ 
+    },
+    error=>{
+      this.checkEmailandPassword=true;
+      Swal.fire({
+        title: 'Error!',
+        text: 'Login Failed. Please try again.',
+        icon: 'error',
+        timer: 1500,
+        showConfirmButton: false
+      });
+    })
   }
+ 
+ 
 }

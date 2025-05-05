@@ -1,103 +1,121 @@
-
 import { Component, OnInit } from '@angular/core';
-
-import { MentorshipService } from '../../services/mentorship.service';
-
-import { MentorshipProgram } from 'src/app/models/mentorshipprogram.model';
-
+import { MentorshipService } from 'src/app/services/mentorship.service';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
-
   selector: 'app-viewmentorshipprogram',
-  styleUrls: ['./viewmentorshipprogram.component.css'],
-
-  templateUrl: './viewmentorshipprogram.component.html'
-
+  templateUrl: './viewmentorshipprogram.component.html',
+  styleUrls: ['./viewmentorshipprogram.component.css']
 })
-
 export class ViewmentorshipprogramComponent implements OnInit {
 
-  mentorshipPrograms: MentorshipProgram[] = [];
+  programs: any[] = [];
+  filterPrograms: any[] = [];
+  paginatedPrograms: any[] = [];
+  searchProgram: string = '';
+  programIdToDelete: number | null = null;
+  showModal: boolean = false;
+  currentPage: number = 0;
+  itemsPerPage: number = 6;
+  totalPages: number = 0;
+  pages: number[] = [];
 
-  filteredPrograms: MentorshipProgram[] = [];
-
-  searchTerm: string = '';
-
-  constructor(private mentorshipService: MentorshipService, private router: Router) { }
+  constructor(private router: Router, private mentService: MentorshipService) { }
 
   ngOnInit(): void {
-
-    this.loadPrograms();
-
+    this.getMentorshipPrograms();
   }
 
-  loadPrograms() {
-
-    this.mentorshipService.getAllMentorshipPrograms().subscribe({
-
-      next: (res) => {
-
-        this.mentorshipPrograms = res;
-
-        this.filteredPrograms = res;
-
-      },
-
-      error: (err) => {
-
-        alert('Failed to load mentorship programs!');
-
+  getMentorshipPrograms() {
+    // Show loading indicator
+    Swal.fire({
+      title: 'Fetching Programs...',
+      text: 'Please wait while we fetch the programs.',
+      allowOutsideClick: false,
+      didOpen: () => {
+        Swal.showLoading();
       }
-
     });
 
+    this.mentService.getAllMentorshipPrograms().subscribe(data => {
+      this.programs = data;
+      this.filterPrograms = data; // Initialize filterPrograms with all programs
+      this.totalPages = Math.ceil(this.filterPrograms.length / this.itemsPerPage);
+      this.pages = Array.from({ length: this.totalPages }, (_, i) => i);
+      this.updatePaginatedPrograms();
+
+      // Close loading indicator
+      Swal.close();
+    }, error => {
+      // Handle error and close loading indicator
+      Swal.close();
+      Swal.fire('Error', 'Failed to fetch programs. Please try again later.', 'error');
+    });
   }
 
   search() {
-
-    const term = this.searchTerm.toLowerCase();
-
-    this.filteredPrograms = this.mentorshipPrograms.filter(program =>
-
-      program.ProgramName.toLowerCase().includes(term) ||
-
-      program.MentorName.toLowerCase().includes(term)
-
-    );
-
-  }
-
-  editProgram(id: number) {
-
-    this.router.navigate(['/edit-mentorship', id]);
-
-  }
-
-  deleteProgram(id: number) {
-
-    if (confirm('Are you sure you want to delete this program?')) {
-
-      this.mentorshipService.deleteMentorshipProgram(id).subscribe({
-
-        next: () => {
-
-          alert('Deleted Successfully');
-
-          this.loadPrograms();
-
-        },
-
-        error: (err) => {
-
-          alert(err.error.message || 'Delete failed! (Maybe already referenced)');
-
-        }
-
-      });
-
+    if (this.searchProgram.trim() === '') {
+      this.filterPrograms = this.programs;
+    } else {
+      this.filterPrograms = this.programs.filter(p => 
+        p.ProgramName.toLowerCase().includes(this.searchProgram.toLowerCase()) || 
+        p.MentorName.toLowerCase().includes(this.searchProgram.toLowerCase())
+      );
     }
-
+    this.currentPage = 0;
+    this.totalPages = Math.ceil(this.filterPrograms.length / this.itemsPerPage);
+    this.pages = Array.from({ length: this.totalPages }, (_, i) => i);
+    this.updatePaginatedPrograms();
   }
 
+  updatePaginatedPrograms() {
+    const start = this.currentPage * this.itemsPerPage;
+    const end = start + this.itemsPerPage;
+    this.paginatedPrograms = this.filterPrograms.slice(start, end);
+  }
+
+  previousPage() {
+    if (this.currentPage > 0) {
+      this.currentPage--;
+      this.updatePaginatedPrograms();
+    }
+  }
+
+  nextPage() {
+    if (this.currentPage < this.totalPages - 1) {
+      this.currentPage++;
+      this.updatePaginatedPrograms();
+    }
+  }
+
+  goToPage(page: number) {
+    if (page >= 0 && page < this.totalPages) {
+      this.currentPage = page;
+      this.updatePaginatedPrograms();
+    }
+  }
+
+  editProgram(id: number): void {
+    this.router.navigate([`/admin/editmentorshipprogram/${id}`]);
+  }
+
+  openConfirmationModal(id: number): void {
+    this.programIdToDelete = id;
+    this.showModal = true;
+  }
+
+  closeConfirmationModal(): void {
+    this.showModal = false;
+    this.programIdToDelete = null;
+  }
+
+  confirmDelete(): void {
+    if (this.programIdToDelete !== null) {
+      this.mentService.deleteMentorshipProgram(this.programIdToDelete).subscribe(() => {
+        this.getMentorshipPrograms(); 
+        this.closeConfirmationModal();
+      });
+    }
+  }
 }

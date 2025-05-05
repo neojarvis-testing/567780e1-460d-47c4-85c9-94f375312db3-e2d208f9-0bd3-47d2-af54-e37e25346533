@@ -1,117 +1,62 @@
-
 import { Component, OnInit } from '@angular/core';
-
 import { ActivatedRoute, Router } from '@angular/router';
-
 import { MentorshipService } from 'src/app/services/mentorship.service';
-
 import { MentorshipProgram } from 'src/app/models/mentorshipprogram.model';
+import { ViewmentorshipprogramComponent } from '../viewmentorshipprogram/viewmentorshipprogram.component';
+import  Swal  from 'sweetalert2';
 
 @Component({
-
   selector: 'app-admineditmentorshipprogram',
-
-  styleUrls:['./admineditmentorshipprogram.component.css'],
-
-  templateUrl:'./admineditmentorshipprogram.component.html'
-
+  templateUrl: './admineditmentorshipprogram.component.html',
+  styleUrls: ['./admineditmentorshipprogram.component.css']
 })
-
 export class AdmineditmentorshipprogramComponent implements OnInit {
 
-  mentorshipId: number = 0;
-
-  mentorship: MentorshipProgram = {
-
+  programId: number;
+  
+  program: MentorshipProgram = {
     ProgramName: '',
-
     Description: '',
-
     FieldOfMentorship: '',
-
     DurationInMonths: 0,
-
     MentorName: '',
-
     ExperienceLevel: '',
-
     ModeOfMentorship: ''
-
   };
 
-
-
-  constructor(
-
-    private route: ActivatedRoute,
-
-    private mentorshipService: MentorshipService,
-
-    private router: Router
-
-  ) { }
+  constructor(private route: ActivatedRoute, private router: Router, private mentorshipService: MentorshipService) { }
 
   ngOnInit(): void {
+    this.programId = +this.route.snapshot.paramMap.get('id');
+    console.log(this.programId);
 
-    // this.mentorshipId = this.route.snapshot.params['id'];
-    this.route.params.subscribe((p) => {
-      this.mentorshipId = Number(p['id']);
-
-      if (this.mentorshipId) {
-        this.loadMentorship();
-      }
+    this.mentorshipService.getMentorshipProgramById(this.programId).subscribe(data => {
+      this.program = data;
     });
-
-   
-
+    console.log(this.program);
   }
 
-  loadMentorship() {
 
-    this.mentorshipService.getMentorshipProgramById(this.mentorshipId).subscribe({
-
-      next: (res) => {
-
-        this.mentorship = res;
-
-      },
-
-      error: (err) => {
-
-        alert('Failed to load mentorship details.');
-
-      }
-
-    });
-
+  onSubmit(): void {
+    if (this.program.ProgramName && this.program.Description && this.program.FieldOfMentorship &&
+        this.program.DurationInMonths && this.program.MentorName && this.program.ExperienceLevel &&
+        this.program.ModeOfMentorship) {
+      this.mentorshipService.updateMentorshipProgram(this.programId, this.program).subscribe(() => {
+        Swal.fire({
+          title: 'Success!',
+          text: 'Program Updated Successfully!',
+          icon: 'success',
+          timer: 1500,
+          showConfirmButton: false
+        });
+        this.router.navigate(['admin/viewmentorshipprogram']);
+      });
+    } else {
+      alert('Please fill in all required fields.');
+    }
   }
 
-  update() {
-
-    this.mentorshipService.updateMentorshipProgram(this.mentorshipId, this.mentorship).subscribe({
-
-      next: () => {
-
-        alert('Updated successfully!');
-
-        this.router.navigate(['/view-mentorships']);
-
-      },
-
-      error: (err) => {
-
-        alert(err.error.message || 'Update failed!');
-
-      }
-
-    });
-
+  goBack(): void {
+    this.router.navigate(['admin/viewmentorshipprogram']);
   }
-
-  back() {
-
-    this.router.navigate(['/view-mentorships']);
-
-  }
-
 }

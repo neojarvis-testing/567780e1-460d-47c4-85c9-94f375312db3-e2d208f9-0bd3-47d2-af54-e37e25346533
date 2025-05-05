@@ -1,29 +1,73 @@
-body {
-    margin: 0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(to right, #fce3e3, #fffafa);
+.error-handler-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background: linear-gradient(135deg, #45baed, #fcff3d);
+  color: #fff;
+  text-align: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.logo {
+  max-width: 250px;
+  margin-bottom: 20px;
+  animation: fadeIn 1.5s ease-in-out;
+}
+
+.error-content {
+  background: rgba(0, 0, 0, 0.5);
+  padding: 20px;
+  border-radius: 10px;
+  animation: slideIn 0.5s ease-in-out;
+}
+
+h2 {
+  font-size: 36px;
+  margin-bottom: 10px;
+}
+
+p {
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+.back-button {
+  background-color: #fff;
+  color: #45baed;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.back-button:hover {
+  background-color: #45baed;
+  color: #fff;
+}
+
+@keyframes fadeIn {
+  from {
+      opacity: 0;
   }
-  
-  .error-page {
-    max-width: 600px;
-    margin: 100px auto;
-    text-align: center;
-    padding: 40px;
-    background-color: #fff0f0;
-    border-radius: 12px;
-    box-shadow: 0 6px 16px rgba(255, 0, 0, 0.1);
-    border: 1px solid #f5c2c2;
+  to {
+      opacity: 1;
   }
-  
-  .error-page h1 {
-    color: #cc0000;
-    font-size: 28px;
-    margin-bottom: 20px;
-    text-transform: uppercase;
+}
+
+@keyframes slideIn {
+  from {
+      transform: translateY(50px);
+      opacity: 0;
   }
-  
-  .error-page p {
-    color: #555;
-    font-size: 18px;
+  to {
+      transform: translateY(0);
+      opacity: 1;
   }
-  
+}

@@ -1,0 +1,115 @@
+.container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #FFFFFF;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .feedback-title {
+    font-size: 36px;
+    font-weight: bold;
+    color: #325C70ff;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  .mentorship-table {
+    width: 80%;
+    margin: 0 auto;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: #FFFFFF;
+    border: none;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  
+  .mentorship-table thead {
+    background-color: #325C70ff;
+    color: #F0ECE2;
+  }
+  
+  .mentorship-table th, .mentorship-table td {
+    padding: 12px;
+    font-size: 14px;
+    text-align: center;
+    border: none;
+  }
+  
+  .mentorship-table tbody tr:nth-child(even) {
+    background-color: #F7F9FA;
+  }
+  
+  .mentorship-table tbody tr:hover {
+    background-color: #DCE7F0;
+  }
+  
+  .btn-custom-delete {
+    background-color: #5C8A93ff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 5px 10px;
+    cursor: pointer;
+  }
+  
+  .btn-custom-delete:hover {
+    background-color: #1D4A60ff;
+  }
+  
+  .no-records {
+    color: #325C70ff;
+    font-weight: bold;
+    text-align: center;
+  }
+  .popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #F0ECE2;
+    color: #325C70ff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 10;
+  }
+  
+  .popup-header h3 {
+    color: #5C8A93ff;
+  }
+  
+  .popup-footer {
+    display: flex;
+    justify-content: space-between; /* Ensures buttons are separated */
+    gap: 10px; /* Adds spacing between the buttons */
+    margin-top: 20px; /* Adds spacing above the buttons */
+  }
+  
+  .btn-delete {
+    background-color: #2D1B49ff;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 4px; /* Add rounded corners */
+  }
+  
+  .btn-delete:hover {
+    background-color: #1D4A60ff;
+  }
+  
+  .btn-cancel {
+    background-color: #5C8A93ff;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 4px; /* Add rounded corners */
+  }
+  
+  .btn-cancel:hover {
+    background-color: #325C70ff;
+  }
