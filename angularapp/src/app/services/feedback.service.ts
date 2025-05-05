@@ -10,7 +10,7 @@ export class FeedbackService {
 
   // Base API URL for the feedback-related requests.
 
-  public apiUrl = "https://8080-cdcacccccaadbcfceefbaaddebedfbddafee.premiumproject.examly.io/api";
+  public apiUrl = "https://8080-dfadabbbaceadbcfceefbaaddebedfbddafee.premiumproject.examly.io/api";
 
 
   // Constructor injecting HttpClient for HTTP operations.
